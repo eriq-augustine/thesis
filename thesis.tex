@@ -9,7 +9,7 @@
 
 \documentclass[12pt]{ucthesis}
 
-\usepackage{url}
+\usepackage[hyphens]{url}
 \usepackage{hyperref}
 \usepackage{subfig}
 \usepackage{graphicx}
@@ -80,13 +80,12 @@
 
 Every week there are over a billion new posts to Twitter services and many of
 those messages contain feedback to companies about their services. One company
-that has recognized this unused source of information is Netflix. That is why
-Netflix initiated the development of a system that will let them respond to the
+that has recognizes this unused source of information is Netflix. That is why
+Netflix initiated the development of a system that lets them respond to the
 millions of Twitter and Netflix users that are acting as sensors and reporting all types of user
-visible outages. This system will enhance the feedback loop between Netflix and
-its customers by increasing the amount of customer feedback that is being
-received by Netflix and reducing the time it takes for Netflix to receive the
-reports and respond to them.
+visible outages. This system enhances the feedback loop between Netflix and
+its customers by increasing the amount of customer feedback that Netflix receives
+and reducing the time it takes for Netflix to receive the reports and respond to them.
 
 The goal of the SPOONS (Swift Perceptions of Online Negative Situations) system
 is to use Twitter posts to determine when Netflix users are reporting a problem
@@ -97,8 +96,9 @@ as well as outage detection using tweet classification.
 
 \begin{acknowledgements}
 
-Thanks Alex, thanks Netflix (Kevin).
-Negative thanks to Farscape.
+% TODO(eriq): More Thankful!
+Thanks Alex, ABRA, Netflix especially Kevin McEntee, and all the funions.
+Thanks to Farscape for encouraging team bonding and providing a common enemy.
 
 \end{acknowledgements}
 
@@ -122,48 +122,56 @@ Negative thanks to Farscape.
 \section{General Problem: Swift Perception Of Online Negative Situations}
 \label{general-problem}
 
-Twitter is an immensely popular micro-blogging service. According to Twitter,
-approximately one billion micro-posts, \emph{tweets}, were being poster per week as of March 14th 2011\cite{TwitterBlog}.
+Twitter is an immensely popular micro-blogging service. According to Twitter as of March 14\textsuperscript{th} 2011,
+approximately one billion micro-posts, \emph{tweets}, were being posted per week\cite{TwitterBlog}.
 Because of the low time and effort cost of tweeting, only a few seconds from a smart phone,
-Users of Twitter post tweets about almost every aspect of their daily lives.
+users of Twitter post tweets about almost every aspect of their daily lives.
 Because of this large stream of information, Twitter makes an excellent source of information for
 data miners. Already, researchers have been using Twitter to attempt to track and model
 disease outbreaks\cite{DetectingInfluenza}, earthquakes\cite{Earthquakes}, and the
 stock market\cite{StockMarket}.
 
-Netflix saw the power in this data source as a potential for detecting service outages that
-is orthogonal to their current outage detection methods. Currently, Netflix utilizes four
+%% TODO(eriq): Work on this paragraph
+Netflix is the one of the largest online Internet subscription service for streaming movies and
+television shows. Netflix has over 25 million subscribers watching media streamed to over 450 different
+platforms. Even a short disruption of service can effect millions of users. Therefore, quickly detecting service outages
+is essential to keep customers happy. However, service outage detection is no trivial matter in Netflix's
+environment. In addition to constantly streaming thousands of different videos to hundreds of different platforms,
+Netflix also has to deal with problems caused by their entire infrastructure being hosted in the cloud with Amazon's
+AWS.
+
+Netflix saw the power in Twitter as a potential data source for detecting service outages that
+is orthogonal to their current, more traditional outage detection methods. Currently, Netflix utilizes four
 different methods for detecting outages:
 
-\paragraph{Internal Monitoring Systems}
+\paragraph{Internal Monitoring Systems.}
 Like any sizable service providing company, Netflix utilizes many different internal monitoring
 systems to detect service outages. However, there are some class of problems that are difficult to solve
-with internal monitoring. These problems include broken encodes of video files or a problem on a third-party delivery
-platform such as Roku or AppleTV. These problems are obvious to an end user, but very difficult to detect internally.
+with internal monitoring. These problems include corrupt video files or a problem on a third-party delivery
+platform such as Roku or AppleTV. These problems are obvious to the end user, but very difficult to detect internally.
 In addition, the internal monitoring systems share the same infrastructure as the service providing system. Therefore,
 a problem in the infrastructure can cause both systems to go down at the same time.
 
-\paragraph{External Monitoring Systems}
+\paragraph{External Monitoring Systems.}
 Netflix contracts with external services that can periodically probe its systems to try and detect problems.
 However, this model too has problems. There are many problems that cannot be seen from an external probe.
 Also, if this system probes too often then it is taking compute time away from the servers that are trying to deliver
 content to end users.
 
-\paragraph{Customer Service}
+\paragraph{Customer Service.}
 Calls to customer service are a very straight-forward way to detect outages.
 Unfortunately, this method is very slow and inconsistent. It takes a lot of frustration to get a user to
 lookup a phone number and complain.
 
-\paragraph{Manual Twitter Observation}
+\paragraph{Manual Twitter Observation.}
 Manual observation shows that there is usually a response on Twitter when Netflix suffers a service
-outage. Image~\ref{fig:tweetEx} shows some tweets that occurred during a disruption of Netflix's service to
+outage. Figure~\ref{fig:tweetEx} shows some tweets that occurred during a disruption of Netflix's service to
 the Nintendo Wii. However without any infrastructure, Twitter observation is slow and inconsistent.
 It is also very time consuming to have someone constantly watching Twitter for signs of an outage.
 
-Given all these deficiencies Netflix wanted a monitoring system that is seperate from their infrastructure,
+Given all these deficiencies Netflix wanted a monitoring system that is separate from their infrastructure,
 fast, and does not require any human intervention\cite{kevin}.
 
-% TODO(eriq): get a better tweet picture
 \begin{figure}
    \begin{center}
       \includegraphics[width=140mm]{images/tweetexample.eps}
@@ -179,7 +187,7 @@ fast, and does not require any human intervention\cite{kevin}.
 \label{overview}
 
 SPOONS (Swift Perception Of Online Negative Situations) is a system that is
-designed to use tweets to detect outages in Netflix systems. The system
+designed to use tweets to detect outages in Netflix content delivery systems. At present the system
 supports a wide variety of detection methods that use some combination of time
 series analysis, classification, natural language processing, sentiment
 analysis, and filtering.
@@ -194,28 +202,28 @@ analysis, and filtering.
    \end{center}
 \end{figure}
 
-Image~\ref{fig:systemFlow} shows how the SPOONS system can be divided into 3
+Figure~\ref{fig:systemFlow} shows how the SPOONS system can be divided into three
 main parts: {\color{blue}input}; {\color{orange}analysis methods}; and
 {\color{red}output}. The inputs are tweets gathered from Twitter. Then the
 analysis methods use a combination of sentiment estimation, classification, and
 traffic volume analysis to detect when an outage is occurring.
-The outputs of the system are: email alerts to Netflix engineers; and a web UI that displays
+The outputs of the system are: email alerts to Netflix engineers, and a web UI that displays
 information about the outage.
 
 \section{Ethics of Twitter Observation}
 
-The work in this project uses content that people post on Twitter without their
+The work in this project uses content that users post on Twitter without their
 knowledge. This monitoring system isn't being announced to the
 public because widespread knowledge of it would increase the likelihood of a
 malicious attack. This practice may lead to concerns about the level of privacy
 or ownership being provided to Twitter users regarding the content they post
 through the Twitter services. The goal of this section is to address these
-concerns by provding more information about the Twitter services and how the
+concerns by providing more information about the Twitter services and how the
 SPOONS system and this work uses the tweets.
 
 \subsection{Twitter Terms of Service}
 
-According to Twitter Terms of Service\cite{termsOfService} agreement, that
+According to Twitter Terms of Service\cite{termsOfService} agreement that
 everyone accepts automatically by accessing or using Twitter services:
 
 \emph{``You retain your rights to any Content you submit, post or
@@ -242,26 +250,23 @@ individuals who partner with Twitter, may be made with no compensation paid to
 you with respect to the Content that you submit, post, transmit or otherwise
 make available through the Services.''}
 
-To summarize, while Twitter users do own the content they post,
-by posting it through a Twitter service, they give Twitter and its partners
-rights to reuse it without compensation. As a user of the Twitter API, the
-SPOONS research group has become a partner of Twitter. So the analysis of
-tweets, extraction of tweet metadata, and aggregate use of that data is well
-within the rights of a partner of Twitter as defined by the Twitter Terms of
-Service.
+In short, Twitter takes ownerships of users' tweet as soon as they are posted on Twitter.
+Using the Twitter API allows SPOONS to obtain the tweets with the consent of Twitter.
+Therefore, the collection and analysis of Twitter data by SPOONS is well withing the
+Twitter Terms of Service.
 
 \section{SPOONS Requirements}
 Netflix has provided the following set of key requirements to be met by the
 SPOONS system:
 
-\paragraph{Structural Independence}
+\paragraph{Structural Independence.}
 The outage detection system shall be structurally independent of both the
 software and the hardware infrastructure used by Netflix. It shall rely only on
 information that is publicly available and free for use. This ensures that the
 outage detection system stays up even when any or all Netflix servers are
 experiencing downtime.
 
-\paragraph{Use of Amazon Web Services}
+\paragraph{Use of Amazon Web Services.}
 Netflix is one of the largest customers of Amazon.com's cloud computing
 service, Amazon Web Services (AWS). AWS allows users to create new cloud
 machines (instances) in many regions throughout the world. The outage
@@ -270,24 +275,24 @@ operationally independent of other AWS servers used by Netflix. Using a cloud
 solution allows the outage detection and alert system to be deployable on a
 global scale.
 
-\paragraph{Real-Time}
+\paragraph{Real-Time.}
 Netflix's streaming services run in real-time and any downtime has an immediate
 impact on customers. To minimize that impact, the outage detection system shall notify
 Netflix of detected outages as soon as possible.
 
-\paragraph{Precise Outage Detection}
+\paragraph{Precise Outage Detection.}
 The number of non-outage situations that raise an alert shall be minimized.
 While a small number of false positives detected in real-time may be acceptable,
 the outage detection system shall detect outages and generate alerts with as
 high precision as possible.
 
-\paragraph{Comprehensive Outage Detection}
+\paragraph{Comprehensive Outage Detection.}
 Not all Netflix outages will generate a signal on Twitter. Those that don't may
 be allowed to go unnoticed by the outage detection system (as the system will
 have no basis for detecting them), but any outage that causes a signal on
 Twitter shall be detected.
 
-\paragraph{User-Friendly Online UI}
+\paragraph{User-Friendly Online UI.}
 The outage detection and alert system shall have an easy-to-use, informative,
 online UI which shall provide Netflix employees with real-time information and
 historic data about the state of Netflix according to Twitter. The information
@@ -299,6 +304,23 @@ provided shall include:
    \item current and recent Netflix-related Twitter traffic trends;
    \item and samples of Netflix-related tweets.
 \end{itemize}
+
+\section{Contributions and Organization}
+\label{contributions-organization}
+
+SPOONS is a continual team effort and has been touched and improved by many different people.
+The idea originated at Netflix and was passed to the ABRA team at Cal Poly. The ABRA team has published a paper
+on SPOONS \cite{abraPaper}. In addition, Cailin Cushing defended a thesis using SPOONS\cite{cailinThesis}.
+
+The main contributions of this work are the design and implementation of the SPOONS system, framework, server architecture,
+distribution model, and database schema. As well as the design and implementation of classification based outage detection
+methods.
+
+% TODO(eriq): Change when experiments is split and merged with results.
+The rest of the paper is organized as follows. Chapter~\ref{background-related-work} covers background and related work.
+Chapter~\ref{arch} discusses the architecture of SPOONS. Chapter~\ref{classifiers} discuss the details of the classifiers
+used in SPOONS. Chapters~\ref{experiments} and \ref{results} respectively discuss the different experiments performed and
+their results. Chapter~\ref{conclusions} wraps up the paper.
 
 \chapter{Background \& Related Work}
 \label{background-related-work}
@@ -317,12 +339,12 @@ Microtext Classification \cite{hong}
 
 \subsection{WEKA}
 \label{background-weka}
-\begin{wrapfigure}{r}{0.20\textwidth}
+\begin{figure}
   \begin{center}
     \includegraphics[width=0.20\textwidth]{images/weka.eps}
   \end{center}
   \caption{WEKA logo}
-\end{wrapfigure}
+\end{figure}
 SPOONS utilizes several classifiers provided in the \textit{WEKA Machine Learning Package}.
 WEKA is an open source package written under the GNU General Public License\cite{weka}.
 
@@ -333,65 +355,71 @@ All of the data data that SPOONS uses is obtained in real time using the Twitter
 \subsection{Rate Limiting}
 \label{api-rate-limit}
 Twitter imposes a limit on the number of queries to the Search API. However, Twitter does not publish the official
-limit. However, my experiments suggests that SPOONS can query the API for all new Tweets once every two minutes without
+limit. However, our experiments suggest that SPOONS can query the API for all new Tweets once every two minutes without
 suffering from rate limiting.
 
 \subsection{Pagination}
 \label{api-pagination}
-Twitter paginates the results from its search api. The maximum results you can get per page is 100, and each
+Twitter paginates the results from its search API. The maximum results you can get per page is 100, and each
 query can return at most 15 pages. Therefore when there are more than 1500 tweets generated per minute,
 SPOONS must do multiple search queries.
 
 \subsection{Query Anatomy}
 \label{api-anatomy}
-One of our typical queries looks like:\\
-http://search.twitter.com/search.\textbf{json}?\textbf{q}=$\langle$query$\rangle$\&\textbf{rpp}=100\&\textbf{result\_type}=recent\&\textbf{since\_id}=$\langle$tweet id$\rangle$\&\textbf{max\_id}=$\langle$tweet id$\rangle$
+Our typical Twitter API query is structured as follows:\\
+http://search.twitter.com/search.\textbf{json}?\\
+\textbf{q}=$\langle$query$\rangle$\&\textbf{rpp}=100\&\textbf{result\_type}=recent\&\\
+\textbf{since\_id}=$\langle$tweet id$\rangle$\&\textbf{max\_id}=$\langle$tweet id$\rangle$
 
-\paragraph{json}
+The parameters are:
+
+\begin{description}
+
+\item[json:]
 Twitter can supply the result data in either ATOM or JSON format. Testing with both have shown that the ATOM
 results are less consistent and provide less data. Because of the more accurate information returned from the JSON
-api, we are able to write more efficient queries. Using the ATOM api, we could query Twitter only once every five
-minutes; as opposed to every two minutes with the JSON api.
+API, we are able to write more efficient queries. Using the ATOM API, we could query Twitter only once every five
+minutes; as opposed to every two minutes with the JSON API.
 
-\paragraph{q}
+\item[q:]
 The search query. Twitter supports some advanced search features such as conjunction and negation.
 
-\paragraph{rpp}
+\item[rpp:]
 ``Results Per Page''. Twitter paginates the responses from the Search API. SPOONS always uses the maximum pagination value to decrease the number of requests per hour and lessen the chance of being rate limited.
 
-\paragraph{result\_type}
-Twitter allows users to get results ordered search by either relevance or time. Since we want to gather all tweets about
+\item[result\_type:]
+Twitter allows users to get results ordered by either relevance or time. Since we want to gather all tweets about
 our query, we choose to get the results ordered by time. In addition, the ``since\_id'' and ``max\_id''
 parameters do not work when results are sorted by relevance.
 
-\paragraph{since\_id}
+\item[since\_id:]
 The id of the oldest tweet that should be returned. This is not a hard limit, but provides a nice starting point.
 
-\paragraph{max\_id}
+\item[max\_id:]
 The id of the most recent tweet that should be returned. It may seem counter-intuitive to provide a cap on the
 most recent tweet, when one wants to query for all of the most recent tweets. However when a query spans across
 more than 15 pages, it will need to be broken into a new query restarting at the first page. In this situation,
 not providing an upper limit will include new tweets outside of the original search scope. This can result in tweets
 are forever lost to us.
 
+\end{description}
+
 \subsection{Result Anatomy}
 \begin{figure}
    \begin{center}
-      \includegraphics[width=140mm]{images/api_result.eps}
+      \includegraphics[width=150mm]{images/api_result.eps}
       \captionfonts
       \caption[Twitter Search API Result]{A JSON result from the Twitter Search API}
       \label{fig:apiRes}
    \end{center}
 \end{figure}
 
-Image~\ref{fig:apiRes} shows the result from the query ``eriq netflix''. Notice that some fields,
-like the ``geo'' field, can be null. Also note that the api incorrectly guessed my language as Danish.
+Figure~\ref{fig:apiRes} shows the result from the query ``eriq netflix''. Notice that some fields,
+like the \textsf{geo} field, can be null. Also note that the API incorrectly guessed the language of the tweet as Danish.
 
 \chapter{SPOONS Architecture}
 \label{arch}
 
-\section{Architecture Overview}
-\label{arch-overview}
 \begin{figure}
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/SPOONS_Framework_Architecture.eps}
@@ -401,24 +429,6 @@ like the ``geo'' field, can be null. Also note that the api incorrectly guessed 
    \end{center}
 \end{figure}
 
-There are multiple levels of architecture within SPOONS that need to be discussed.
-There is the Framework Architecture (Image~\ref{fig:frameworkArch}) that describes the relations between the
-different pieces of the framework; the Server Architecture (Image~\ref{fig:serverArch}) that describes the layout of
-the different servers involved in the SPOONS system; and the Distribution Model which describes how tasks are
-distributed between the different servers.
-
-\subsection{Claims}
-\label{arch-claims}
-As part of my thesis, I lay claim to the design and implementation of the SPOONS system, framework, server architecture,
-distribution model, and database schema. However, I do not claim the UI and API. Those were the product of Matt Tognetti.
-
-\subsection{Backend}
-\label{arch-backend}
-The ``backend'' consists of all parts of SPOONS that are not part of the UI or API.
-This includes code that runs on multiple servers as well as the database.
-
-\subsection{UI and API}
-\label{arch-ui}
 \begin{figure}
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/ui.eps}
@@ -428,19 +438,66 @@ This includes code that runs on multiple servers as well as the database.
    \end{center}
 \end{figure}
 
-SPOONS includes a web UI that allows users to quickly and easily view the data produced by SPOONS.
-The UI is written primarily in PHP and Javascript and is separated from the SPOONS backend.
-The only shared resource between the UI and backend is the database. The UI will automatically pull
-data from tables that have a specified schema and present them to the user.
+There are multiple levels of architecture within SPOONS that need to be discussed.
+There is the Framework Architecture (Figure~\ref{fig:frameworkArch}) that describes the relations between the
+different pieces of the framework; the Server Architecture (Figure~\ref{fig:serverArch}) that describes the layout of
+the different servers involved in the SPOONS system; and the Distribution Model which describes how tasks are
+distributed between the different servers.
 
 \section{Framework Architecture}
-\label{arch-framework-arch}
+\label{arch-framework}
 This section describes the architecture of the SPOONS framework. The SPOONS framework includes all pieces of SPOONS
-that takes the data from gathering all the way through to final analysis.
+that take the data from gathering all the way through to final analysis.
+
+\subsection{High Level Solution}
+\label{arch-framework-highlevel}
+
+The general solution taken by SPOONS consists of four main steps:
+
+\begin{description}
+   \item[Collect]
+      Tweets are collected from Twitter.
+
+   \item[Process] 
+      The tweets are converted from plain text to some form of information that can be analyzed.
+
+   \item[Model]
+      Use the information generated from the previous step to build a mathematical model of the information.
+      Use past information to predict what the current model of the data should look like.
+
+   \item[Compare]
+      Compare the two models generated in the previous step. A significant divergence means that there is
+      anomalous traffic.
+
+\end{description}
+
+\subsubsection{Framework Overview}
+\label{arch-framework-highlevel-overview}
+
+Figure~\ref{fig:frameworkArch} shows the flow of control and data through the SPOONS framework. Data comes into SPOONS
+in the form of Tweets collected by the Gatherers, and leave SPOONS in the form of alerts generated by the Monitors.
+
+\paragraph{Gatherer.}
+Gatherers are responsible for collecting documents from a specified data source such as the Twitter Search API.
+
+\paragraph{Control.}
+The Control is responsible for controlling the SPOONS server. It maintains data structures with all of the Gatherers and
+Analysis Pipelines. It is also responsible for communication with other servers in the SPOONS cluster.
+
+\paragraph{Processor.}
+Processors are data transformation utilities that takes raw data and puts it in a form that other components can use.
+
+\paragraph{Modeler.}
+Modelers are responsible for building a mathematical model of the data and can be split into two groups: \textbf{Predictors} and \textbf{Counters}.
+Predictors build a predictive model of the data. Counters to build a model of the data that was actually gathered by the system.
+
+\paragraph{Monitor.}
+Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
+making the final decision on about a period of time being anomalous.
 
 \subsection{Gatherers}
 \label{arch-gatherers}
-The data begins its journey in the Gatherers. The Gatherers run periodically (for Twitter, every two minutes).
+The data enters SPOONS at the Gatherers. The Gatherers run periodically (for Twitter, every two minutes).
 Gatherers are asynchronous and not dependent on any other part of the framework. There may be multiple different
 Gatherers running on the same machine. Gatherers are abstracted to be able to gather data from any source.
 Once the Gatherers get their data, they place the data in the database and notify the Control that there is new data
@@ -454,33 +511,56 @@ new tweets. We call these dead zones ``holes''. We have found that a query from 
 experience the same hole. To counteract holes, we run Gatherers on multiple servers and resolve uniques upon insertion
 into the database.
 
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.9\textwidth]{images/Twitter_Holes.eps}
+      \captionfonts
+      \caption[Twitter Holes]{One server in a hole is covered by two other gathering servers.}
+      \label{fig:ui}
+   \end{center}
+\end{figure}
+
 \subsection{Processors}
 \label{arch-processors}
 Processors are responsible for processing or transforming data before it goes into the analysis pipelines.
-Processing the data could be any task. Some of our most notable Processors are ones that classifies tweets into one of
-the nine tweet categories discussed in Section~\ref{class-tweet-classes}.
+\begin{itemize}
+   \item{Classifier Processors} There exists a Processor for every tweet classifier used in SPOONS (see Chapter \ref{classifiers}.
+   Because of the high number of classifiers used, these constitute the are the majority of Processors and the largest unit of work in SPOONS.
+   These Processors classify every tweet into one of the nine tweet categories discussed in Section~\ref{class-tweet-classes}.
+
+   \item{Author Processors} The Author Processors extract the author of tweets and try to establish which authors are credible. These Processors are
+   outside the scope of this work and are discussed in other work\cite{cailinsThesis}.
+
+   \item{Valence Processors} The Valence Processors assign a numeric ``happiness'' score to every tweet. How that score is produced is outside the
+   scope of this work (see Section~\ref{future-work-kim}).
+
+   \item{Document Frequency Processors} The Document Frequency Processors maintain term frequencies and inverse document frequencies for the collection
+   of tweets in SPOONS.
+
+\end{itemize}
 
 Unlike most parts of the analysis pipeline, Processors are a shared resource. That is, multiple analysis pipelines
-invoke the same processors. However, it does not make sense to restart the processing once it is started, or to
-start another instance of the same Processor. Processors have a finite amount of data to process and may be cumulative.
-Therefore, Processors are singleton. When multiple threads call into a Processor to do work, the Processor will block
-all incoming threads until the work is complete. Then, the Processor will release all of the threads that asked it to
-do work. This model allows all the analysis pipelines to share the same Processor without any duplication of work.
+invoke the same Processors. However, it does not make sense to restart the processing once it is started, or to
+start another instance of the same Processor for the same data. Processors have a finite amount of data to process and may be cumulative.
+To make sure that no redundant work is done, Processors are singleton. When multiple threads call into a Processor to do work, the Processor will block
+all incoming threads until the work is complete. Then, the Processor will release all of the threads that requested the work.
+This model allows all the analysis pipelines to share the same Processor without any redundancies.
 
 \subsection{Analysis Pipelines}
 \label{arch-pipelines}
 An Analysis Pipeline (also called Analysis Method) is the analytical center of the SPOONS framework.
 The pipeline aggregates multiple tasks that it needs to run on the data.
 
-An Analysis Pipeline typically starts with running any number of processors on the data.
-Then, the pipeline invokes modelers on the data from the Processors. These modelers typically build models and
-predictive models on the data. Finally, the pipeline invokes tasks that assess the models produced in the previous
+An Analysis Pipeline typically starts with running any number of Processors on the data.
+Then, the pipeline invokes modelers on the data from the Processors. These modelers typically build models for the
+actual data coming into SPOONS as well as predictive models.
+Finally, the pipeline invokes tasks that assess the models produced in the previous
 step and decides whether or not there is an anomaly.
 
 Every Analysis Pipeline gets its own thread, and there is no interdependence between the different pipelines.
 Currently, SPOONS usually runs more than 20 Analysis Pipelines at a time.
 
-\subsubsection{Tasks}
+\subsection{Tasks}
 \label{arch-tasks}
 Tasks are the core unit of computation in SPOONS. Almost everything that can be ``run'' is a child of the Task base
 class. Every Task gets its own thread, and callers into the Task may request that the task block the calling thread
@@ -490,27 +570,27 @@ Tasks are singleton with respects to the leaf child class. Therefore there are m
 unique. We do this by enforcing that the class name is unique upon construction. The uniqueness of tasks is very
 important to SPOONS distribution model that will be discussed in Section~\ref{arch-dist}.
 
-\subsubsection{Modelers}
+\subsection{Modelers}
 \label{arch-modelers}
 Modelers are Tasks that are responsible for building a mathematical representation for the data.
 
-\paragraph{Predictors}
+\subsubsection{Predictors}
 \label{arch-predictors}
 Predictors build a predictive model of the data. For example, we have noticed that tweet volume tends to be
-periodic day-to-day and week-to-week. Therefore, a Predictor may just model that prediction by guessing that the volume
+periodic day-to-day and week-to-week. Therefore, a Predictor may model that prediction by guessing that the volume
 in the future will be the same as it was the previous week or day.
 
-\paragraph{Counters}
+\subsubsection{Counters}
 \label{arch-counters}
 Counters attempt to build a model of data that was actually gathered by the system. Going with the previous example,
 the Counter for modeling tweet volume would simply count the number of tweets gathered for a period.
 
-\subsubsection{Monitors}
+\subsection{Monitors}
 \label{arch-monitors}
 Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
-making the final decision on about a period of time being anomalous.
+making the final decision about a period of time being anomalous.
 
-\paragraph{Auto-Tuning}
+\subsubsection{Auto-Tuning}
 \label{arch-autotuning}
 Monitors take anywhere from two to six tuning parameters. To find the best set of parameters, the Monitors can
 automatically run themselves on a training set and search the space of all possible parameters. They then keep the
@@ -520,7 +600,7 @@ parameters that result in the best score.
 \label{arch-control}
 The Control is the center of a SPOONS instance. It handles the flow of all control and has the ability to start and
 stop any task or pipeline on demand. It holds references to all the threads for the Gatherers and Analysis Pipelines.
-The Control handles all the setup and teardown in the system.
+The Control handles all the setup and tear down in the system.
 
 There are different types of Controls that decide the behavior SPOONS on each respective server.
 The Control is singleton with respects to the base class. Therefore, only one instance of any type of Control can be
@@ -537,7 +617,7 @@ All Controls will always run the entire slew of Gatherers.
 \subsubsection{Master Control}
 \label{arch-master-control}
 The Master Control is the Control that is responsible for the controlling SPOONS when it is in distributed mode.
-The Master Control maintains information on all the the active worker servers. It will send the worker servers
+The Master Control maintains information on all the active worker servers. It will send the worker servers
 messages to tell them what work to do.
 
 The Master Control maintains ``shallow execution'' of every pipeline in the system.
@@ -590,7 +670,7 @@ gone down.
 The SPOONS distribution model relies on two assumptions about the system: every server contains
 exactly the same data in memory and every Task can be uniquely referenced.
 
-\paragraph{Same Data}
+\paragraph{Same Data.}
 SPOONS assumes that every server will have the same data in memory on every server.
 This means that not only does every server need to have the same data structures in memory,
 but also that every server needs to have the same classes instantiated. The only exception to this
@@ -598,7 +678,7 @@ assumption is the Control. Depending on the role of the server, a different Cont
 instantiated. Because of this assumption, we do not have to worry about active replication
 between servers or a worker being asked to do work that requires a class that is not instantiated.
 
-\paragraph{Unniquely Referenced Tasks}
+\paragraph{Uniquely Referenced Tasks.}
 As stated in Sec~\ref{arch-tasks}, Tasks are the basic unit of work inside SPOONS.
 When a worker is told to execute some work, it is being asked to execute a specific task with specified
 parameters. Therefore, Tasks need to be able to be referenced by a key that can be serialized and
@@ -607,30 +687,30 @@ sent over the wire from the master to the worker.
 \subsubsection{Distributable Tasks}
 \label{arch-dist-tasks}
 Distributable Task is a subclass of Task that provides some of the distribution mechanism for Tasks.
-When a task is to be distributed, the Distributable Task calls into the the Control and requests that
+When a task is to be distributed, the Distributable Task calls into the Control and requests that
 the Control distributes it. The next step varies depending on the type of Control that is active:
 
-\paragraph{Master Control}
+\paragraph{Master Control.}
 The task distributing control flow is described in Image~\ref{img:taskFlow}.
 A Master Control will take the pause the calling thread and send a message to a selected worker\footnote{The
 current scheduling algorithm chooses the worker that has the fewest tasks currently assigned to it.} telling to
 run the task with given parameters. The message that goes to the worker just contains the task's unique identifier
-and and the parameters to the task's run. When the task is complete, the Worker Control will send the Task's return
+and the parameters to the task's run. When the task is complete, the Worker Control will send the Task's return
 status back to the Master Control. When the master receives a message from the worker that the requested task
 has completed its run, it will resume the original calling thread and have it return with the return status given
 by the worker.
 
-\paragraph{Worker Control}
+\paragraph{Worker Control.}
 If a Worker Control receives a task, then it is being asked to distribute a task that is already being distributed.
 We consider this a violation of the framework and will throw an error.
 
-\paragraph{Single Control}
+\paragraph{Single Control.}
 A worker will just call back into the task and tell it to run itself.
 
 \subsubsection{Shared Properties}
 \label{arch-props}
 As previously stated, all servers must maintain a consistent in-memory view of the system.
-This can be troublesome if a Task needs to maintain cummulative settings or member datum.
+This can be troublesome if a Task needs to maintain cumulative settings or member datum.
 Not only will this data need to be consistent on all the servers, but it also needs to maintain this
 data between starts and stop of the system. An Analysis Pipeline should be able to the stopped for an arbitrary amount
 of time and then restarted without losing data or its place.
@@ -695,7 +775,7 @@ The tweets table contains ten rows:
    \item geo - Geographical coordinates of place.
 \end{itemize}
 
-\paragraph{Frames}
+\paragraph{Frames.}
 Inside SPOONS, we use a ``frame'' as the atomic unit of time. Currently, a frame corresponds to a minute. Bucketing the tweets into frames allows us to
 gain a natural aggregation and smoothing. It also provides a natural index. Maintaining an index on \textit{frame\_id} allows quick retrieval of
 timeseries data which is the primary task of SPOONS. Because insertions are generally chronological, insertions are also quick and do not require a
@@ -713,7 +793,7 @@ This keeps the UI fairly stable in the face of database changes.
 \section{Fitting Into The SPOONS Framework}
 \label{class-framework}
 Although the classifiers can be used at any stage in an analysis pipeline, the classifiers are usually implemented as
-a Processor. It takes in a range ot tweets and produces a classification for each tweet.
+a Processor. It takes in a range of tweets and produces a classification for each tweet.
 
 \section{WEKA Classifiers}
 \label{class-weka}
@@ -759,7 +839,7 @@ a tweet.
 \label{class-filter-twitter-symbols}
 Tweets often contain several special symbols specific to tweets.
 
-\paragraph{RT}
+\paragraph{RT.}
 \label{class-twitter-symbols-rt}
 ``RT'' stands for ``re-tweet''. It means that the posted tweet is a repost of
 a tweet made by another user. This symbol contains no reference to the original post.
@@ -776,13 +856,13 @@ There were hundred of identical tweets that said:
 RT: If I'm ever a ghost, I hope the person I haunt has Netflix.
 \end{quote}
 
-\paragraph{\#}
+\paragraph{\#.}
 \label{class-twitter-symbols-hash}
 In Twitter, a ``\#'' (pronounced ``hashtag'') is a reference to some topic in Twitter.
 Users can seach for tweets by hashtag and see the collection of tweets supposedly about the
 same topic. A hashtag does not have to reference a pre-existing topic.
 
-\paragraph{\@}
+\paragraph{\@.}
 \label{class-twitter-symbols-at}
 An ``@'' in Twitter, simply pronounced ``at'', is a reference to another Twitter user.
 A reference to a user will alert that user about the posted tweet.
@@ -915,7 +995,7 @@ online!}'', which could be classified as both \texttt{happy} and \texttt{watchin
          \texttt{Happy}  & 147  & \texttt{Undetermined}  & 48
          \tabularnewline\hline
       \end{tabular}
-      \caption{Overview of the Netflix-related Twitter post training set used to train classifiers in SPOONS.}
+      \caption[Netflix-related Twitter Traffic]{Overview of the Netflix-related Twitter post training set used to train classifiers in SPOONS.}
       \label{table:classCounts}
    \end{center}
 \end{table}
@@ -925,7 +1005,7 @@ online!}'', which could be classified as both \texttt{happy} and \texttt{watchin
 
 \section{Ground Truth}
 \label{exp-truth}
-Netflix has provided us with a list of outages that occured between March 14, 2011 and January 30, 2012.
+Netflix has provided us with a list of outages that occurred between March 14, 2011 and January 30, 2012.
 This list is not comprehensive and some of the times are questionable. Regardless, we use this as our base truth
 about all of the Netflix outages in that time period.
 
@@ -987,11 +1067,14 @@ Know What To Search For (dynamic search generation)
 
 \section{Current and Future Work}
 \label{future-work}
-Kim - Advanced Sentiment Analysis
 Brett - Feasability of SPOONS as a comercial multi-target, source system.
 All sorts of stuff
 Open Source System
 Dynamic Training Set
+
+\subsection{Advanced Sentiment Analysis}
+\label{future-work-kim}
+Kim - Advanced Sentiment Analysis
 
 % ------------- End main chapters ----------------------
 
