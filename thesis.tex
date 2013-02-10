@@ -22,6 +22,7 @@
 \usepackage{wrapfig}
 \usepackage{longtable}
 \usepackage{morefloats}
+\usepackage{float}
 \usepackage{listings}
 \usepackage{makecell}
 
@@ -116,12 +117,10 @@ Thanks to Farscape for encouraging team bonding and providing a common enemy.
 
 \renewcommand{\baselinestretch}{1.66}
 
-% ------------- Main chapters here --------------------
-
-\chapter{Introduction}
+\part{Introduction}
 \label{introduction}
 
-\section{General Problem: Swift Perception Of Online Negative Situations}
+\chapter{General Problem: Swift Perception Of Online Negative Situations}
 \label{general-problem}
 
 Twitter is an immensely popular micro-blogging service. According to Twitter as of March 14\textsuperscript{th} 2011,
@@ -185,7 +184,7 @@ fast, and does not require any human intervention\cite{kevin}.
 \end{figure}
 
 
-\section{Solution Overview}
+\chapter{Solution Overview}
 \label{overview}
 
 SPOONS (Swift Perception Of Online Negative Situations) is a system that is
@@ -212,7 +211,7 @@ traffic volume analysis to detect when an outage is occurring.
 The outputs of the system are: email alerts to Netflix engineers, and a web UI that displays
 information about the outage.
 
-\section{Ethics of Twitter Observation}
+\chapter{Ethics of Twitter Observation}
 
 The work in this project uses content that users post on Twitter without their
 knowledge. This monitoring system isn't being announced to the
@@ -223,7 +222,7 @@ through the Twitter services. The goal of this section is to address these
 concerns by providing more information about the Twitter services and how the
 SPOONS system and this work uses the tweets.
 
-\subsection{Twitter Terms of Service}
+\section{Twitter Terms of Service}
 
 According to Twitter Terms of Service\cite{termsOfService} agreement that
 everyone accepts automatically by accessing or using Twitter services:
@@ -257,7 +256,7 @@ Using the Twitter API allows SPOONS to obtain the tweets with the consent of Twi
 Therefore, the collection and analysis of Twitter data by SPOONS is well withing the
 Twitter Terms of Service.
 
-\section{SPOONS Requirements}
+\chapter{SPOONS Requirements}
 Netflix has provided the following set of key requirements to be met by the
 SPOONS system:
 
@@ -307,7 +306,7 @@ provided shall include:
    \item and samples of Netflix-related tweets.
 \end{itemize}
 
-\section{Contributions and Organization}
+\chapter{Contributions and Organization}
 \label{contributions-organization}
 
 SPOONS is a continual team effort and has been touched and improved by many different people.
@@ -318,55 +317,53 @@ The main contributions of this work are the design and implementation of the SPO
 distribution model, and database schema. As well as the design and implementation of classification based outage detection
 methods.
 
-% TODO(eriq): Change when experiments is split and merged with results.
 The rest of the paper is organized as follows. Chapter~\ref{background-related-work} covers background and related work.
 Chapter~\ref{arch} discusses the architecture of SPOONS. Chapter~\ref{classifiers} discuss the details of the classifiers
-used in SPOONS. Chapters~\ref{experiments} and \ref{results} respectively discuss the different experiments performed and
-their results. Chapter~\ref{conclusions} wraps up the paper.
+used in SPOONS. Chapters~\ref{outage-detection} extends the problem of classification to full outage detection. Chapter~\ref{conclusions} wraps up the paper.
 
-\chapter{Background \& Related Work}
+\part{Background \& Related Work}
 \label{background-related-work}
 
-\section{Text Stream Analysis}
+\chapter{Text Stream Analysis}
 \label{background-text-stream}
 Text Stream Analysis \cite{Bansal}\cite{Grinev}\cite{Huang}.
 
-\section{Classification}
+\chapter{Classification}
 \label{background-classification}
 Classification \cite{Pang}
 
-\section{Classifiers}
+\chapter{Classifiers}
 \label{background-classification-classifiers}
 
-\subsection{Naive Bayes}
+\section{Naive Bayes}
 \label{background-classification-classifiers-naive-bayes}
 
-\subsection{Bayes Net}
+\section{Bayes Net}
 \label{background-classification-classifiers-bayes-net}
 
-\subsection{Decisions Trees}
+\section{Decisions Trees}
 \label{background-classification-classifiers-decision-trees}
 
 C4.5
 J48
 
-\subsection{K-Nearest Neighbors}
+\section{K-Nearest Neighbors}
 \label{background-classification-classifiers-knn}
 
-\subsection{Support Vector Machines}
+\section{Support Vector Machines}
 \label{background-classification-classifiers-svm}
 
 SMO
 
-\subsection{BPNB}
+\section{BPNB}
 \label{background-classification-classifiers-bpnb}
 BPNB is a method developed by Dr. Leilei Chu\cite{bpnb}. It is a Naive Bayes method that is based on relative probability of features.
 
-\subsection{Microtext Classification}
+\section{Microtext Classification}
 \label{background-microtext-classification}
 Microtext Classification \cite{hong}
 
-\subsection{WEKA}
+\section{WEKA}
 \label{background-weka}
 \begin{figure}
   \begin{center}
@@ -377,23 +374,23 @@ Microtext Classification \cite{hong}
 SPOONS utilizes several classifiers provided in the \textit{WEKA Machine Learning Package}.
 WEKA is an open source package written under the GNU General Public License\cite{weka}.
 
-\section{Twitter API}
+\chapter{Twitter API}
 \label{background-twitter-api}
 All of the data data that SPOONS uses is obtained in real time using the Twitter Search REST API\cite{TwitterAPI}.
 
-\subsection{Rate Limiting}
+\section{Rate Limiting}
 \label{api-rate-limit}
 Twitter imposes a limit on the number of queries to the Search API. However, Twitter does not publish the official
 limit. However, our experiments suggest that SPOONS can query the API for all new Tweets once every two minutes without
 suffering from rate limiting.
 
-\subsection{Pagination}
+\section{Pagination}
 \label{api-pagination}
 Twitter paginates the results from its search API. The maximum results you can get per page is 100, and each
 query can return at most 15 pages. Therefore when there are more than 1500 tweets generated per minute,
 SPOONS must do multiple search queries.
 
-\subsection{Query Anatomy}
+\section{Query Anatomy}
 \label{api-anatomy}
 Our typical Twitter API query is structured as follows:\\
 http://search.twitter.com/search.\textbf{json}?\\
@@ -433,7 +430,7 @@ are forever lost to us.
 
 \end{description}
 
-\subsection{Result Anatomy}
+\section{Result Anatomy}
 \begin{figure}
    \begin{center}
       \includegraphics[width=150mm]{images/api_result.eps}
@@ -446,7 +443,7 @@ are forever lost to us.
 Figure~\ref{fig:apiRes} shows the result from the query ``eriq netflix''. Notice that some fields,
 like the \textsf{geo} field, can be null. Also note that the API incorrectly guessed the language of the tweet as Danish.
 
-\chapter{SPOONS Architecture}
+\part{SPOONS Architecture}
 \label{arch}
 
 \begin{figure}
@@ -473,58 +470,54 @@ different pieces of the framework; the Server Architecture (Figure~\ref{fig:serv
 the different servers involved in the SPOONS system; and the Distribution Model which describes how tasks are
 distributed between the different servers.
 
-\section{Framework Architecture}
+\chapter{Framework Architecture}
 \label{arch-framework}
 This section describes the architecture of the SPOONS framework. The SPOONS framework includes all pieces of SPOONS
 that take the data from gathering all the way through to final analysis.
 
-\subsection{High Level Solution}
+\section{High Level Solution}
 \label{arch-framework-highlevel}
 
 The general solution taken by SPOONS consists of four main steps:
 
 \begin{description}
-   \item[Collect]
+   \item[Collect:]
       Tweets are collected from Twitter.
-
-   \item[Process] 
+   \item[Process:]
       The tweets are converted from plain text to some form of information that can be analyzed.
-
-   \item[Model]
+   \item[Model:]
       Use the information generated from the previous step to build a mathematical model of the information.
       Use past information to predict what the current model of the data should look like.
-
-   \item[Compare]
+   \item[Compare:]
       Compare the two models generated in the previous step. A significant divergence means that there is
       anomalous traffic.
-
 \end{description}
 
-\subsubsection{Framework Overview}
+\subsection{Framework Overview}
 \label{arch-framework-highlevel-overview}
 
 Figure~\ref{fig:frameworkArch} shows the flow of control and data through the SPOONS framework. Data comes into SPOONS
 in the form of Tweets collected by the Gatherers, and leave SPOONS in the form of alerts generated by the Monitors.
 
-\paragraph{Gatherer.}
+\subsubsection{Gatherer}
 Gatherers are responsible for collecting documents from a specified data source such as the Twitter Search API.
 
-\paragraph{Control.}
+\subsubsection{Control}
 The Control is responsible for controlling the SPOONS server. It maintains data structures with all of the Gatherers and
 Analysis Pipelines. It is also responsible for communication with other servers in the SPOONS cluster.
 
-\paragraph{Processor.}
+\subsubsection{Processor}
 Processors are data transformation utilities that takes raw data and puts it in a form that other components can use.
 
-\paragraph{Modeler.}
+\subsubsection{Modeler}
 Modelers are responsible for building a mathematical model of the data and can be split into two groups: \textbf{Predictors} and \textbf{Counters}.
 Predictors build a predictive model of the data. Counters to build a model of the data that was actually gathered by the system.
 
-\paragraph{Monitor.}
+\subsubsection{Monitor}
 Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
 making the final decision on about a period of time being anomalous.
 
-\subsection{Gatherers}
+\section{Gatherers}
 \label{arch-gatherers}
 The data enters SPOONS at the Gatherers. The Gatherers run periodically (for Twitter, every two minutes).
 Gatherers are asynchronous and not dependent on any other part of the framework. There may be multiple different
@@ -532,7 +525,7 @@ Gatherers running on the same machine. Gatherers are abstracted to be able to ga
 Once the Gatherers get their data, they place the data in the database and notify the Control that there is new data
 available to the system.
 
-\subsubsection{Twitter Holes}
+\subsection{Twitter Holes}
 \label{arch-twitter-holes}
 It is worth noting that sometimes the Twitter Search API fails to return any data. We have not discovered the cause
 of this, but Twitter does not report any errors. For unspecified amounts of time the Twitter API will just report zero
@@ -549,7 +542,7 @@ into the database.
    \end{center}
 \end{figure}
 
-\subsection{Processors}
+\section{Processors}
 \label{arch-processors}
 Processors are responsible for processing or transforming data before it goes into the analysis pipelines.
 \begin{itemize}
@@ -575,7 +568,7 @@ To make sure that no redundant work is done, Processors are singleton. When mult
 all incoming threads until the work is complete. Then, the Processor will release all of the threads that requested the work.
 This model allows all the analysis pipelines to share the same Processor without any redundancies.
 
-\subsection{Analysis Pipelines}
+\section{Analysis Pipelines}
 \label{arch-pipelines}
 An Analysis Pipeline (also called Analysis Method) is the analytical center of the SPOONS framework.
 The pipeline aggregates multiple tasks that it needs to run on the data.
@@ -589,7 +582,7 @@ step and decides whether or not there is an anomaly.
 Every Analysis Pipeline gets its own thread, and there is no interdependence between the different pipelines.
 Currently, SPOONS usually runs more than 20 Analysis Pipelines at a time.
 
-\subsection{Tasks}
+\section{Tasks}
 \label{arch-tasks}
 Tasks are the core unit of computation in SPOONS. Almost everything that can be ``run'' is a child of the Task base
 class. Every Task gets its own thread, and callers into the Task may request that the task block the calling thread
@@ -599,33 +592,120 @@ Tasks are singleton with respects to the leaf child class. Therefore there are m
 unique. We do this by enforcing that the class name is unique upon construction. The uniqueness of tasks is very
 important to SPOONS distribution model that will be discussed in Section~\ref{arch-dist}.
 
-\subsection{Modelers}
+\section{Modelers}
 \label{arch-modelers}
 Modelers are Tasks that are responsible for building a mathematical representation for the data.
 
-\subsubsection{Predictors}
+\subsection{Predictors}
 \label{arch-predictors}
 Predictors build a predictive model of the data. For example, we have noticed that tweet volume tends to be
 periodic day-to-day and week-to-week. Therefore, a Predictor may model that prediction by guessing that the volume
 in the future will be the same as it was the previous week or day.
 
-\subsubsection{Counters}
+\subsection{Counters}
 \label{arch-counters}
 Counters attempt to build a model of data that was actually gathered by the system. Going with the previous example,
 the Counter for modeling tweet volume would simply count the number of tweets gathered for a period.
 
-\subsection{Monitors}
+\section{Monitors}
 \label{arch-monitors}
 Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
 making the final decision about a period of time being anomalous.
 
-\subsubsection{Auto-Tuning}
+\subsection{Auto-Tuning}
 \label{arch-autotuning}
 Monitors take anywhere from two to six tuning parameters. To find the best set of parameters, the Monitors can
 automatically run themselves on a training set and search the space of all possible parameters. They then keep the
 parameters that result in the best score.
 
-\subsection{Control}
+\subsection{Resistance}
+\label{arch-resistance}
+A monitor's ``resistance'' is its tendency not to move into or out of an alert state.
+The resistance is the number of normal or abnormal observations it needs to be
+trigger a state change. Monitors are given resistance because otherwise outliers could cause
+monitor to rapidly switch between alert and normal states.
+There currently are three different methods of observing resistance.
+The method of resistance as well as the resistance thresholds can also be auto-tuned.
+
+\subsubsection{Fighting Resistance}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|p{9cm}|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            A & The number the counter must reach to enter an alert state. & $ A > 0 $ \\
+         \hline
+            R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+Fighting resistance counts every time that there is a normal period as a +1, and every time there is 
+an anomalous period as a -1. If the counter reached $-A$, then the monitor is put into an alert state.
+If the counter reaches $R$, then the monitor is put into a normal state.
+
+\subsubsection{Continuous Resistance}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|p{9cm}|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            A & The number the counter must reach to enter an alert state. & $ A > 0 $ \\
+         \hline
+            R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+Continuous resistance must get $A$ continuous anomalous observations to enter an alert state, and $R$ continuous normal
+observations to enter a normal state. 
+
+\subsubsection{Window Resistance}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|p{9cm}|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & The window size. & $ W > 0 $ \\
+         \hline
+            C & The number of anomalous observations necessary for an alert state. & $ 0 < C <= W $ \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+Window resistance remembers $W$  previous observations as being normal or anomalous. If the number of anomalous
+observations is or exceeds $C$, then an alert state is declared. Otherwise, the monitor stays in a normal state.
+
+\subsection{Smoothers}
+\label{arch-smoothers}
+The monitors have a chance to smooth the data before it gets analyzed.
+As with resistance methods, different smoothers and smoothing parameters can be auto-tuned.
+
+\subsubsection{No Smoother}
+Do not smooth. If this smoother is put into the parameter search space, then the effects of no smoothing can be seen.
+
+\subsubsection{Moving Mean Smoother}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & The window size. & $ W > 0 $ \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+Any value becomes the mean of that value and the $W - 1$ values that precede it.
+
+\section{Control}
 \label{arch-control}
 The Control is the center of a SPOONS instance. It handles the flow of all control and has the ability to start and
 stop any task or pipeline on demand. It holds references to all the threads for the Gatherers and Analysis Pipelines.
@@ -643,7 +723,7 @@ system or notifying any other components of the SPOONS system.
 
 All Controls will always run the entire slew of Gatherers.
 
-\subsubsection{Master Control}
+\subsection{Master Control}
 \label{arch-master-control}
 The Master Control is the Control that is responsible for the controlling SPOONS when it is in distributed mode.
 The Master Control maintains information on all the active worker servers. It will send the worker servers
@@ -652,15 +732,15 @@ messages to tell them what work to do.
 The Master Control maintains ``shallow execution'' of every pipeline in the system.
 This means that this control will run each pipeline, but then distribute work for each pipeline as it is created.
 
-\subsubsection{Worker Control}
+\subsection{Worker Control}
 \label{arch-worker-control}
 Worker Controls do not take any initiative to run any tasks. Instead, they just wait for a Master Control to tell them what to do.
 
-\subsubsection{Single Control}
+\subsection{Single Control}
 \label{arch-single-control}
 The Single Control is for a SPOONS instance that wants to run on a single server.
 
-\subsection{Distributed Model}
+\section{Distributed Model}
 \label{arch-dist}
 
 \begin{figure}
@@ -693,13 +773,13 @@ always knowns about all of the workers and the worker always knows about the cur
 When a server misses three heartbeats, the server expecting that heartbeat assumes that the server has
 gone down.
 
-\subsubsection{Distribution Assumptions}
+\subsection{Distribution Assumptions}
 \label{arch-dist-assumptions}
 
 The SPOONS distribution model relies on two assumptions about the system: every server contains
 exactly the same data in memory and every Task can be uniquely referenced.
 
-\paragraph{Same Data.}
+\subsubsection{Same Data}
 SPOONS assumes that every server will have the same data in memory on every server.
 This means that not only does every server need to have the same data structures in memory,
 but also that every server needs to have the same classes instantiated. The only exception to this
@@ -707,19 +787,19 @@ assumption is the Control. Depending on the role of the server, a different Cont
 instantiated. Because of this assumption, we do not have to worry about active replication
 between servers or a worker being asked to do work that requires a class that is not instantiated.
 
-\paragraph{Uniquely Referenced Tasks.}
+\subsubsection{Uniquely Referenced Tasks}
 As stated in Sec~\ref{arch-tasks}, Tasks are the basic unit of work inside SPOONS.
 When a worker is told to execute some work, it is being asked to execute a specific task with specified
 parameters. Therefore, Tasks need to be able to be referenced by a key that can be serialized and
 sent over the wire from the master to the worker.
 
-\subsubsection{Distributable Tasks}
+\subsection{Distributable Tasks}
 \label{arch-dist-tasks}
 Distributable Task is a subclass of Task that provides some of the distribution mechanism for Tasks.
 When a task is to be distributed, the Distributable Task calls into the Control and requests that
 the Control distributes it. The next step varies depending on the type of Control that is active:
 
-\paragraph{Master Control.}
+\subsubsection{Master Control}
 The task distributing control flow is described in Image~\ref{img:taskFlow}.
 A Master Control will take the pause the calling thread and send a message to a selected worker\footnote{The
 current scheduling algorithm chooses the worker that has the fewest tasks currently assigned to it.} telling to
@@ -729,14 +809,14 @@ status back to the Master Control. When the master receives a message from the w
 has completed its run, it will resume the original calling thread and have it return with the return status given
 by the worker.
 
-\paragraph{Worker Control.}
+\subsubsection{Worker Control}
 If a Worker Control receives a task, then it is being asked to distribute a task that is already being distributed.
 We consider this a violation of the framework and will throw an error.
 
-\paragraph{Single Control.}
+\subsubsection{Single Control}
 A worker will just call back into the task and tell it to run itself.
 
-\subsubsection{Shared Properties}
+\subsection{Shared Properties}
 \label{arch-props}
 As previously stated, all servers must maintain a consistent in-memory view of the system.
 This can be troublesome if a Task needs to maintain cumulative settings or member datum.
@@ -753,7 +833,7 @@ In addition to storing shared properties, the shared property store houses infor
 When a server comes online, it queries the property store to find all the other active servers and inserts itself into
 the store. If a server fails to heartbeat, then the servers that still live will remove the entry that server from the property store.
 
-\section{Database}
+\chapter{Database}
 \label{arch-database}
 SPOONS is backed by a MySQL database. SPOONS currently uses 225 tables and 35 stored procedures. The 225 tables are further divided into
 six different categories that are used in different stages of the analysis pipeline. In addition to tweets being stored in the database
@@ -765,7 +845,7 @@ The database uses naming and schema conventions to maintain organization on its 
 components of the Analysis Pipeline to be interchanged without any need to change/reprocess the data. In addition the conventions allows the UI
 to represent new tables without the need for specifying them.
 
-\subsection{Tables and Schemas}
+\section{Tables and Schemas}
 \label{arch-database-tables}
 Each stage in an analysis pipeline generally stores some information in the database. Because each stage generally deals with similar
 types of data, these tables are considered to be in the same group. We enforce group membership using hints in the table names. For example, the
@@ -795,7 +875,7 @@ The six different top level categories that SPOONS recognizes are:
 
 The full schema for select tables are described in Appendix~\ref{appendix-db-schema}.
 
-\subsubsection{Data Flow}
+\subsection{Data Flow}
 \label{arch-database-data-flow}
 The flow of data through the different types of tables is described in Figure~\ref{fig:db-data-flow}.
 The data originates from the Gatherers and is moved into DATA tables. Information from
@@ -811,7 +891,7 @@ At a later time the data from CALC tables is further analyzed and the results ar
    \end{center}
 \end{figure}
 
-\subsubsection{Tweets Table}
+\subsection{Tweets Table}
 \label{arch-database-tables-tweets}
 As the most used and important table in the database, the table that houses all of our tweets, ``DATA\_tweets'', gets special attention.
 
@@ -849,18 +929,18 @@ The tweets table contains ten attributes which are described in Table~\ref{table
    \label{tweet-attributes}
 \end{table}
 
-\paragraph{Frames.}
+\subsubsection{Frames}
 Inside SPOONS, we use a ``frame'' as the atomic unit of time. Currently, a frame corresponds to a minute. Bucketing the tweets into frames allows us to
 gain a natural aggregation and smoothing. It also provides a natural index. Maintaining an index on \textit{frame\_id} allows quick retrieval of
 time series data which is the primary task of SPOONS. Because insertions are generally chronological, insertions are also quick and do not require a
 rebuild of the B-Tree index\cite{innodb}.
 
-\subsection{UI Stored Procedures}
+\section{UI Stored Procedures}
 \label{arch-database-sp}
 In addition to utility procedures, the database holds many stored procedures used by the UI.
 This keeps the UI fairly stable in the face of database changes.
 
-\subsubsection{Expected Schemas}
+\subsection{Expected Schemas}
 \label{arch-database-sp-schemas}
 The UI Stored Procedures look for 6 distinct name/schema combinations all of which are required to be RESULT tables.
 The different schema requirements are shown in Figure~\ref{fig:ui-expected-schema}, and described below:
@@ -916,10 +996,10 @@ The different schema requirements are shown in Figure~\ref{fig:ui-expected-schem
 The stored procedures will further divide the tables by language. The currently recognized languages are English,
 Spanish, and Portuguese.
 
-\chapter{Classifiers}
+\part{Classifiers}
 \label{classifiers}
 
-\section{Why Classification?}
+\chapter{Why Classification?}
 \label{class-why}
 Classification helps discover Netflix service outages by differentiating between different types of Twitter traffic.
 
@@ -972,7 +1052,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \end{center}
 \end{figure}
 
-\section{Classification Roadmap}
+\chapter{Classification Roadmap}
 \label{class-roadmap}
 The steps that SPOONS takes to use classification to detect service outages is as follows:
 
@@ -987,12 +1067,12 @@ The steps that SPOONS takes to use classification to detect service outages is a
    \item Declare an outage when the two traffics diverge significantly.
 \end{enumerate}
 
-\section{Fitting Into The SPOONS Framework}
+\chapter{Fitting Into The SPOONS Framework}
 \label{class-framework}
 Although the classifiers can be used at any stage in an analysis pipeline, the classifiers are usually implemented as
 a Processor. It takes in a range of tweets and produces a classification for each tweet.
 
-\section{Tweet Classes}
+\chapter{Tweet Classes}
 \label{class-tweet-classes}
 After observing Netflix-related Twitter traffic, it was discovered that tweets fall into at least one of nine different categories.
 
@@ -1038,7 +1118,7 @@ Examples of tweets with their corresponding classes are shown in Table~\ref{tabl
    \label{table:classes}
 \end{table}
 
-\subsection{Tweet Groups}
+\section{Tweet Groups}
 \label{class-tweet-groups}
 Because the goal of SPOONS is to detect anomalous times, it is useful to collapse the nine classes into
 three different groups that account for the different types of Netflix-related traffic.
@@ -1065,7 +1145,7 @@ periods.
    \end{center}
 \end{figure}
 
-\section{WEKA Classifiers}
+\chapter{WEKA Classifiers}
 \label{class-weka}
 SPOONS uses several classifier from the WEKA machine learning package\cite{weka}.
 All of these classifiers have been discussed in Section~\ref{background-classification-classifiers}.
@@ -1078,35 +1158,35 @@ All of these classifiers have been discussed in Section~\ref{background-classifi
    \item SMO (Support Vector Machine trained with Sequential Minimal Optimization\cite{smo})
 \end{itemize}
 
-\section{Non-WEKA Classifiers}
+\chapter{Non-WEKA Classifiers}
 \label{class-nonweka}
 In addition to the WEKA classifiers, SPOONS uses two classifiers implemented from scratch.
 Because of low performance and inflexible API, the WEKA classifiers are being reimplemented.
 As of now, only Naive Bayes has been reimplemented. The other classifier implemented from scratch is
 a BPNB classifier which is discussed in Section~\ref{background-classification-classifiers-bpnb}.
 
-\section{Feature Selection}
+\chapter{Feature Selection}
 \label{class-features}
 TODO
 %Most of feature input into the classifiers are n-grams.
 
-\subsection{Text Filtering}
+\section{Text Filtering}
 \label{class-filter}
 Before the input text is split into features, it goes through heavy pre-processing.
 The text filtering involves normalizing the case, remove extra characters, and replacing special features.
 
-\subsubsection{Link Replacement}
+\subsection{Link Replacement}
 \label{class-filter-link-replacement}
 The first step in processing the text is to replace links.
 Following a link may provide information about a tweet, however the link text of the link
 itself provides no information. The presence of a link, however, can provide information about
 a tweet.
 
-\subsubsection{Twitter Specific Symbols}
+\subsection{Twitter Specific Symbols}
 \label{class-filter-twitter-symbols}
 Tweets often contain several special symbols specific to tweets.
 
-\paragraph{RT.}
+\subsubsection{RT}
 \label{class-twitter-symbols-rt}
 ``RT'' stands for ``re-tweet''. It means that the posted tweet is a repost of
 a tweet made by another user. This symbol contains no reference to the original post.
@@ -1123,13 +1203,13 @@ There were hundred of identical tweets that said:
    RT: If I'm ever a ghost, I hope the person I haunt has Netflix.
 \end{center}
 
-\paragraph{\#.}
+\subsubsection{\#}
 \label{class-twitter-symbols-hash}
 In Twitter, a ``\#'' (pronounced ``hashtag'') is a reference to some topic in Twitter.
 Users can search for tweets by hashtag and see the collection of tweets supposedly about the
 same topic. A hashtag does not have to reference a pre-existing topic.
 
-\paragraph{\@.}
+\subsubsection{\@}
 \label{class-twitter-symbols-at}
 An ``@'' in Twitter, simply pronounced ``at'', is a reference to another Twitter user.
 A reference to a user will alert that user about the posted tweet.
@@ -1139,14 +1219,14 @@ For example, the following tweet will reference my Twitter account.
 Hi there, @eriqaugustine
 \end{center}
 
-\subsubsection{Emoticon Parsing}
+\subsection{Emoticon Parsing}
 \label{class-filter-emoticon}
 Emoticons are parsed out and replaced with meta words.
 SPOONS emoticon parser was written by Ryan Hanarkis and Allen Dunlea as part of a project for Graduate Artificial Intelligence.
 Emoticons provide a plethora of information about a tweet. Sarcasm aside,
 an emoticon can surmise the sentiment of an entire tweet.
 
-\subsubsection{Title Replacement}
+\subsection{Title Replacement}
 \label{class-filter-title}
 Because our tweets are always about Netflix, a television show and movie streaming service,
 titles are a common occurrence. However, movie and show titles often contain words that can be
@@ -1181,26 +1261,26 @@ starting at the next word in the tweet. Figure~\ref{fig:title-trie} shows a samp
    \end{center}
 \end{figure}
 
-\subsubsection{Stemming}
+\subsection{Stemming}
 \label{class-filter-stemming}
 Stemming finds the root of a word. This allows words to be categorized by their roots which
 decreases the number of unique words being evaluated and emphasizes linguistic patterns.
 This preprocessor uses Porter's stemmer for the English language \cite{porters}.
 
-\subsubsection{Stop Word Removal}
+\subsection{Stop Word Removal}
 \label{class-filter-stopword}
 Stopwords, or words that carry little or no semantic information, are identified based
 on a static table of words mapped to levels. Stopwords are assigned levels which allow
 processes to use different sets of stop words. All words less than 3 character are also
 automatically considered stop words.
 
-\subsubsection{Punctuation/Non-English Character Removal}
+\subsection{Punctuation/Non-English Character Removal}
 \label{class-filter-noneng}
 Removes all punctuation and
 characters not in the English alphabet. This simplifies word extraction and
 comparison.
 
-\subsubsection{Meta Words}
+\subsection{Meta Words}
 \label{class-filter-meta}
 Below is an overview of meta words that SPOONS recognizes:
 \begin{description}
@@ -1211,7 +1291,7 @@ Below is an overview of meta words that SPOONS recognizes:
    \item[$\langle$\$@\$$\rangle$] Inserted when a reference to another Twitter user is made. The user that is the subject of the reference is separated off into another word.
 \end{description}
 
-\section{Training Set}
+\chapter{Training Set}
 \label{class-training-set}
 
 The classifiers were trained on a small set of \textbf{759} tweets which were pulled from from periods of both normal and
@@ -1242,17 +1322,39 @@ online!}'', which could be classified as both \texttt{happy} and \texttt{watchin
    \end{center}
 \end{table}
 
-\chapter{Experimental Setup}
-\label{experiments}
+\chapter{Evaluation}
+\label{class-evaluation}
+Each classifier is individually evaluated just on its ability to classify tweets against the training set.
+Each classifier varied two parameters: the type of filtering and the feature selection.
+The measure of accuracy is the percentage of correctly classified tweets.
 
-\section{Ground Truth}
-\label{exp-truth}
+Table~\ref{table:classification-summary-uncompressed} shows a summary of the results of the evaluation.
+The SMO classifier took the top three spots with a top accuracy of \textbf{.5750}.
+This is a decent accuracy, but much of the misclassification occurs between classes that don't matter
+as much when trying to identify the different types of classes. For example, it does not matter if
+a \texttt{watching} tweet is misclassified as a \texttt{happy} tweet. Both of those classes contribute to
+normal background traffic. Therefore the classifiers will be evaluated again, but the different classes
+will be compressed into their respective groups before the results are evaluated.
+
+\input{classifierSummaries.tex}
+
+Table~\ref{table:classification-summary-compressed} shows a summary of the compressed results.
+After the classes have been compressed, the SMO classifier is still on top but now with a best accuracy
+of \textbf{.8583}. Compressing the classes into groups greatly increases the accuracy of the classifiers.
+
+Full results for both the uncompressed and compressed evaluation can be found in Section~\ref{appendix-full-classifier}.
+
+\part{Outage Detection}
+\label{outage-detection}
+
+\chapter{Ground Truth}
+\label{outage-detection-truth}
 Netflix has provided us with a list of outages that occurred between March 14, 2011 and January 30, 2012.
 This list is not comprehensive and some of the times are questionable. Regardless, we use this as our base truth
 about all of the Netflix outages in that time period.
 
-\section{Success Metrics}
-\label{exp-metrics}
+\chapter{Success Metrics}
+\label{outage-detection-metrics}
 The accuracy of outage detection is measured using three metrics: Recall, Precision, and F$_{0.5}$.
 
 The following definitions are used to calculate the accuracy metrics:
@@ -1262,18 +1364,21 @@ The following definitions are used to calculate the accuracy metrics:
    \item{fn} - False Negative. An alert that has no intersection on an event reported by Netflix is a false negative.
 \end{itemize}
 
-\paragraph{Recall.} The percent of the reported events that were caught.
+\subsubsection{Recall}
+The percent of the reported events that were caught.
 \begin{center}
    $Recall = \frac{tp}{tp + fn}$
 \end{center}
 
-\paragraph{Precision.} The percent of the alerts generated that occurred during an outage event.
+\subsubsection{Precision}
+The percent of the alerts generated that occurred during an outage event.
 Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
 \begin{center}
    $Precision = \frac{tp}{tp + fp}$
 \end{center}
 
-\paragraph{F$_{0.5}$ Score.} A harmonic mean between recall and precision. The standard F score evenly weighs precision and recall.
+\subsubsection{F$_{0.5}$ Score}
+A harmonic mean between recall and precision. The standard F score evenly weighs precision and recall.
 F$_{0.5}$ weighs precision more than recall.
 \begin{center}
    $F_{\beta} = (1 + \beta^{2}) \cdot \frac{precision \cdot recall}{\beta^{2} \cdot precision + recall}$
@@ -1282,52 +1387,298 @@ F$_{0.5}$ weighs precision more than recall.
    $F_{0.5} = 1.25 \cdot \frac{precision \cdot recall}{.25 \cdot precision + recall}$
 \end{center}
 
-\section{Classifier Evaluation}
-\label{exp-classifier}
-Each classifier is individually evaluated just on its ability to classify tweets against the training set.
-Each classifier varied three parameters: the type of filtering, the feature selection, and whether or not to collapse the classes into groups.
+\chapter{Outage Detection Pipeline}
+\label{outage-detection-pipeline}
 
-\section{Outage Detection}
-\label{exp-outage}
-The end goal of SPOONS is to be able to detect anomalous events. Therefore, each classifier is put into a full analysis pipeline
-and its ability to detect outages is evaluated.
-TODO(eriq): Pick monitor
+\section{Processors}
+\label{outage-detection-processors}
+
+\section{Modeler}
+\label{outage-detection-modeler}
+
+\section{Monitors}
+\label{outage-detection-monitors}
+TODO(eriq): Describe how the different monitors will be described.
 
 \subsection{Monitor Parameters}
-\label{exp-monitor-params}
-TODO(eriq): Numbers
+\label{outage-detection-monitors-params}
+TODO(eriq)
+Section~\ref{arch-smoothers}
+Section~\ref{arch-resistance}
+
+\subsection{Baseline Monitor}
+\label{outage-detection-monitors-Baseline}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            B & Baseline & $ B > 0 $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & Any time series & - \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Baseline Monitor looks for any value above B, and counts that as anomalous.
+Ironically, because of its naivety it also provides a decent baseline for the Monitors.
+
+\subsection{Windowed Standard Deviation Monitor}
+\label{outage-detection-monitors-WindowStdDev}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & Window Size & $ W > 0 $\\
+         \hline
+            L & Lower Threshold & $L > 0 $\\
+         \hline
+            U & Upper Threshold & $U >= L $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & Any time series & - \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Windowed Standard Deviation Monitor is one of the simplest monitors. This monitor takes a $W$ sized window worth of data
+and uses the standard deviation of the window to find outliers. Any outliers more than $L$ are considered anomalies and counts towards
+an alert, but are still included in the windowed standard deviation calculation. Any value above $U$ is considered an anomaly, but not included
+in the standard deviation calculation. The reason for this is that values above $U$ are extreme outliers.
+
+The calculation for the standard deviation, is based off of an iterative approach described in Knuth's ``The Art of Computer Programming'' is used \cite{Knuth}.
+Because Knuth's approach was iterative, it could be modified it to calculate for a range of values in an on-line fashion.
+
+Adding the $k$th value, $x$, to the window:
+\begin{eqnarray*}
+   \lefteqn{Mean(k) = }\\
+   && \frac{Mean(k - 1) * (k - 1) - Mean(k - W) + x}{k}
+\end{eqnarray*}
+$$
+   V(k) = (x - Mean(k)) * (x - Mean(k - 1))
+$$
+$$
+   T(k) = T(k - 1) - V(k - W) + V(k)
+$$
+$$
+   WindowStdDev(k) = \sqrt{\frac{T(K))}{k - 1}}
+$$
+
+\subsection{Weekly Offset Windowed Standard Deviation Monitor}
+\label{outage-detection-monitors-WeeklyWindowStdDev}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & Window Size & $ W > 0 $\\
+         \hline
+            L & Lower Threshold & $L > 0 $\\
+         \hline 
+            U & Upper Threshold & $U >= L $\\
+         \hline 
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & Any time series & - \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Weekly Offset Window Standard Deviation Monitor leverages the periodicity of tweet volume.
+Not only is there a daily pattern in traffic, but there is also an even stronger weekly pattern.
+The stronger weekly pattern makes sense if one views Netflix-related Twitter traffic as a representative for the number of
+people currently watching Netflix. People tend to have pattern that they follow, and people are more available
+on different days of the week (especially Friday).
+
+This monitor holds a windowed standard deviation for every 30 minute time period with 15 minute offsets
+for every week. Therefore, values are not compared to the other values around it, but to expected values from
+previous weeks. This monitor uses the same tactics as the Windows Standard Deviation Monitor for counting anomalies.
+
+\subsection{Mean Squared Error Monitor}
+\label{outage-detection-monitors-MSE}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & Window Size & $ W > 0 $\\
+         \hline
+            T & Threshold & $ T > 0 $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & The expected time series & - \\
+         \hline
+            Y & The actual time series & $ Y(k) < X(k) $ \\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Mean square Error Monitor keeps a windowed mean squared error (MSE). This monitor requires two sets of input, a set
+of expected values and a set of actual values. Any value that causes the MSE to go above a certain threshold, $T$,
+counts towards an anomaly.
+
+Adding the $k$th value to the window MSE:
+$$
+   V(k) = (X(k) - Y(k))^{2}
+$$
+\begin{eqnarray*}
+   \lefteqn{MSE(k) = }\\
+   && \frac{MSE(k - 1) * (k - 1) - V(k - W) + V(k)}{k}
+\end{eqnarray*}
+
+\subsection{Ratio Monitor}
+\label{outage-detection-monitors-Ratio}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            T & Threshold & $ 0 < T < 1 $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & The expected time series & - \\
+         \hline
+            Y & The actual time series & $ Y(k) < X(k) $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Ratio Monitor takes the ratio of the actual value over the expected value for every time period.
+Whenever the ratio dips under the threshold $T$, then that period counts towards an anomaly.
+This monitor may seem simple, but the real challenge lies in picking a proper $X$ and $Y$.
+If a good approximating time series can be chosen, then the monitor can be very successful.
+
+\subsection{Class Correlation Monitor}
+\label{outage-detection-monitors-Correlation}
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Parameter & Description & Restrictions \\
+         \hline
+            W & Window Size & $ W > 0 $\\
+         \hline
+            T & Threshold & $ -1 < T < 1 $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            Input & Description & Restrictions \\
+         \hline
+            X & The expected time series & - \\
+         \hline
+            Y & The actual time series & $ Y(k) < X(k) $\\
+         \hline
+      \end{tabular}
+   \end{center}
+\end{table}
+
+The Correlation Monitor takes the Pearson Correlation between $X$ and $Y$ for a running window of size $W$.
+Pearson Correlation is used because of its ability to catch the linear correlation between two time series within
+a normalized range.
+
+For performance reasons SPOONS uses an approximation of Pearson Correlation which uses the windowed standard deviation approach
+described in Section~\ref{outage-detection-monitors-WindowStdDev}.
+
+Adding the $k$th value, to the window:
+$$
+   Let \bar{X} be the windowed mean of X.
+$$
+$$
+   Let \bar{Y} be the windowed mean of Y.
+$$
+\begin{eqnarray*}
+   \lefteqn{T(k) = }\\
+   && T(k - 1) + (X(k) * Y(k)) - (X(k - W) * Y(k -W))
+\end{eqnarray*}
+\begin{eqnarray*}
+   \lefteqn{Pearson(k) = }\\
+   && \frac{T(k) - (W * \bar{X} * \bar{Y})}{(W - 1) * WindowStdDev(X) * WindowStdDev(Y)}
+\end{eqnarray*}
 
 \chapter{Results}
-\label{results}
+\label{outage-detection-results}
 TODO(eriq): Numbers
 
-\section{Classifier Evaluation}
-\label{res-classifier}
-
-\input{classifierSummaries.tex}
-\input{classifierTables.tex}
-
-\section{Outage Detection}
-\label{res-outage}
-
-\chapter{Conclusions}
+\part{Conclusions}
 \label{conclusions}
 
-\section{Current Limitations of SPOONS}
+\chapter{Current Limitations of SPOONS}
 \label{limitations}
 Severity
 Nature of Outage
 Malicious Tweet Attack
 Know What To Search For (dynamic search generation)
 
-\section{Current and Future Work}
+\chapter{Current and Future Work}
 \label{future-work}
 Brett - Feasability of SPOONS as a comercial multi-target, source system.
 All sorts of stuff
 Dynamic Training Set
 CP$^{2}$ - WEKA Classifier Reimplementation
 
-\subsection{Advanced Sentiment Analysis}
+\section{Advanced Sentiment Analysis}
 \label{future-work-kim}
 Kim - Advanced Sentiment Analysis
 
@@ -1358,6 +1709,11 @@ CREATE TABLE DATA_tweets (
    KEY lang (lang)
 );
 \end{lstlisting}
+
+\chapter{Full Classifier Evaluation Results}
+\label{appendix-full-classifier}
+\input{classifierTables.tex}
+
 
 % TODO(eriq): Pick more tables
 
