@@ -1350,8 +1350,10 @@ Full results for both the uncompressed and compressed evaluation can be found in
 \chapter{Ground Truth}
 \label{outage-detection-truth}
 Netflix has provided us with a list of outages that occurred between March 14, 2011 and January 30, 2012.
-This list is not comprehensive and some of the times are questionable. Regardless, we use this as our base truth
-about all of the Netflix outages in that time period.
+This list is not comprehensive and some of the times are questionable. Some of the outages contained in the list
+are internal outages that did not affect their streaming service. These outages generated no signal on Twitter.
+Therefore, errors of omission could fall into one of two categories: true failures to recognize outages, and uncatchable
+outages. Regardless, we use this as our base truth about all of the Netflix outages in that time period.
 
 \chapter{Success Metrics}
 \label{outage-detection-metrics}
@@ -1378,8 +1380,10 @@ Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
 \end{center}
 
 \subsubsection{F$_{0.5}$ Score}
-A harmonic mean between recall and precision. The standard F score evenly weighs precision and recall.
-F$_{0.5}$ weighs precision more than recall.
+A harmonic mean between recall and precision. The standard F$_{1}$ score evenly weighs precision and recall.
+F$_{0.5}$ weighs precision more than recall. Precision is being weighed more heavily than recall because
+every alert that SPOONS generates would require the intervention of a Netflix engineer. Generating too many
+false positives would just cause SPOONS to be ignored.
 \begin{center}
    $F_{\beta} = (1 + \beta^{2}) \cdot \frac{precision \cdot recall}{\beta^{2} \cdot precision + recall}$
 \end{center}
