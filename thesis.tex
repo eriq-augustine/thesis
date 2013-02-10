@@ -23,6 +23,7 @@
 \usepackage{longtable}
 \usepackage{morefloats}
 \usepackage{listings}
+\usepackage{makecell}
 
 \definecolor{orange}{rgb}{1,0.5,0}
 \definecolor{blue}{rgb}{0.1,0.1,0.8}
@@ -993,7 +994,7 @@ a Processor. It takes in a range of tweets and produces a classification for eac
 
 \section{Tweet Classes}
 \label{class-tweet-classes}
-Tweets generally fall into nine different categories:
+After observing Netflix-related Twitter traffic, it was discovered that tweets fall into at least one of nine different categories.
 
 \begin{itemize}
   \item \texttt{Media} -- Relate to a media story about Netflix.
@@ -1004,8 +1005,38 @@ Tweets generally fall into nine different categories:
   \item \texttt{Watching} -- Updates on what the user is currently watching.
   \item \texttt{Response} -- Neutral response to another user in a Netflix-related conversation.
   \item \texttt{Refuse To Rate} -- Used for tweets that we refuse to rate entirely (usually tweets that are in a different language than the training set).
-  \item \texttt{Undetermined} -- A default for all tweets that don't match any other class.
+  \item \texttt{Undetermined} -- This class does not exist in the wild. It is used during classification as default for all tweets that don't match any other class.
 \end{itemize}
+
+Examples of tweets with their corresponding classes are shown in Table~\ref{table:classes}.
+
+\begin{table}
+   \begin{center}
+      \begin{tabular}{|l|p{12cm}|}
+         \hline
+            Class & Tweet Example
+         \tabularnewline\hline
+            \texttt{Media} & Netflix Now Available Through Facebook - http://bit.ly/ffpBHH - [Geeky Gadgets]
+         \tabularnewline\hline
+            \texttt{Snafu} & And netflix is broken. Why is this happening to me.
+         \tabularnewline\hline
+            \texttt{Complaint} & netflix keeps taking little things i like about the site away...Why?
+         \tabularnewline\hline
+            \texttt{Happy} & Netflix :)
+         \tabularnewline\hline
+            \texttt{Neutral} & about to download this netflix free trial
+         \tabularnewline\hline
+            \texttt{Watching} & Watching Family Guy on Netflix
+         \tabularnewline\hline
+            \texttt{Response} & @BeehiveBlog  Both good movies.  I think I'll put on the netflix list.
+         \tabularnewline\hline
+            \texttt{Refuse To Rate} & en serio, QUIERO pagar por algo como Netflix, DEJARME pagar
+         \tabularnewline\hline
+      \end{tabular}
+   \end{center}
+   \caption[Database Tweet Attributes]{The database attributes used to describe tweets.}
+   \label{table:classes}
+\end{table}
 
 \subsection{Tweet Groups}
 \label{class-tweet-groups}
@@ -1222,31 +1253,43 @@ about all of the Netflix outages in that time period.
 
 \section{Success Metrics}
 \label{exp-metrics}
-The accuracy of outage detection is measured using three metrics:
+The accuracy of outage detection is measured using three metrics: Recall, Precision, and F$_{0.5}$.
 
+The following definitions are used to calculate the accuracy metrics:
 \begin{itemize}
-   \item {\bf Recall}: the percent of the reported events that were caught.
-   \item {\bf Precision}: the percent of the alerts generated that occurred during an outage event.
-   \item {\bf F$_{0.5}$ Measure}: a harmonic mean of precision and recall that weighs precision greater than recall.
+   \item{tp} - True Positive. Any intersection between a reported outage range and a detected outage range.
+   \item{fp} - False Positive. Any detected outage that has no intersection in the events reported by Netflix.
+   \item{fn} - False Negative. An alert that has no intersection on an event reported by Netflix is a false negative.
 \end{itemize}
 
-The following definitions are used to calculate the metrics:
-\begin{itemize}
-   \item {\bf True Postive}: any intersection between a reported outage range and a detected outage range.
-   \item {\bf False Positive}: any detected outage that has no intersection in the events reported by Netflix.
-   \item {\bf False Negative}: no intersection on an event reported by Netflix is a false negative.
-\end{itemize}
+\paragraph{Recall.} The percent of the reported events that were caught.
+\begin{center}
+   $Recall = \frac{tp}{tp + fn}$
+\end{center}
 
+\paragraph{Precision.} The percent of the alerts generated that occurred during an outage event.
 Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
+\begin{center}
+   $Precision = \frac{tp}{tp + fp}$
+\end{center}
+
+\paragraph{F$_{0.5}$ Score.} A harmonic mean between recall and precision. The standard F score evenly weighs precision and recall.
+F$_{0.5}$ weighs precision more than recall.
+\begin{center}
+   $F_{\beta} = (1 + \beta^{2}) \cdot \frac{precision \cdot recall}{\beta^{2} \cdot precision + recall}$
+\end{center}
+\begin{center}
+   $F_{0.5} = 1.25 \cdot \frac{precision \cdot recall}{.25 \cdot precision + recall}$
+\end{center}
 
 \section{Classifier Evaluation}
 \label{exp-classifier}
 Each classifier is individually evaluated just on its ability to classify tweets against the training set.
-Each classifier varied three parameters: the type of filtering, the feature selction, and whether or not to collapse the classes into groups.
+Each classifier varied three parameters: the type of filtering, the feature selection, and whether or not to collapse the classes into groups.
 
 \section{Outage Detection}
 \label{exp-outage}
-The end goal of SPOONS is to be able to detect anamolous events. Therefore, each classifier is put into a full analysis pipeline
+The end goal of SPOONS is to be able to detect anomalous events. Therefore, each classifier is put into a full analysis pipeline
 and its ability to detect outages is evaluated.
 TODO(eriq): Pick monitor
 
@@ -1261,6 +1304,7 @@ TODO(eriq): Numbers
 \section{Classifier Evaluation}
 \label{res-classifier}
 
+\input{classifierSummaries.tex}
 \input{classifierTables.tex}
 
 \section{Outage Detection}
@@ -1280,8 +1324,8 @@ Know What To Search For (dynamic search generation)
 \label{future-work}
 Brett - Feasability of SPOONS as a comercial multi-target, source system.
 All sorts of stuff
-Open Source System
 Dynamic Training Set
+CP$^{2}$ - WEKA Classifier Reimplementation
 
 \subsection{Advanced Sentiment Analysis}
 \label{future-work-kim}

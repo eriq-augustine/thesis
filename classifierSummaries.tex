@@ -1,0 +1,212 @@
+\begin{center}
+   \begin{longtable}{|l|l|l|c|c|c|}
+      \hline
+         Classifier & Feature Selection & Text Filter & Accuracy
+      \tabularnewline\hline
+         \textbf{SMOClassifier} & \textbf{TweetFSG} & \textbf{NoFilter} & \textbf{0.5750}
+      \tabularnewline\hline
+         SMOClassifier & NGram & NoFilter & 0.5726
+      \tabularnewline\hline
+         SMOClassifier & NGram & EriqFilter & 0.5618
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & NGram & NoFilter & 0.5606
+      \tabularnewline\hline
+         SMOClassifier & TweetFSG & EriqFilter & 0.5546
+      \tabularnewline\hline
+         NaiveBayesClassifier & NGram & NoFilter & 0.5462
+      \tabularnewline\hline
+         J48Classifier & NGram & EriqFilter & 0.5414
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & NGram & EriqFilter & 0.5414
+      \tabularnewline\hline
+         J48Classifier & TweetFSG & NoFilter & 0.5366
+      \tabularnewline\hline
+         J48Classifier & NGram & NoFilter & 0.5294
+      \tabularnewline\hline
+         J48Classifier & TweetFSG & EriqFilter & 0.5282
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & NGram & EriqFilter & 0.5210
+      \tabularnewline\hline
+         NaiveBayesClassifier & NGram & EriqFilter & 0.5198
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & TweetFSG & NoFilter & 0.5186
+      \tabularnewline\hline
+         BinarySMOClassifier & NGram & EriqFilter & 0.5174
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & TweetFSG & EriqFilter & 0.5150
+      \tabularnewline\hline
+         BinaryJ48Classifier & TweetFSG & NoFilter & 0.5126
+      \tabularnewline\hline
+         BinarySMOClassifier & NGram & NoFilter & 0.5126
+      \tabularnewline\hline
+         BinarySMOClassifier & TweetFSG & NoFilter & 0.5102
+      \tabularnewline\hline
+         BinarySMOClassifier & TweetFSG & EriqFilter & 0.5030
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & NGram & EriqFilter & 0.4982
+      \tabularnewline\hline
+         BayesNetClassifier & NGram & NoFilter & 0.4970
+      \tabularnewline\hline
+         NaiveBayesClassifier & TweetFSG & NoFilter & 0.4970
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & NGram & NoFilter & 0.4958
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & NGram & NoFilter & 0.4958
+      \tabularnewline\hline
+         BinaryJ48Classifier & TweetFSG & EriqFilter & 0.4922
+      \tabularnewline\hline
+         NaiveBayesClassifier & TweetFSG & EriqFilter & 0.4778
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & TweetFSG & NoFilter & 0.4694
+      \tabularnewline\hline
+         BayesNetClassifier & NGram & EriqFilter & 0.4646
+      \tabularnewline\hline
+         BinaryKNNClassifier & TweetFSG & NoFilter & 0.4622
+      \tabularnewline\hline
+         BinaryJ48Classifier & NGram & EriqFilter & 0.4622
+      \tabularnewline\hline
+         KNNClassifier & TweetFSG & NoFilter & 0.4586
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & TweetFSG & EriqFilter & 0.4538
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & TweetFSG & EriqFilter & 0.4526
+      \tabularnewline\hline
+         BinaryJ48Classifier & NGram & NoFilter & 0.4514
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & TweetFSG & NoFilter & 0.4454
+      \tabularnewline\hline
+         BinaryKNNClassifier & NGram & NoFilter & 0.4406
+      \tabularnewline\hline
+         KNNClassifier & NGram & NoFilter & 0.4382
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & TweetFSG & EriqFilter & 0.4226
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & TweetFSG & NoFilter & 0.4226
+      \tabularnewline\hline
+         BinaryKNNClassifier & TweetFSG & EriqFilter & 0.4130
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & NGram & EriqFilter & 0.4082
+      \tabularnewline\hline
+         KNNClassifier & TweetFSG & EriqFilter & 0.4046
+      \tabularnewline\hline
+         BayesNetClassifier & TweetFSG & NoFilter & 0.3998
+      \tabularnewline\hline
+         KNNClassifier & NGram & EriqFilter & 0.3854
+      \tabularnewline\hline
+         BinaryKNNClassifier & NGram & EriqFilter & 0.3830
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & NGram & NoFilter & 0.3553
+      \tabularnewline\hline
+         BayesNetClassifier & TweetFSG & EriqFilter & 0.3289
+      \tabularnewline\hline
+      \caption[Uncompressed Classification Results Summary]{Uncompressed Classification Results Summary}
+      \label{table:classification-summary-uncompressed}
+   \end{longtable}
+\end{center}
+
+\begin{center}
+   \begin{longtable}{|l|l|l|c|c|c|}
+      \hline
+         Classifier & Feature Selection & Text Filter & Accuracy
+      \tabularnewline\hline
+         \textbf{SMOClassifier} & \textbf{TweetFSG} & \textbf{NoFilter} & \textbf{0.8583}
+      \tabularnewline\hline
+         SMOClassifier & NGram & EriqFilter & 0.8583
+      \tabularnewline\hline
+         SMOClassifier & NGram & NoFilter & 0.8499
+      \tabularnewline\hline
+         SMOClassifier & TweetFSG & EriqFilter & 0.8319
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & NGram & EriqFilter & 0.8271
+      \tabularnewline\hline
+         BinarySMOClassifier & NGram & NoFilter & 0.8259
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & NGram & NoFilter & 0.8235
+      \tabularnewline\hline
+         BinarySMOClassifier & NGram & EriqFilter & 0.8235
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & NGram & EriqFilter & 0.8199
+      \tabularnewline\hline
+         BinarySMOClassifier & TweetFSG & NoFilter & 0.8175
+      \tabularnewline\hline
+         NaiveBayesClassifier & NGram & NoFilter & 0.8175
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & NGram & NoFilter & 0.8151
+      \tabularnewline\hline
+         BinarySMOClassifier & TweetFSG & EriqFilter & 0.8139
+      \tabularnewline\hline
+         J48Classifier & NGram & EriqFilter & 0.8091
+      \tabularnewline\hline
+         NaiveBayesClassifier & NGram & EriqFilter & 0.8079
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & TweetFSG & NoFilter & 0.7923
+      \tabularnewline\hline
+         BinaryKNNClassifier & NGram & NoFilter & 0.7899
+      \tabularnewline\hline
+         J48Classifier & NGram & NoFilter & 0.7887
+      \tabularnewline\hline
+         J48Classifier & TweetFSG & EriqFilter & 0.7875
+      \tabularnewline\hline
+         KNNClassifier & NGram & NoFilter & 0.7863
+      \tabularnewline\hline
+         J48Classifier & TweetFSG & NoFilter & 0.7839
+      \tabularnewline\hline
+         NaiveBayesClassifier & TweetFSG & NoFilter & 0.7803
+      \tabularnewline\hline
+         BinaryNaiveBayesClassifier & TweetFSG & EriqFilter & 0.7707
+      \tabularnewline\hline
+         NaiveBayesClassifier & TweetFSG & EriqFilter & 0.7671
+      \tabularnewline\hline
+         KNNClassifier & NGram & EriqFilter & 0.7623
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & NGram & EriqFilter & 0.7611
+      \tabularnewline\hline
+         BinaryKNNClassifier & NGram & EriqFilter & 0.7575
+      \tabularnewline\hline
+         BinaryKNNClassifier & TweetFSG & NoFilter & 0.7527
+      \tabularnewline\hline
+         KNNClassifier & TweetFSG & NoFilter & 0.7479
+      \tabularnewline\hline
+         BinaryJ48Classifier & TweetFSG & NoFilter & 0.7419
+      \tabularnewline\hline
+         BinaryKNNClassifier & TweetFSG & EriqFilter & 0.7371
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & TweetFSG & EriqFilter & 0.7371
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & TweetFSG & NoFilter & 0.7335
+      \tabularnewline\hline
+         KNNClassifier & TweetFSG & EriqFilter & 0.7311
+      \tabularnewline\hline
+         BayesNetClassifier & NGram & NoFilter & 0.7263
+      \tabularnewline\hline
+         Non-Weka NaiveBayesClassifier & NGram & NoFilter & 0.7263
+      \tabularnewline\hline
+         BinaryJ48Classifier & TweetFSG & EriqFilter & 0.7059
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & TweetFSG & NoFilter & 0.6939
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & TweetFSG & NoFilter & 0.6927
+      \tabularnewline\hline
+         BinaryJ48Classifier & NGram & NoFilter & 0.6879
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & NGram & EriqFilter & 0.6855
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & NGram & NoFilter & 0.6819
+      \tabularnewline\hline
+         BinaryJ48Classifier & NGram & EriqFilter & 0.6759
+      \tabularnewline\hline
+         Non-Weka BPNBClassifier & TweetFSG & EriqFilter & 0.6651
+      \tabularnewline\hline
+         BayesNetClassifier & TweetFSG & NoFilter & 0.6615
+      \tabularnewline\hline
+         BayesNetClassifier & NGram & EriqFilter & 0.6603
+      \tabularnewline\hline
+         BinaryBayesNetClassifier & TweetFSG & EriqFilter & 0.6567
+      \tabularnewline\hline
+         BayesNetClassifier & TweetFSG & EriqFilter & 0.6279
+      \tabularnewline\hline
+      \caption[Compressed Classification Results Summary]{Compressed Classification Results Summary}
+      \label{table:classification-summary-compressed}
+   \end{longtable}
+\end{center}
+
