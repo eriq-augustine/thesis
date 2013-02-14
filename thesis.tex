@@ -1165,10 +1165,13 @@ Because of low performance and inflexible API, the WEKA classifiers are being re
 As of now, only Naive Bayes has been reimplemented. The other classifier implemented from scratch is
 a BPNB classifier which is discussed in Section~\ref{background-classification-classifiers-bpnb}.
 
-\chapter{Feature Selection}
-\label{class-features}
-TODO
-%Most of feature input into the classifiers are n-grams.
+\chapter{Text Processing}
+\label{class-processing}
+Before the tweets are classified, they are processed. During processing, the text is transformed
+to make classification of the text easier. Standard text operations like stemming, stopword removal,
+and case normalization; as well as Twitter and Netflix specific operations like hashtag and movie title
+recognition are preformed. After the text is processed, it is split into unigrams to be used as features
+in the classifiers.
 
 \section{Text Filtering}
 \label{class-filter}
@@ -1197,7 +1200,7 @@ Conan O'Brien posted the following tweet:
    If I'm ever a ghost, I hope the person I haunt has Netflix.
 \end{center}
 
-There were hundred of identical tweets that said:
+There were hundreds of identical tweets that said:
 
 \begin{center}
    RT: If I'm ever a ghost, I hope the person I haunt has Netflix.
