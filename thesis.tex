@@ -324,53 +324,203 @@ used in SPOONS. Chapters~\ref{outage-detection} extends the problem of classific
 \part{Background \& Related Work}
 \label{background-related-work}
 
-\chapter{Text Stream Analysis}
-\label{background-text-stream}
-Text Stream Analysis \cite{Bansal}\cite{Grinev}\cite{Huang}.
+%\chapter{Text Stream Analysis}
+%\label{background-text-stream}
+%Text Stream Analysis \cite{Bansal}\cite{Grinev}\cite{Huang}.
 
-\chapter{Classification}
+\chapter{Twitter Classification}
 \label{background-classification}
-Classification \cite{Pang}
+There has been much work in using classifiers on both tweets and Twitter users.
+Most of the classification effort has gone into trying to determine the sentiment,
+the general feeling, of a tweet \cite{Jiang}\cite{Mukherjee}\cite{Saif}\cite{Wang}.
+Raz et al. tackle the task of classifying humorous tweets as a specific type of humor
+such as irony, observational, or wordplay\cite{Raz}.
+The traditional text classification task of topic modeling has also been attempted various times\cite{hong}\cite{Zhao}.
+Instead of trying to classify tweets, Pennacchiotti et al. try to classify a user associations from
+their tweets\cite{Pennacchiotti}.
+
+The common theme in all of these classification attempts is that tweets are much more difficult to
+classify than more traditional media sources, eg. news articles, because of their length and language.
+The 140 character limit on tweets severely limits the information content of a tweet.
+Partially because of the character limit, slang and informal language are commonplace in tweets.
 
 \chapter{Classifiers}
 \label{background-classification-classifiers}
+SPOONS uses a variety of different classifiers for text classification.
+This section gives an overview of each different type of classifier used.
 
 \section{Naive Bayes}
 \label{background-classification-classifiers-naive-bayes}
+Naive Bayes classifier work by applying the Bayes' theorem with the assumption that
+the probability of each feature in a document is independent from the probability of
+any other feature appearing in the same document.\cite{Kibriya}\cite{Frank}
+
+Let $c$ be a specific class in the set of possible classes $C$.
+Let $d$ be a document composed of a vector of $n$ features, $d = (\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
+The Bayes' theorem states that the probability of observing class $c$ given document $d$
+can be represented as:
+
+\begin{equation}
+   Pr(c|d) = \frac{Pr(c) \cdot Pr(d|c)}{Pr(d)}
+\end{equation}
+
+$Pr(c)$ is the \textsf{prior probability} of class $c$. That is, the probability of
+observing $c$ regardless of the document attached to it. When training the classifier, this
+is just the percentage of times that the class appeared in the training set.
+
+$Pr(d)$ is the \textsf{prior probability} of document $d$. Like $Pr(c)$, it is just the
+probability of observing the collection of features $d$ regardless of the class associated with it.
+Note that for classification, it may not be necessary to compute $Pr(d)$ because it is constant among all
+documents and classes. A classifier can just choose the class with the largest $Pr(c) \cdot Pr(d|c$ term.
+
+$Pr(d|c)$ is the probability of observing document $d$ given that $d$ is already recognized as belonging to
+class $c$. Remember that document $d$ is really just a vector of $n$ features, $(\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
+Assuming \textbf{conditional independence} (the \textsf{naive} part in Naive Bayes), $Pr(d|c)$ can be
+constructed as a product of the probability of observing each feature in $d$:
+
+\begin{equation}
+   Pr(d|c) = Pr(\textrm{f}_{1}|c) \cdot Pr(\textrm{f}_{2}|c) \cdot ... \cdot Pr(\textrm{f}_{n}|c) = \prod_{i = 1}^{n}Pr(\textrm{f}_{i}|c)
+\end{equation}
+
+Now the last step is to estimate the conditional probabilities of the $n$ features.
+When dealing with discrete features, then estimating $Pr(\textrm{f}_{m}|c)$ ($1 \leq m \leq n$) can be done by
+finding the percentage of training documents that contain feature $\textrm{f}_{m}$ and have class $c$.
 
 \section{Bayes Net}
 \label{background-classification-classifiers-bayes-net}
+A Bayesian Networks are probabilistic, directed acyclic graphs that represents a set of random variables and their conditional probabilities.
+In a Bayesian Network, each edge represents the conditional probability between two nodes. Each node represents a variable and a probability
+function that takes as input the state of the node's parents.\cite{Pearl}\cite{Neapolitan}
 
-\section{Decisions Trees}
-\label{background-classification-classifiers-decision-trees}
+Figure~\ref{fig:bayesNet1} shows a simple Bayesian Network that models the chance of going on a picnic.
+Note that the whether or not it is Spring affects the chance of it raining; and both the season and weather
+affect the chance of going on a picnic.
 
-C4.5
-J48
+Figure~\ref{fig:bayesNet2} shows the probability functions for the network. The chance of the season being Spring if
+fully independent, and therefore takes no parameters into its probability function. However, the weather and picnic decision
+takes one and two input parameters respectively.
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.4\textwidth]{images/Bayes_Net_1.eps}
+      \captionfonts
+      \caption[Simple Bayes Net]{A simple Bayesian Network modeling the chance of going on a picnic given the season and weather. The season affects the weather and both the season and weather affect the chance of going on a picnic.}
+      \label{fig:bayesNet1}
+   \end{center}
+\end{figure}
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{images/Bayes_Net_2.eps}
+      \captionfonts
+      \caption[Bayes Net With Probabilities]{The simple Bayesian Network augmented with the probability functions for each node.}
+      \label{fig:bayesNet2}
+   \end{center}
+\end{figure}
+
+\section{J48}
+\label{background-classification-classifiers-j48}
+J48 is a specific implementation of the C4.5 algorithm.
+C4.5 is an algorithm that is used to generate a decision tree given a training set.
+
+\subsection{Decision Trees}
+\label{background-classification-classifiers-j48-decision-trees}
+A decision tree is a simple data structure used to come to come conclusion based off of a number of observations.
+At each non-terminal node, a question is asked. The answers to the question are represented by the node's outgoing edges.
+The tree is traversed in this fashion until a terminal node is reached. The terminal node contains the final conclusion.
+In a classification context, each non-terminal node is labeled with an attribute, each edge is the value (or range of values)
+for that attribute, and each terminal node is a class. Each attribute can only appear once in the tree.
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{images/Decision_Tree.eps}
+      \captionfonts
+      \caption[Simple Decision Tree]{A simple decision tree trying to answer the question of whether or not to go on a picnic.}
+      \label{fig:decisionTree}
+   \end{center}
+\end{figure}
+
+Figure~\ref{fig:decisionTree} shows a decision tree that may be generated for the picnic example discussed in Section~\ref{background-classification-classifiers-bayes-net}.
+Note that once the decision tree is built, reaching a terminal node is fairly trivial.
+
+\subsection{C4.5}
+\label{background-classification-classifiers-j48-c45}
+C4.5 will recursively build a decision tree by continually splitting the dataset on a single attribute\cite{Quinlan}.
+The splitting attribute is determined by the normalized information gain (Kullback-Leibler divergence) and becomes a
+node in the tree and the possible values for the attribute become edges. Each subtree is then recursively built using only the
+data where the splitting attribute takes the value given by the incoming edge. The algorithm has two stopping conditions.
+First, when all the data has the same class. In which case a single node tree will be constructed that contains the class.
+Secondly, when there are no more attributes or when the information gain from splitting on each attribute is below a threshold.
+In this case, a single node tree will be constructed which contains the plurality class.
 
 \section{K-Nearest Neighbors}
 \label{background-classification-classifiers-knn}
+$k$-Nearest Neighbors (KNN) is simple and effective classification technique\cite{Duda}.
+While training, the classifier remembers the entire training set.
+During the classification phase, the classifier will find the $k$ nearest neighbors
+to the query point. The predicted class is simply the plurality of the $k$ nearest neighbors.
+Figure~\ref{fig:knn} shows an example of $k$-Nearest Neighbors with a simple search space.
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.4\textwidth]{images/KNN.eps}
+      \captionfonts
+      \caption[K-Nearest Neighbors]{A simple example of KNN. If $k = 3$, then the query point (the star) will be classified as a triangle. However, if $k = 5$ then the query point will be classified as a square.}
+      \label{fig:knn}
+   \end{center}
+\end{figure}
 
 \section{Support Vector Machines}
 \label{background-classification-classifiers-svm}
+Support Vector Machines (SVMs) are considered one of the best off-the-shelf classification techniques\cite{Vapnik}.
+When training, SVMs use hyperplanes to partition the data into surfaces based off of the different classes of the training examples.
+When classifying, the SVM will find which surface the query point falls on and give that class to the point.
+SVMs will try and choose the partitioning hyperplane to maximize the margin between the two groups of data.
+Depending on the implementation, the SVM may choose the optimal partition or just an approximation.
 
-SMO
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.4\textwidth]{images/SVM.eps}
+      \captionfonts
+      \caption[Support Vector Machine]{A simple example of a support vector machine. The SVM chose a partition that maximizes the margin between the squares and triangles.}
+      \label{fig:svm}
+   \end{center}
+\end{figure}
+
+Figure~\ref{fig:svm} shows a simple example of a linear binary SVM.
+Note that the partition line is chosen to maximize the distance between the triangles and squares.
+The query point (the star) falls into the squares' partition and is therefore classified as a square.
+
+\subsection{Sequential Minimal Optimization}
+\label{background-classification-classifiers-svm-smo}
+Sequential Minimal Optimization (SMO) is an efficient algorithm for solving SVMs invented by John Platt in 1998\cite{Platt}.
 
 \section{BPNB}
 \label{background-classification-classifiers-bpnb}
-BPNB is a method developed by Dr. Leilei Chu\cite{bpnb}. It is a Naive Bayes method that is based on relative probability of features.
+BPNB is a method developed by Chu\cite{bpnb}.
+It is based off of Naive Bayes, except the relative probability of each feature is accounted for.
 
-\section{Microtext Classification}
-\label{background-microtext-classification}
-Microtext Classification \cite{hong}
+Let $c$ be a specific class in the set of possible classes $C$.
+Let $d$ be a document composed of a vector of $n$ features, $d = (\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
+BPNB states that the probability of observing class $c$ given document $d$
+can be represented as:
+
+\begin{equation}
+   Pr(c|d) = Pr(c) \cdot \prod_{i = 1}^{n}g(\textrm{f}_{i},c)
+\end{equation}
+
+Where $g(\textrm{f}_{m}, c)$ is the weight of feature $\textrm{f}_m$ in class $c$.
+
+\begin{equation}
+   g(\textrm{f}_m, c) = \beta^{1 - \frac{Pr(\textrm{f}_m|c)}{Ave(\textrm{f}_m)}}, 0 < \beta < 1
+\end{equation}
+
+\begin{equation}
+   Ave(\textrm{f}_m) = \frac{\sum_{i=1}^{|C|} Pr(\textrm{f}_m|c_{i})}{|C|}, c_i \in C
+\end{equation}
 
 \section{WEKA}
 \label{background-weka}
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.20\textwidth]{images/weka.eps}
-  \end{center}
-  \caption{WEKA logo}
-\end{figure}
 SPOONS utilizes several classifiers provided in the \textit{WEKA Machine Learning Package}.
 WEKA is an open source package written under the GNU General Public License\cite{weka}.
 
@@ -1406,6 +1556,7 @@ false positives would just cause SPOONS to be ignored.
 \section{Monitors}
 \label{outage-detection-monitors}
 TODO(eriq): Describe how the different monitors will be described.
+TODO(eriq): Make sure equations get numbers.
 
 \subsection{Monitor Parameters}
 \label{outage-detection-monitors-params}
@@ -1680,7 +1831,8 @@ Know What To Search For (dynamic search generation)
 
 \chapter{Current and Future Work}
 \label{future-work}
-Brett - Feasability of SPOONS as a comercial multi-target, source system.
+TODO(eriq)
+Brett - Feasibility of SPOONS as a commercial multi-target, source system.
 All sorts of stuff
 Dynamic Training Set
 CP$^{2}$ - WEKA Classifier Reimplementation
