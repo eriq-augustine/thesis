@@ -1821,9 +1821,11 @@ TODO(eriq): Numbers
 
 \part{Conclusions}
 \label{conclusions}
+TODO(eriq)
 
 \chapter{Current Limitations of SPOONS}
 \label{limitations}
+TODO(eriq)
 Severity
 Nature of Outage
 Malicious Tweet Attack
@@ -1831,15 +1833,31 @@ Know What To Search For (dynamic search generation)
 
 \chapter{Current and Future Work}
 \label{future-work}
-TODO(eriq)
-Brett - Feasibility of SPOONS as a commercial multi-target, source system.
-All sorts of stuff
-Dynamic Training Set
-CP$^{2}$ - WEKA Classifier Reimplementation
+
+\section{WEKA Classifier Reimplementation}
+\label{future-work-weka}
+The WEKA machine learning package offers a wide variety of classifiers.
+However, their implementation and API has some room for improvement.
+Because of this, SPOONS already uses two classifiers implemented from scratch.
+I plan on continuing this to make a classification package centered around performance
+and ease of use.
 
 \section{Advanced Sentiment Analysis}
 \label{future-work-kim}
-Kim - Advanced Sentiment Analysis
+Kim Paterson, a member of the SPOONS team, is currently working on improving the sentiment
+analysis work from Cailin Cushing\cite{cailinThesis}. If completed, then SPOONS can use
+both text classification and sentiment analysis to determine when there is an outage.
+Because of their orthogonal natures, having both would allow SPOONS to recognize even more outages.
+
+\section{SPOONS Scaling}
+\label{future-work-brett}
+Another member of the SPOONS team, Brett Armstrong, is working to improve the scalability of SPOONS.
+Because of its distributed architecture (see Section~\ref{arch-dist}), SPOONS already has the potential to
+scale horizontally. If there is too much traffic/work, then another server can just be added to the cluster.
+However, that currently requires manual intervention. Since there are spikes when outages occur, we may not know
+when there is going to be a lot of traffic. To solve this problem, Brett will use SPOONS to monitor itself.
+The end result of an Analysis Pipeline will not be an email alert, rather it will be the creation of a new
+AWS instance.
 
 % ------------- End main chapters ----------------------
 
