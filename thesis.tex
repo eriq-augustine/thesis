@@ -993,7 +993,7 @@ If Task A calls upon a Worker Control to distribute a Task B, then that means th
 its own atomicity. This is considered a violation of the framework and will cause the Worker Control to throw an error.
 
 \subsubsection{Single Control}
-Instead of blocking the calling thread like in the Master Contol, a Single Control
+Instead of blocking the calling thread like in the Master Control, a Single Control
 will just use the calling thread to run the task. When the task is complete,
 the Single Control will return control to the caller.
 
@@ -1006,8 +1006,8 @@ data between starts and stop of the system. An Analysis Pipeline should be able 
 of time and then restarted without losing data or its place.
 
 To enforce these restrictions, SPOONS uses a shared property store. The shared property store is a MongoDB server.
-Whenever a Task needs to store member datum, it places the data in the shared store. Making the data available to any server in the cluser.
-A Task can first be run to completion on Server A and then when new data is availble run on Server B.
+Whenever a Task needs to store member datum, it places the data in the shared store. Making the data available to any server in the cluster.
+A Task can first be run to completion on Server A and then when new data is available run on Server B.
 Because the Task stores the necessary information in the shared property store,
 Server B can have all the information gained from the run on Server A and not lose any positional information.
 
@@ -1018,10 +1018,9 @@ the store. If a server fails to heartbeat, then the rest of the cluster that is 
 \chapter{Database}
 \label{arch-database}
 SPOONS is backed by a MySQL database. SPOONS currently uses 225 tables and 35 stored procedures. The 225 tables are further divided into
-six different categories that are used in different stages of the analysis pipeline. In addition to tweets being stored in the database
-configuration data, intermediary calculations, analysis results, and final alerting decisions are stored in the database. Keeping all of this
-data allows the users to look back at any point in time for reference or debugging. The majority of the stored procedures are a bridge between
-the UI and database. The stored procedures provide a consistent interface for the UI without the need to underlying details.
+six different categories that are used in different stages of the analysis pipeline. In addition to tweets being stored in the database,
+configuration data, intermediate calculations, analysis results, and final alerting decisions are stored in the database. Keeping all of this
+data allows the users to look back at any point in time for reference or debugging.
 
 The database uses naming and schema conventions to maintain organization on its tables. The naming and schema conventions allow different
 components of the Analysis Pipeline to be interchanged without any need to change/reprocess the data. In addition the conventions allows the UI
@@ -1031,15 +1030,15 @@ to represent new tables without the need for specifying them.
 \label{arch-database-tables}
 Each stage in an analysis pipeline generally stores some information in the database. Because each stage generally deals with similar
 types of data, these tables are considered to be in the same group. We enforce group membership using hints in the table names. For example, the
-table name ``\textcolor{red}{RESULT}\_\textcolor{orange}{EN}\_\textcolor{yellow}{class}\_\textcolor{green}{heuristic}\_\textcolor{blue}{bayes\_net}''
+table name ``RESULT\_EN\_class\_heuristic\_bayes\_net''
 gives five hints as to the type of the table.
 
 \begin{enumerate}
-   \item \textcolor{red}{RESULT} - Marks this table as a result table. This means that it is guaranteed to be shown in the UI.
-   \item \textcolor{orange}{EN} - The language of the tweets that were input into this method.
-   \item \textcolor{yellow}{class} - Indicates that this these results are output from a tweet classifier.
-   \item \textcolor{green}{heuristic} - States that the type of classifier used was a heuristic classifier.
-   \item \textcolor{blue}{bayes\_net} - The name of the classifier used.
+   \item RESULT - Marks this table as a result table. This means that it is guaranteed to be shown in the UI.
+   \item EN - The language of the tweets that were input into this method.
+   \item class - Indicates that this these results are output from a tweet classifier.
+   \item heuristic - States that the type of classifier used was a heuristic classifier.
+   \item bayes\_net - The name of the classifier used.
 \end{enumerate}
 
 Using all of these hints, the UI can then ask for data for specific types of tables (eg. all result tables that are for English tweets).
@@ -1047,7 +1046,7 @@ Using all of these hints, the UI can then ask for data for specific types of tab
 The six different top level categories that SPOONS recognizes are:
 
 \begin{enumerate}
-   \item CALC - These are intermediary tables in analysis pipelines. CALC tables are typically only used when large sets of past data are needed for cumulative models. They are never shown to the UI.
+   \item CALC - These tables store intermediate results in analysis pipelines. CALC tables are typically only used when large sets of past data are needed for cumulative models. They are never shown to the UI.
    \item CONFIG - Contains information that analysis methods used to configure themselves before runs. These tables have been mostly replaced with the shared property store (see Section \ref{arch-props}).
    \item DATA - Raw input data. These tables are generally the output from the Gatherers.
    \item META - Contains information that is not analyzed, but required by the system. For example, the different classes that the classifiers use along with descriptions of each class.
@@ -1055,7 +1054,7 @@ The six different top level categories that SPOONS recognizes are:
    \item TEST - These tables are used for debugging and development. They are never shown in a user-facing UI, however may be shown in development UIs.
 \end{enumerate}
 
-The full schema for select tables are described in Appendix~\ref{appendix-db-schema}.
+The full schemas for select tables are described in Appendix~\ref{appendix-db-schema}.
 
 \subsection{Data Flow}
 \label{arch-database-data-flow}
@@ -1081,13 +1080,14 @@ The tweets table contains ten attributes which are described in Table~\ref{table
 
 \begin{table}
    \begin{center}
+      {\Large Data\_tweets Schema}
       \begin{tabular}{|l|p{12cm}|}
          \hline
             Name & Description
          \tabularnewline\hline
             \textsf{id} & An auto-incremented primary key.
          \tabularnewline\hline
-            \textsf{twitter\_id} & The unique id Twitter gives a tweet.
+            \textsf{twitter\_id} & The unique id Twitter gives to a tweet.
          \tabularnewline\hline
             \textsf{published} & The epoch time that the tweet was posted according to Twitter.
          \tabularnewline\hline
@@ -1108,7 +1108,7 @@ The tweets table contains ten attributes which are described in Table~\ref{table
       \end{tabular}
    \end{center}
    \caption[Database Tweet Attributes]{The database attributes used to describe tweets.}
-   \label{tweet-attributes}
+   \label{table:tweet-attributes}
 \end{table}
 
 \subsubsection{Frames}
@@ -1153,24 +1153,24 @@ The different schema requirements are shown in Figure~\ref{fig:ui-expected-schem
 
 %TODO(eriq): Not liking this V.
 \begin{description}
-   \item[Volume]
+   \item[Volume.]
    This schema is for tables that contain time series information about tweet volumes.
-   This includes tables that holds the time series for the total Netflix-related Twitter traffic.
+   This includes tables that hold the time series for the total Netflix-related Twitter traffic.
 
-   \item[Volume Prediction]
+   \item[Volume Prediction.]
    These tables contain time series that are predictive models of Netflix-related Twitter traffic.
 
-   \item[Valence]
+   \item[Valence.]
    These tables contain time series for estimates of the current sentiment about Netflix.
 
-   \item[Valence Prediction]
+   \item[Valence Prediction.]
    These tables contain time series that are predictive models of the sentiment about Netflix.
 
-   \item[Class]
+   \item[Class.]
    These tables contain time series for the volume of tweets that were classified into
    each of the nine categories described in Section~\ref{class-tweet-classes}.
 
-   \item[Group]
+   \item[Group.]
    These tables contain time series for the volume of tweets that were classified into
    each of the thee different groupings described in Section~\ref{class-tweet-groups}.
 \end{description}
@@ -1185,16 +1185,17 @@ Spanish, and Portuguese.
 \label{class-why}
 Classification helps discover Netflix service outages by differentiating between different types of Twitter traffic.
 
-Figure~\ref{fig:normal-traffic} shows the normal pattern of Netflix-related Twitter traffic. The peaks appear at around 7pm
-PST and the valleys are around 2am PST. This kind of pattern is very regular and repeats weekly during normal times. However
-where there is some sort of event, the traffic develops spikes. Figure~\ref{fig:anomalous-traffic} shows a period with two
-anomalous spikes. However, sampling tweets from the different spikes hints that the causes for the two different spikes
+Figure~\ref{fig:normal-traffic} shows the normal pattern of Netflix-related Twitter traffic over the course of a single week.
+The peaks appear at around 7pm PST and the valleys are around 2am PST.
+This kind of pattern is very regular and repeats weekly during normal times.
+However, where there is some sort of event, the traffic develops spikes. Figure~\ref{fig:anomalous-traffic} shows a period with two
+anomalous spikes. However, sampling tweets from the different spikes hints that the causes for the two spikes
 are very different. Figure~\ref{fig:linkless-traffic} shows tweets sampled from each spike. The left spike is composed mostly
 of tweets indicating that Netflix is experiencing a service outage. The right spike however, is composed mainly of tweets linking to
-a news article about Netflix. Therefore, we see that not only service outages generates spikes in Netflix-related Twitter traffic.
+a news article about Netflix. Therefore, we see that not only service outages generate spikes in Netflix-related Twitter traffic.
 
-This is where classifiers become useful. If tweets can be placed into different classes according to the type of traffic that they
-generate, then the different types of traffic can be differentiated. Figure~\ref{fig:classified-traffic} shows the result of classifying
+This is where classifiers become useful. If tweets can be placed into different classes according to their type,
+then the different types of traffic can be differentiated. Figure~\ref{fig:classified-traffic} shows the result of classifying
 the tweets and then building time series of the classes respective traffic. It becomes obvious that the spike on the left is caused by
 outage related traffic and that the spike on the right is caused by media related traffic.
 
@@ -1236,7 +1237,7 @@ outage related traffic and that the spike on the right is caused by media relate
 
 \chapter{Classification Roadmap}
 \label{class-roadmap}
-The steps that SPOONS takes to use classification to detect service outages is as follows:
+The steps that SPOONS takes to use classification to detect service outages are as follows:
 
 \begin{enumerate}
    \item Observe Netflix-related Twitter traffic and observe the different classes that the tweets fall into.
@@ -1249,24 +1250,19 @@ The steps that SPOONS takes to use classification to detect service outages is a
    \item Declare an outage when the two traffics diverge significantly.
 \end{enumerate}
 
-\chapter{Fitting Into The SPOONS Framework}
-\label{class-framework}
-Although the classifiers can be used at any stage in an analysis pipeline, the classifiers are usually implemented as
-a Processor. It takes in a range of tweets and produces a classification for each tweet.
-
 \chapter{Tweet Classes}
 \label{class-tweet-classes}
-After observing Netflix-related Twitter traffic, it was discovered that tweets fall into at least one of nine different categories.
+After observing Netflix-related Twitter traffic, we decided tweets fall into at least one of nine different categories.
 
 \begin{itemize}
-  \item \texttt{Media} -- Relate to a media story about Netflix.
-  \item \texttt{Snafu} -- Talk about a Netflix outage.
-  \item \texttt{Complaint} -- Complain about Netflix.
-  \item \texttt{Happy} -- Express joy about Netflix.
-  \item \texttt{Neutral} -- Neutral observation or comment about Netflix.
-  \item \texttt{Watching} -- Updates on what the user is currently watching.
-  \item \texttt{Response} -- Neutral response to another user in a Netflix-related conversation.
-  \item \texttt{Refuse To Rate} -- Used for tweets that we refuse to rate entirely (usually tweets that are in a different language than the training set).
+  \item \texttt{Media} -- Tweets relating to a media story about Netflix. Typically a link to a news article.
+  \item \texttt{Snafu} -- Tweets that talk about a Netflix outage.
+  \item \texttt{Complaint} -- Tweets where people are complaining about Netflix.
+  \item \texttt{Happy} -- Tweets that expresses the user's joy about Netflix.
+  \item \texttt{Neutral} -- Tweets that are just a neutral observation or comment about Netflix.
+  \item \texttt{Watching} -- Tweets that gives updates about what the user is currently watching.
+  \item \texttt{Response} -- Tweets that are a neutral response to another user in a Netflix-related conversation.
+  \item \texttt{Refuse To Rate} -- Tweets that we we refuse to rate entirely (usually tweets that are in a different language than the training set).
   \item \texttt{Undetermined} -- This class does not exist in the wild. It is used during classification as default for all tweets that don't match any other class.
 \end{itemize}
 
@@ -1278,31 +1274,31 @@ Examples of tweets with their corresponding classes are shown in Table~\ref{tabl
          \hline
             Class & Tweet Example
          \tabularnewline\hline
-            \texttt{Media} & Netflix Now Available Through Facebook - http://bit.ly/ffpBHH - [Geeky Gadgets]
+            \texttt{Media} & \texttt{Netflix Now Available Through Facebook - http://bit.ly/ffpBHH - [Geeky Gadgets]}
          \tabularnewline\hline
-            \texttt{Snafu} & And netflix is broken. Why is this happening to me.
+            \texttt{Snafu} & \texttt{And netflix is broken. Why is this happening to me.}
          \tabularnewline\hline
-            \texttt{Complaint} & netflix keeps taking little things i like about the site away...Why?
+            \texttt{Complaint} & \texttt{netflix keeps taking little things i like about the site away...Why?}
          \tabularnewline\hline
-            \texttt{Happy} & Netflix :)
+            \texttt{Happy} & \texttt{Netflix :)}
          \tabularnewline\hline
-            \texttt{Neutral} & about to download this netflix free trial
+            \texttt{Neutral} & \texttt{about to download this netflix free trial}
          \tabularnewline\hline
-            \texttt{Watching} & Watching Family Guy on Netflix
+            \texttt{Watching} & \texttt{Watching Family Guy on Netflix}
          \tabularnewline\hline
-            \texttt{Response} & @BeehiveBlog  Both good movies.  I think I'll put on the netflix list.
+            \texttt{Response} & \texttt{@BeehiveBlog  Both good movies.  I think I'll put on the netflix list.}
          \tabularnewline\hline
-            \texttt{Refuse To Rate} & en serio, QUIERO pagar por algo como Netflix, DEJARME pagar
+            \texttt{Refuse To Rate} & \texttt{en serio, QUIERO pagar por algo como Netflix, DEJARME pagar}
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[Database Tweet Attributes]{The database attributes used to describe tweets.}
+   \caption[Tweet Class Examples]{Examples of the types of tweets that go with each class.}
    \label{table:classes}
 \end{table}
 
 \section{Tweet Groups}
 \label{class-tweet-groups}
-Because the goal of SPOONS is to detect anomalous times, it is useful to collapse the nine classes into
+Because the goal of SPOONS is to detect anomalous traffic, it is useful to collapse the nine classes into
 three different groups that account for the different types of Netflix-related traffic.
 
 \begin{itemize}
