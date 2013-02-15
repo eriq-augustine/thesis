@@ -7,6 +7,8 @@
 % modified by Mark Barry 2/07.
 %
 
+% TODO(eriq): Final check for ch/section reference.
+
 \documentclass[12pt]{ucthesis}
 
 \usepackage[hyphens]{url}
@@ -123,23 +125,22 @@ Thanks to Farscape for encouraging team bonding and providing a common enemy.
 \chapter{General Problem: Swift Perception Of Online Negative Situations}
 \label{general-problem}
 
-Twitter is an immensely popular micro-blogging service. According to Twitter as of March 14\textsuperscript{th} 2011,
+Twitter is an immensely popular micro-blogging service. According to Twitter, as of March 14\textsuperscript{th} 2011,
 approximately one billion micro-posts, \emph{tweets}, were being posted per week\cite{TwitterBlog}.
 Because of the low time and effort cost of tweeting, only a few seconds from a smart phone,
-users of Twitter post tweets about almost every aspect of their daily lives.
+Twitter users post tweets about almost every aspect of their daily lives.
 Because of this large stream of information, Twitter makes an excellent source of information for
-data miners. Already, researchers have been using Twitter to attempt to track and model
+data miners interested in real-time events. Already, researchers have been using Twitter to attempt to track and model
 disease outbreaks\cite{DetectingInfluenza}, earthquakes\cite{Earthquakes}, and the
 stock market\cite{StockMarket}.
 
-%% TODO(eriq): Work on this paragraph
 Netflix is the one of the largest online Internet subscription service for streaming movies and
 television shows. Netflix has over 25 million subscribers watching media streamed to over 450 different
-platforms. Even a short disruption of service can effect millions of users. Therefore, quickly detecting service outages
+platforms. Even a short disruption of their streaming service can affect millions of users. Therefore, quickly detecting service outages
 is essential to keep customers happy. However, service outage detection is no trivial matter in Netflix's
 environment. In addition to constantly streaming thousands of different videos to hundreds of different platforms,
-Netflix also has to deal with problems caused by their entire infrastructure being hosted in the cloud with Amazon's
-AWS.
+Netflix also has to deal with problems caused by most of their infrastructure being hosted in the cloud with
+Amazon Web Services (AWS).
 
 Netflix saw the power in Twitter as a potential data source for detecting service outages that
 is orthogonal to their current, more traditional outage detection methods. Currently, Netflix utilizes four
@@ -147,7 +148,7 @@ different methods for detecting outages:
 
 \paragraph{Internal Monitoring Systems.}
 Like any sizable service providing company, Netflix utilizes many different internal monitoring
-systems to detect service outages. However, there are some class of problems that are difficult to solve
+systems to detect service outages. However, there are some classes of problems that are difficult to solve
 with internal monitoring. These problems include corrupt video files or a problem on a third-party delivery
 platform such as Roku or AppleTV. These problems are obvious to the end user, but very difficult to detect internally.
 In addition, the internal monitoring systems share the same infrastructure as the service providing system. Therefore,
@@ -188,8 +189,8 @@ fast, and does not require any human intervention\cite{kevin}.
 \label{overview}
 
 SPOONS (Swift Perception Of Online Negative Situations) is a system that is
-designed to use tweets to detect outages in Netflix content delivery systems. At present the system
-supports a wide variety of detection methods that use some combination of time
+designed to use tweets to detect outages in Netflix content delivery systems.
+At present, the system supports a wide variety of detection methods that use some combination of time
 series analysis, classification, natural language processing, sentiment
 analysis, and filtering.
 
@@ -251,7 +252,7 @@ individuals who partner with Twitter, may be made with no compensation paid to
 you with respect to the Content that you submit, post, transmit or otherwise
 make available through the Services.''}
 
-In short, Twitter takes ownerships of users' tweet as soon as they are posted on Twitter.
+In short, Twitter takes ownership of user tweets as soon as they are posted on Twitter.
 Using the Twitter API allows SPOONS to obtain the tweets with the consent of Twitter.
 Therefore, the collection and analysis of Twitter data by SPOONS is well withing the
 Twitter Terms of Service.
@@ -530,7 +531,7 @@ All of the data data that SPOONS uses is obtained in real time using the Twitter
 
 \section{Rate Limiting}
 \label{api-rate-limit}
-Twitter imposes a limit on the number of queries to the Search API. However, Twitter does not publish the official
+Twitter imposes a limit on the number of queries to the Search API. Twitter does not publish the official
 limit. However, our experiments suggest that SPOONS can query the API for all new Tweets once every two minutes without
 suffering from rate limiting.
 
@@ -542,10 +543,23 @@ SPOONS must do multiple search queries.
 
 \section{Query Anatomy}
 \label{api-anatomy}
-Our typical Twitter API query is structured as follows:\\
-http://search.twitter.com/search.\textbf{json}?\\
-\textbf{q}=$\langle$query$\rangle$\&\textbf{rpp}=100\&\textbf{result\_type}=recent\&\\
-\textbf{since\_id}=$\langle$tweet id$\rangle$\&\textbf{max\_id}=$\langle$tweet id$\rangle$
+The typical structure of a Twitter API query is shown in Figure~\ref{fig:apiQuery}.
+
+\begin{figure}[H]
+   \begin{center}
+      \fbox{
+         \begin{minipage}{12cm}
+            \begin{center}
+               http://search.twitter.com/search.\textbf{json}?\textbf{q}=$\langle$query$\rangle$\&\textbf{rpp}=100\&\\
+               \textbf{result\_type}=recent\&\textbf{since\_id}=$\langle$tweet id$\rangle$\&\textbf{max\_id}=$\langle$tweet id$\rangle$
+            \end{center}
+         \end{minipage}
+      }
+      \captionfonts
+      \caption[Twitter API Query]{The structure of a typical query to the Twitter API.}
+      \label{fig:apiQuery}
+   \end{center}
+\end{figure}
 
 The parameters are:
 
@@ -583,7 +597,11 @@ are forever lost to us.
 \section{Result Anatomy}
 \begin{figure}
    \begin{center}
-      \includegraphics[width=150mm]{images/api_result.eps}
+      \fbox{
+         \begin{minipage}{160mm}
+            \includegraphics[width=150mm]{images/api_result.eps}
+         \end{minipage}
+      }
       \captionfonts
       \caption[Twitter Search API Result]{A JSON result from the Twitter Search API}
       \label{fig:apiRes}
@@ -652,6 +670,10 @@ in the form of Tweets collected by the Gatherers, and leave SPOONS in the form o
 \subsubsection{Gatherer}
 Gatherers are responsible for collecting documents from a specified data source such as the Twitter Search API.
 
+\subsubsection{Database}
+After the tweets are gathered, they are placed in the database. In addition to storing just tweets, the database also stores
+configuration data, intermediary calculations, and the results of the Analysis Pipelines.
+
 \subsubsection{Control}
 The Control is responsible for controlling the SPOONS server. It maintains data structures with all of the Gatherers and
 Analysis Pipelines. It is also responsible for communication with other servers in the SPOONS cluster.
@@ -696,17 +718,18 @@ into the database.
 \label{arch-processors}
 Processors are responsible for processing or transforming data before it goes into the analysis pipelines.
 \begin{itemize}
-   \item{Classifier Processors} There exists a Processor for every tweet classifier used in SPOONS (see Chapter \ref{classifiers}.
-   Because of the high number of classifiers used, these constitute the are the majority of Processors and the largest unit of work in SPOONS.
+   % TODO(eriq): Check refs after chapter/sections are changed.
+   \item{\underline{Classifier Processors}:} There exists a Processor for every tweet classifier used in SPOONS (see Chapter~\ref{classifiers}.
+   Because of the high number of classifiers used, these constitute the majority of Processors and form the largest unit of work in SPOONS.
    These Processors classify every tweet into one of the nine tweet categories discussed in Section~\ref{class-tweet-classes}.
 
-   \item{Author Processors} The Author Processors extract the author of tweets and try to establish which authors are credible. These Processors are
-   outside the scope of this work and are discussed in other work\cite{cailinsThesis}.
+   \item{\underline{Author Processors}:} The Author Processors extract the author of tweets and try to establish which authors are credible. These Processors are
+   outside the scope of this work and are discussed in other work\cite{cailinThesis}.
 
-   \item{Valence Processors} The Valence Processors assign a numeric ``happiness'' score to every tweet. How that score is produced is outside the
+   \item{\underline{Valence Processors}:} The Valence Processors assign a numeric ``happiness'' score to every tweet. How that score is produced is outside the
    scope of this work (see Section~\ref{future-work-kim}).
 
-   \item{Document Frequency Processors} The Document Frequency Processors maintain term frequencies and inverse document frequencies for the collection
+   \item{\underline{Document Frequency Processors}:} The Document Frequency Processors maintain term frequencies and inverse document frequencies for the collection
    of tweets in SPOONS.
 
 \end{itemize}
@@ -721,7 +744,8 @@ This model allows all the analysis pipelines to share the same Processor without
 \section{Analysis Pipelines}
 \label{arch-pipelines}
 An Analysis Pipeline (also called Analysis Method) is the analytical center of the SPOONS framework.
-The pipeline aggregates multiple tasks that it needs to run on the data.
+Pipelies are split into Tasks (see Section~\ref{arch-tasks}) which are chunked units of work.
+The exact number and types of Tasks used are different for each pipeline.
 
 An Analysis Pipeline typically starts with running any number of Processors on the data.
 Then, the pipeline invokes modelers on the data from the Processors. These modelers typically build models for the
@@ -792,8 +816,8 @@ The method of resistance as well as the resistance thresholds can also be auto-t
    \end{center}
 \end{table}
 
-Fighting resistance counts every time that there is a normal period as a +1, and every time there is 
-an anomalous period as a -1. If the counter reached $-A$, then the monitor is put into an alert state.
+Fighting resistance counts every time that there is a normal period as a +1, and every time there is
+an anomalous period as a -1. If the counter reaches $-A$, then the monitor is put into an alert state.
 If the counter reaches $R$, then the monitor is put into a normal state.
 
 \subsubsection{Continuous Resistance}
@@ -812,7 +836,7 @@ If the counter reaches $R$, then the monitor is put into a normal state.
 \end{table}
 
 Continuous resistance must get $A$ continuous anomalous observations to enter an alert state, and $R$ continuous normal
-observations to enter a normal state. 
+observations to enter a normal state.
 
 \subsubsection{Window Resistance}
 \begin{table}[H]
@@ -835,6 +859,7 @@ observations is or exceeds $C$, then an alert state is declared. Otherwise, the 
 \subsection{Smoothers}
 \label{arch-smoothers}
 The monitors have a chance to smooth the data before it gets analyzed.
+Smoothers take in a stream of data.
 As with resistance methods, different smoothers and smoothing parameters can be auto-tuned.
 
 \subsubsection{No Smoother}
@@ -853,7 +878,9 @@ Do not smooth. If this smoother is put into the parameter search space, then the
    \end{center}
 \end{table}
 
-Any value becomes the mean of that value and the $W - 1$ values that precede it.
+The Moving Mean Smoother works by taking the mean in a sliding window of size $W$.
+This Smoother tolerates a smaller window if there is not enough data available.
+Therefore, this Smoother always outputs a number for every number in the input stream.
 
 \section{Control}
 \label{arch-control}
@@ -866,21 +893,21 @@ The Control is singleton with respects to the base class. Therefore, only one in
 active at any given time.
 
 The Control is very careful to never allow anyone to own a reference to the currently running Control.
-All requests to the Control are made statically to the ``Control'' base class. The base class will then forward the
-request onto the specific instance of Control. We do this so that the rest of the SPOONS system will never know
+All requests to the Control are made statically to the ``Control'' base class. The base class then forwards the
+request onto the specific instance of Control. We do this so that the rest of the SPOONS system never knows
 what kind of Control is currently active. So we can switch a server between different roles without restarting the
 system or notifying any other components of the SPOONS system.
 
-All Controls will always run the entire slew of Gatherers.
+All Controls always run the entire slate of Gatherers.
 
 \subsection{Master Control}
 \label{arch-master-control}
 The Master Control is the Control that is responsible for the controlling SPOONS when it is in distributed mode.
-The Master Control maintains information on all the active worker servers. It will send the worker servers
+The Master Control maintains information on all the active worker servers. It sends the worker servers
 messages to tell them what work to do.
 
 The Master Control maintains ``shallow execution'' of every pipeline in the system.
-This means that this control will run each pipeline, but then distribute work for each pipeline as it is created.
+This means that this control runs each pipeline, but then distributes work for each pipeline as the work is generated.
 
 \subsection{Worker Control}
 \label{arch-worker-control}
@@ -915,8 +942,8 @@ As discussed before, SPOONS is a multi-server system (Fig~\ref{fig:serverArch}).
 The SPOONS system uses the master/worker paradigm with a single master and N workers.
 
 All of the servers share two primary resources: the primary database and a NoSQL property store.
-When a master or worker comes online, it inserts and entry for itself into the shared property store.
-If the new server is a worker, it will alert the current master about its existence; and visa-versa
+When a master or worker comes online, it inserts an entry for itself into the shared property store.
+If the new server is a worker, it alerts the current master about its existence, and visa-versa,
 if the new server is a master. In addition, all workers are required to heartbeat to the master every
 15 seconds and the master heartbeats to the workers every 15 seconds. Using this system, the master
 always knowns about all of the workers and the worker always knows about the current master.
@@ -930,7 +957,7 @@ The SPOONS distribution model relies on two assumptions about the system: every 
 exactly the same data in memory and every Task can be uniquely referenced.
 
 \subsubsection{Same Data}
-SPOONS assumes that every server will have the same data in memory on every server.
+SPOONS assumes that every server has the same data in memory on every server.
 This means that not only does every server need to have the same data structures in memory,
 but also that every server needs to have the same classes instantiated. The only exception to this
 assumption is the Control. Depending on the role of the server, a different Control will be
@@ -950,21 +977,25 @@ When a task is to be distributed, the Distributable Task calls into the Control 
 the Control distributes it. The next step varies depending on the type of Control that is active:
 
 \subsubsection{Master Control}
-The task distributing control flow is described in Image~\ref{img:taskFlow}.
-A Master Control will take the pause the calling thread and send a message to a selected worker\footnote{The
+The task distributing control flow is described in Figure~\ref{fig:taskFlow}.
+A Master Control blocks the calling thread and send a message to a selected worker\footnote{The
 current scheduling algorithm chooses the worker that has the fewest tasks currently assigned to it.} telling to
 run the task with given parameters. The message that goes to the worker just contains the task's unique identifier
-and the parameters to the task's run. When the task is complete, the Worker Control will send the Task's return
+and the parameters to the task's run. When the task is complete, the Worker Control sends the Task's return
 status back to the Master Control. When the master receives a message from the worker that the requested task
-has completed its run, it will resume the original calling thread and have it return with the return status given
+has completed its run, it resumes the original calling thread and have it return with the return status given
 by the worker.
 
 \subsubsection{Worker Control}
-If a Worker Control receives a task, then it is being asked to distribute a task that is already being distributed.
-We consider this a violation of the framework and will throw an error.
+Worker Controls do not distribute Tasks.
+Because Tasks are atomic units of work, Tasks are not suppose to call other Tasks.
+If Task A calls upon a Worker Control to distribute a Task B, then that means that Task A has violated
+its own atomicity. This is considered a violation of the framework and will cause the Worker Control to throw an error.
 
 \subsubsection{Single Control}
-A worker will just call back into the task and tell it to run itself.
+Instead of blocking the calling thread like in the Master Contol, a Single Control
+will just use the calling thread to run the task. When the task is complete,
+the Single Control will return control to the caller.
 
 \subsection{Shared Properties}
 \label{arch-props}
@@ -974,14 +1005,15 @@ Not only will this data need to be consistent on all the servers, but it also ne
 data between starts and stop of the system. An Analysis Pipeline should be able to the stopped for an arbitrary amount
 of time and then restarted without losing data or its place.
 
-To enforce these restrictions, we use a shared property store. The shared property store is a MongoDB server.
-Whenever a Task needs to store member datum, it places it in the shared store. Therefore, any server may access this data.
-A Task can first be run on Server A and then on Server B. Because it stores the necessary information in the shared
-property store, Server B can have all the information gained from the run on Server A and not lose any positional information.
+To enforce these restrictions, SPOONS uses a shared property store. The shared property store is a MongoDB server.
+Whenever a Task needs to store member datum, it places the data in the shared store. Making the data available to any server in the cluser.
+A Task can first be run to completion on Server A and then when new data is availble run on Server B.
+Because the Task stores the necessary information in the shared property store,
+Server B can have all the information gained from the run on Server A and not lose any positional information.
 
 In addition to storing shared properties, the shared property store houses information on every active server.
 When a server comes online, it queries the property store to find all the other active servers and inserts itself into
-the store. If a server fails to heartbeat, then the servers that still live will remove the entry that server from the property store.
+the store. If a server fails to heartbeat, then the rest of the cluster that is still active will remove the entry for that server from the property store.
 
 \chapter{Database}
 \label{arch-database}
