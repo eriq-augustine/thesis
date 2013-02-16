@@ -766,7 +766,7 @@ into the database.
       \includegraphics[width=0.9\textwidth]{images/Twitter_Holes.eps}
       \captionfonts
       \caption[Twitter Holes]{One server in a hole is covered by two other gathering servers.}
-      \label{fig:ui}
+      \label{fig:twitterHoles}
    \end{center}
 \end{figure}
 
@@ -1211,7 +1211,7 @@ This keeps the UI fairly stable in the face of database changes.
 \subsection{Expected Schemas}
 \label{arch-database-sp-schemas}
 The UI Stored Procedures look for 6 distinct name/schema combinations all of which are required to be RESULT tables.
-The different schema requirements are shown in Figure~\ref{fig:ui-expected-schema}, and described below:
+The different schema requirements are shown in Table~\ref{table:ui-expected-schema}, and described below:
 
 \begin{table}
    \begin{center}
@@ -1234,7 +1234,7 @@ The different schema requirements are shown in Figure~\ref{fig:ui-expected-schem
       \end{tabular}
    \end{center}
    \caption[Stored Procedure UI Expected Schema]{The different types of schemas that the UI looks for in RESULT tables.}
-   \label{fig:ui-expected-schema}
+   \label{table:ui-expected-schema}
 \end{table}
 
 \begin{description}
@@ -1326,7 +1326,10 @@ outage related traffic and that the spike on the right is caused by media relate
 
 \section{Classification Roadmap}
 \label{class-roadmap}
-The steps that SPOONS takes to use classification to detect service outages are as follows:
+The steps that SPOONS takes to use classification to detect service outages can be divided into two categories:
+prep work and online.
+
+The prep work includes:
 
 \begin{enumerate}
    \item Observe Netflix-related Twitter traffic and observe the different classes that the tweets fall into.
@@ -1334,6 +1337,11 @@ The steps that SPOONS takes to use classification to detect service outages are 
    \item Classify incoming tweets.
    \item Group classified tweets according to the type of traffic that class produces.
    \item Establish the best classifiers.
+\end{enumerate}
+
+After the off-line prep work is complete, the online analysis can begin:
+
+\begin{enumerate}
    \item Use the best classifiers in an Analysis Pipeline.
    \item Observe the differences between the total traffic and the classified traffic.
    \item Declare an outage when the two traffics diverge significantly.
@@ -1395,8 +1403,6 @@ three different groups that account for the different types of Netflix-related t
   \item \texttt{Bad}: Contains both the \texttt{snafu} and \texttt{complaint} classes.
   \item \texttt{Other/Normal}: Contains all other classes.
 \end{itemize}
-
-% TODO(eriq): B/W makes description hard.
 
 Figure~\ref{fig:groups} shows the amount of Netflix-related tweets during a Netflix outage and media event.
 During normal times, the \texttt{normal} traffic is responsible for the majority of the overall traffic.
@@ -1573,6 +1579,8 @@ the structure of the training set and shows the  number of tweets classified int
 Tweets were allowed to belong to multiple classes because of posts like, ``\texttt{I love netflix! Watching Law and Order
 online!}'', which could be classified as both \texttt{happy} and \texttt{watching}.
 
+See Appendix~\ref{appendix-full-training} for the full training set.
+
 \begin{table}
    \begin{center}
       \begin{tabular}{|l|c|c|c|}
@@ -1596,24 +1604,171 @@ online!}'', which could be classified as both \texttt{happy} and \texttt{watchin
 \section{Evaluation}
 \label{class-evaluation}
 Each classifier is individually evaluated just on its ability to classify tweets against the training set.
-Each classifier varied two parameters: the type of filtering and the feature selection.
-The measure of accuracy is the percentage of correctly classified tweets.
+Each classifier will vary the type of filtering it uses between no filtering and full filtering (every method discussed in Section~\ref{class-filter}).
+Table~\ref{table:classifierEvaluationSpace} shows the combinations of classifiers and filters used for the classifier evaluation.
 
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|l|l|}
+         \hline
+            Classifiers & Filtering
+         \tabularnewline\hline
+            BayesNetClassifier & None
+         \tabularnewline\hline
+            BinaryBayesNetClassifier & Full
+         \tabularnewline\hline
+            BinaryJ48Classifier &
+         \tabularnewline\hline
+            BinaryKNNClassifier &
+         \tabularnewline\hline
+            BinaryNaiveBayesClassifier &
+         \tabularnewline\hline
+            BinarySMOClassifier &
+         \tabularnewline\hline
+            J48Classifier &
+         \tabularnewline\hline
+            KNNClassifier &
+         \tabularnewline\hline
+            NaiveBayesClassifier &
+         \tabularnewline\hline
+            Non-Weka BPNBClassifier &
+         \tabularnewline\hline
+            Non-Weka NaiveBayesClassifier &
+         \tabularnewline\hline
+            SMOClassifier &
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Classifier Evaluation Combinations]{The cross product of the classifier and filtering will be used to evaluate the classifiers.}
+      \label{table:classifierEvaluationSpace}
+   \end{center}
+\end{table}
+
+\subsection{Confusion Matrices}
+\label{class-evaluation-confusion}
+The results of the classification evaluation will be shown in confusion matrices.
+Table~\ref{table:confusionExample} shows an example of a classification confusion matrix.
+Down the vertical are the actual classes of the tweets, and across the horizontal are the predicted classes that the classifiers output.
+Note that the example shows that this classifier incorrectly classified eight \texttt{media} tweets as another class (seen by looking down the \texttt{media} column),
+and misclassified 22 non-media tweets as \texttt{media} (seen by looking across the \texttt{row}).
+Overall accuracy for the classifier can be calculated by taking the number of correctly classified tweest (down the diagonal) over the total number of tweets.
+
+\begin{table}[H]
+   \begin{center}
+      \scalebox{0.65}{
+         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+         \hline
+            \diaghead{\theadfont Diag ColumnmnHead II}{Classified}{Actual} & undecided & media & neutral & snafu & watching & response & complaint & refuse to rate & happy \\
+         \hline
+            undecided & \textbf{0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+         \hline
+            media & 0 & \textbf{81} & 3 & 0 & 1 & 3 & 0 & 14 & 1 \\
+         \hline
+            neutral & 0 & 0 & \textbf{23} & 3 & 14 & 11 & 11 & 1 & 3 \\
+         \hline
+            snafu & 0 & 0 & 7 & \textbf{81} & 8 & 4 & 55 & 2 & 1 \\
+         \hline
+            watching & 0 & 0 & 26 & 0 & \textbf{82} & 5 & 12 & 0 & 10 \\
+         \hline
+            response & 0 & 2 & 12 & 3 & 6 & \textbf{3} & 1 & 0 & 3 \\
+         \hline
+            complaint & 0 & 1 & 9 & 36 & 9 & 8 & \textbf{77} & 3 & 3 \\
+         \hline
+            refuse to rate & 0 & 5 & 4 & 1 & 2 & 4 & 9 & \textbf{21} & 2 \\
+         \hline
+            happy & 0 & 0 & 18 & 5 & 22 & 5 & 31 & 1 & \textbf{65} \\
+         \hline
+         \end{tabular}
+      }
+      \caption[Example Classification Confusion Matrix]{A example confusion matrix for a classifier.}
+      \label{table:confusionExample}
+   \end{center}
+\end{table}
+
+\subsection{Results}
+\label{class-evaluation-results}
 Table~\ref{table:classification-summary-uncompressed} shows a summary of the results of the evaluation.
-The SMO classifier took the top three spots with a top accuracy of \textbf{.5750}.
+The SMO classifier took the top two spots with a top accuracy of \textbf{.5750}.
 This is a decent accuracy, but much of the misclassification occurs between classes that don't matter
 as much when trying to identify the different types of classes. For example, it does not matter if
 a \texttt{watching} tweet is misclassified as a \texttt{happy} tweet. Both of those classes contribute to
-normal background traffic. Therefore the classifiers will be evaluated again, but the different classes
+normal background traffic. Table~\ref{table:confusionMisclassification} shows the confusion matrix for the top
+ranked classifier (SMO with no filtering). All of the misclassification of the \texttt{other} group that
+would become correct classification if the nine classes were compressed to the three groups are \textbf{bold}.
+Because of this, the classifiers will be evaluated again, but the different classes
 will be compressed into their respective groups before the results are evaluated.
 
-\input{classifierSummaries.tex}
+\begin{table}[H]
+   \begin{center}
+      \scalebox{0.65}{
+         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+         \hline
+            \diaghead{\theadfont Diag ColumnmnHead II}{Classified}{Actual} & undecided & media & neutral & snafu & watching & response & complaint & refuse to rate & happy \\
+         \hline
+            undecided& 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+         \hline
+            media    & 0 & 98 & 0 & 0 & 2 & 2 & 0 & 0 & 1 \\
+         \hline
+            neutral  & 0 & 3 & 11 & 2 & \textbf{16} & \textbf{7} & 7 & 0 & \textbf{20} \\
+         \hline
+            snafu    & 0 & 0 & 1 & 87 & 4 & 4 & 41 & 0 & 21 \\
+         \hline
+            watching & 0 & 2 & \textbf{12} & 3 & 88 & \textbf{5} & 4 & 0 & \textbf{21} \\
+         \hline
+            response & 0 & 2 & \textbf{5} & 4 & \textbf{7} & 0 & 3 & \textbf{1} & \textbf{8} \\
+         \hline
+            complaint& 0 & 2 & 5 & 40 & 4 & 1 & 68 & 1 & 25 \\
+         \hline
+            refuse to rate & 0 & 9 & \textbf{1} & 1 & \textbf{1} & \textbf{1} & 0 & 18 & \textbf{17} \\
+         \hline
+            happy    & 0 & 1 & \textbf{9} & 3 & \textbf{13} & \textbf{6} & 8 & 0 & 107 \\
+         \hline
+         \end{tabular}
+      }
+      \caption[Uncompressed Misclassification Example]{The SMO results with no filtering. Every misclassification that would map to the \texttt{other} group is bold.}
+      \label{table:confusionMisclassification}
+   \end{center}
+\end{table}
 
+\subsection{Compressed Results}
+\label{class-evaluation-compressed-results}
 Table~\ref{table:classification-summary-compressed} shows a summary of the compressed results.
 After the classes have been compressed, the SMO classifier is still on top but now with a best accuracy
 of \textbf{.8583}. Compressing the classes into groups greatly increases the accuracy of the classifiers.
 
+It is important to note that not only is overall accuracy important, but also the precision for the \texttt{snafu} group.
+If SPOONS is stable capturing and classifying anomalous traffic, then when there is a spike then it will be visible.
+However if there are too many false positives, then a spike cannot be trusted. Recall affects the size of a spike, but precision
+affects the shape of the spike.
+
+Table~\ref{table:confusionPrecisionRecall} shows an example of a compressed classification confusion matrix.
+The \textbf{bold} cells shows \texttt{snafu} tweets that were misclassified as other groups. Our number one priority is to minimize these cells.
+These cells represent the precision of the classifier for the \texttt{snafu} group (lower numbers generate higher precision). 
+The \emph{italics} cells shows tweets that were incorrectly classified as \texttt{snafu}. Although we also want to minimize these
+cells, they are not as important as the \textbf{bold} cells.
+
+\begin{table}[H]
+   \begin{center}
+      \scalebox{0.62}{
+         \begin{tabular}{|c|c|c|c|}
+         \hline
+            \diaghead{\theadfont Diag ColumnmnHead II}{Classified}{Actual} & media & snafu & other \\
+         \hline
+            media & 95 & \textbf{0} & 8 \\
+         \hline
+            snafu & \emph{1} & 252& \emph{51} \\
+         \hline
+            other & 13 & \textbf{77} & 336\\
+         \hline
+         \end{tabular}
+      }
+      \caption[Misclassified Snafu]{A sample compressed classification confusion matrix showing misclassified \texttt{snafu} tweets.}
+      \label{table:confusionPrecisionRecall}
+   \end{center}
+\end{table}
+
 Full results for both the uncompressed and compressed evaluation can be found in Appendix~\ref{appendix-full-classifier}.
+
+\input{classifierSummaries.tex}
 
 \chapter{Outage Detection}
 \label{outage-detection}
@@ -2009,8 +2164,14 @@ CREATE TABLE DATA_tweets (
 \label{appendix-full-classifier}
 \input{classifierTables.tex}
 
+\chapter{Full Training Set}
+\label{appendix-full-training}
+\input{trainingSet.tex}
+
 
 % TODO(eriq): Pick more tables
+
+% TODO(eriq): Include the training set as an appendix.
 
 % Glossary here plz
 \newglossaryentry{SPOONS}{name={SPOONS},
