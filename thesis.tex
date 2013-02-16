@@ -7,8 +7,6 @@
 % modified by Mark Barry 2/07.
 %
 
-% TODO(eriq): Final check for ch/section reference.
-
 \documentclass[12pt]{ucthesis}
 
 \usepackage[hyphens]{url}
@@ -1828,14 +1826,10 @@ false positives would just cause SPOONS to be ignored.
 
 \subsection{Monitors}
 \label{outage-detection-monitors}
-TODO(eriq): Describe how the different monitors will be described.
-TODO(eriq): Make sure equations get numbers.
-
-\subsubsection{Monitor Parameters}
-\label{outage-detection-monitors-params}
-TODO(eriq)
-Section~\ref{arch-smoothers}
-Section~\ref{arch-resistance}
+SPOONS uses a number of monitors that use different methods to try and detect anomalies in the traffic.
+This section will describe each monitor used.
+Each monitor described will have two tables describing the parameters that can tune this monitor and
+the inputs that the monitor takes. In addition, each monitor will have a text description along with it.
 
 \subsubsection{Baseline Monitor}
 \label{outage-detection-monitors-Baseline}
@@ -2170,8 +2164,6 @@ CREATE TABLE DATA_tweets (
 
 
 % TODO(eriq): Pick more tables
-
-% TODO(eriq): Include the training set as an appendix.
 
 % Glossary here plz
 \newglossaryentry{SPOONS}{name={SPOONS},
