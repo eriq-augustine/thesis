@@ -289,9 +289,9 @@ the outage detection system shall detect outages and generate alerts with as
 high precision as possible.
 
 \paragraph{Comprehensive Outage Detection.}
-Not all Netflix outages will generate a signal on Twitter. Those that don't may
-be allowed to go unnoticed by the outage detection system (as the system will
-have no basis for detecting them), but any outage that causes a signal on
+Not all Netflix outages generates a signal on Twitter. Those that don't may
+be allowed to go unnoticed by the outage detection system (as the system
+has no basis for detecting them), but any outage that causes a signal on
 Twitter shall be detected.
 
 \paragraph{User-Friendly Online UI.}
@@ -311,12 +311,20 @@ provided shall include:
 \label{contributions-organization}
 
 SPOONS is a continual team effort and has been touched and improved by many different people.
-The idea originated at Netflix and was passed to the ABRA team at Cal Poly. The ABRA team has published a paper
-on SPOONS \cite{abraPaper}. In addition, Cailin Cushing defended a thesis using SPOONS\cite{cailinThesis}.
+The idea originated at Netflix and was passed to the ABRA team at Cal Poly.
+The ABRA team has published a paper on SPOONS \cite{abraPaper}.
+In addition, Cailin Cushing defended a thesis on a part of SPOONS devoted to outage detection through sentiment analysis\cite{cailinThesis}.
 
-The main contributions of this work are the design and implementation of the SPOONS system, framework, server architecture,
-distribution model, and database schema. As well as the design and implementation of classification based outage detection
-methods.
+The main contributions of this work are as follows:
+
+\begin{itemize}
+   \item Design and implementation of the SPOONS system.
+   \item Design and implementation of the SPOONS framework.
+   \item Design and implementation of the SPOONS server architecture.
+   \item Design and implementation of the SPOONS distribution model.
+   \item Design of the SPOONS database structure and all table schemas.
+   \item Design and implementation of all SPOONS classification based outage detection methods.
+\end{itemize}
 
 The rest of the paper is organized as follows.
 Chapter~\ref{background-related-work} covers background and related work.
@@ -450,19 +458,19 @@ Note that once the decision tree is built, reaching a terminal node is fairly tr
 
 \subsubsection{C4.5}
 \label{background-classification-classifiers-j48-c45}
-C4.5 will recursively build a decision tree by continually splitting the dataset on a single attribute\cite{Quinlan}.
+C4.5 recursively builds a decision tree by continually splitting the dataset on a single attribute\cite{Quinlan}.
 The splitting attribute is determined by the normalized information gain (Kullback-Leibler divergence) and becomes a
 node in the tree and the possible values for the attribute become edges. Each subtree is then recursively built using only the
 data where the splitting attribute takes the value given by the incoming edge. The algorithm has two stopping conditions.
-First, when all the data has the same class. In which case a single node tree will be constructed that contains the class.
+First, when all the data has the same class. In which case a single node tree is constructed that contains the class.
 Secondly, when there are no more attributes or when the information gain from splitting on each attribute is below a threshold.
-In this case, a single node tree will be constructed which contains the plurality class.
+In this case, a single node tree is constructed which contains the plurality class.
 
 \subsection{K-Nearest Neighbors}
 \label{background-classification-classifiers-knn}
 $k$-Nearest Neighbors (KNN) is simple and effective classification technique\cite{Duda}.
 While training, the classifier remembers the entire training set.
-During the classification phase, the classifier will find the $k$ nearest neighbors
+During the classification phase, the classifier finds the $k$ nearest neighbors
 to the query point. The predicted class is simply the plurality of the $k$ nearest neighbors.
 Figure~\ref{fig:knn} shows an example of $k$-Nearest Neighbors with a simple search space.
 
@@ -479,8 +487,8 @@ Figure~\ref{fig:knn} shows an example of $k$-Nearest Neighbors with a simple sea
 \label{background-classification-classifiers-svm}
 Support Vector Machines (SVMs) are considered one of the best off-the-shelf classification techniques\cite{Vapnik}.
 When training, SVMs use hyperplanes to partition the data into surfaces based off of the different classes of the training examples.
-When classifying, the SVM will find which surface the query point falls on and give that class to the point.
-SVMs will try and choose the partitioning hyperplane to maximize the margin between the two groups of data.
+When classifying, the SVM finds which surface the query point falls on and give that class to the point.
+SVMs try and choose the partitioning hyperplane to maximize the margin between the two groups of data.
 Depending on the implementation, the SVM may choose the optimal partition or just an approximation.
 
 \begin{figure}
@@ -528,6 +536,43 @@ Where $g(\textrm{f}_{m}, c)$ is the weight of feature $\textrm{f}_m$ in class $c
 \label{background-weka}
 SPOONS utilizes several classifiers provided in the \textit{WEKA Machine Learning Package}.
 WEKA is an open source package written under the GNU General Public License\cite{weka}.
+
+\section{Singletons}
+\label{background-singletons}
+The SPOONS architecture makes heavy use of singletons to guarantee certain assumptions.
+A \textbf{singleton} is a class that may only every have at most one instance of itself instantiated at a time.
+SPOONS uses two types of singletons: singletons that are relative to the base class and singletons that are relative to the
+child classes.
+
+\paragraph{Base Relative Singletons.}
+Base relative singletons are singletons that only allow one instance of to base class in the inheritance hierarchy to be instantiated
+at a time. This means that there can only be one instance allowed for the entire inheritance hierarchy.
+Figure~\ref{fig:baseSingleton} shows an inheritance diagram of a hierarchy that uses a base relative singleton.
+Note that because one of the children have been instantiated, no other class in the hierarchy can be instantiated.
+
+\begin{figure}[H]
+   \begin{center}
+      \includegraphics[width=0.6\textwidth]{images/Base_Singleton.eps}
+      \captionfonts
+      \caption[Base Relative Singleton]{An example base relative singleton inheritance hierarchy. Note that instantiating any child removes the ability to instantiate any other part of the hierarchy.}
+      \label{fig:baseSingleton}
+   \end{center}
+\end{figure}
+
+\paragraph{Child Relative Singletons.}
+Child relative singletons are singletons that allows only one instance of each leaf child in the inheritance hierarchy to be instantiated
+at a time. This allows the inheritance hierarchy to have as many instance as leaf children.
+Figure~\ref{fig:childSingleton} shows an inheritance diagram of a hierarchy that uses child relative singletons.
+Note that all the children can be instantiated once.
+
+\begin{figure}[H]
+   \begin{center}
+      \includegraphics[width=0.6\textwidth]{images/Child_Singleton.eps}
+      \captionfonts
+      \caption[Child Relative Singleton]{An example child relative singleton inheritance hierarchy. Note that any child can be instantiated, but only once.}
+      \label{fig:childSingleton}
+   \end{center}
+\end{figure}
 
 \chapter{Twitter API}
 \label{api}
@@ -592,8 +637,8 @@ The id of the oldest tweet that should be returned. This is not a hard limit, bu
 \item[max\_id:]
 The id of the most recent tweet that should be returned. It may seem counter-intuitive to provide a cap on the
 most recent tweet, when one wants to query for all of the most recent tweets. However when a query spans across
-more than 15 pages, it will need to be broken into a new query restarting at the first page. In this situation,
-not providing an upper limit will include new tweets outside of the original search scope. This can result in tweets
+more than 15 pages, it needs to be broken into a new query restarting at the first page. In this situation,
+not providing an upper limit includes new tweets outside of the original search scope. This can result in tweets
 are forever lost to us.
 
 \end{description}
@@ -614,6 +659,10 @@ are forever lost to us.
 
 Figure~\ref{fig:apiRes} shows the result from the query ``eriq netflix''. Notice that some fields,
 like the \textsf{geo} field, can be null. Also note that the API incorrectly guessed the language of the tweet as Danish.
+
+
+%%%%%%%%%%%%%%%%%%  Arch  %%%%%%%%%%%%%%%%%%%%%
+
 
 \part{SPOONS Architecture}
 \label{arch}
@@ -644,7 +693,7 @@ Chapter~\ref{arch-framework} describes the framework architecture (Figure~\ref{f
 The framework architecture describes the relations between the different pieces of the SPOONS framework.
 Chapter~\ref{arch-dist} describes both the layout of the different servers involved in the SPOONS system
 and the Distribution Model which describes how pieces of work are distributed between the different servers
-Finally, Chapter~\ref{arch-database} will discuss the architecture of the database that backs SPOONS.
+Finally, Chapter~\ref{arch-database} discusses the architecture of the database that backs SPOONS.
 
 \chapter{Framework Architecture}
 \label{arch-framework}
@@ -701,15 +750,15 @@ making the final decision on about a period of time being anomalous.
 The data enters SPOONS at the Gatherers. The Gatherers run periodically (for Twitter, every two minutes).
 Gatherers are asynchronous and not dependent on any other part of the framework. There may be multiple different
 Gatherers running on the same machine. Gatherers are abstracted to be able to gather data from any source.
-Once the Gatherers get their data, they place the data in the database and notify the Control that there is new data
+Once the Gatherers obtain their data, they place the data in the database and notify the Control that there is new data
 available to the system.
 
 \subsection{Twitter Holes}
 \label{arch-twitter-holes}
 It is worth noting that sometimes the Twitter Search API fails to return any data. We have not discovered the cause
-of this, but Twitter does not report any errors. For unspecified amounts of time the Twitter API will just report zero
+of this, but Twitter does not report any errors. For unspecified amounts of time the Twitter API reports zero
 new tweets. We call these dead zones ``holes''. We have found that a query from a different IP usually does not
-experience the same hole. To counteract holes, we run Gatherers on multiple servers and resolve uniques upon insertion
+experience the same hole. To counteract holes, we run Gatherers on multiple servers and resolve duplicate tweets upon insertion
 into the database.
 
 \begin{figure}
@@ -725,7 +774,6 @@ into the database.
 \label{arch-processors}
 Processors are responsible for processing or transforming data before it goes into the analysis pipelines.
 \begin{itemize}
-   % TODO(eriq): Check refs after chapter/sections are changed.
    \item{\underline{Classifier Processors}:} There exists a Processor for every tweet classifier used in SPOONS (see Chapter~\ref{classifiers}.
    Because of the high number of classifiers used, these constitute the majority of Processors and form the largest unit of work in SPOONS.
    These Processors classify every tweet into one of the nine tweet categories discussed in Section~\ref{class-tweet-classes}.
@@ -741,11 +789,12 @@ Processors are responsible for processing or transforming data before it goes in
 
 \end{itemize}
 
+\paragraph{Implementation Notes:}
 Unlike most parts of the analysis pipeline, Processors are a shared resource. That is, multiple analysis pipelines
 invoke the same Processors. However, it does not make sense to restart the processing once it is started, or to
 start another instance of the same Processor for the same data. Processors have a finite amount of data to process and may be cumulative.
-To make sure that no redundant work is done, Processors are singleton. When multiple threads call into a Processor to do work, the Processor will block
-all incoming threads until the work is complete. Then, the Processor will release all of the threads that requested the work.
+To make sure that no redundant work is done, Processors are singleton. When multiple threads call into a Processor to do work, the Processor blocks
+all incoming threads until the work is complete. Then, the Processor releases all of the threads that requested the work.
 This model allows all the analysis pipelines to share the same Processor without any redundancies.
 
 \section{Analysis Pipelines}
@@ -765,13 +814,15 @@ Currently, SPOONS usually runs more than 20 Analysis Pipelines at a time.
 
 \section{Tasks}
 \label{arch-tasks}
-Tasks are the core unit of computation in SPOONS. Almost everything that can be ``run'' is a child of the Task base
-class. Every Task gets its own thread, and callers into the Task may request that the task block the calling thread
+Tasks are the core unit of computation in SPOONS. Almost everything that can be ``run'' is a Task.
+Every Task gets its own thread, and callers into the Task may request that the Task block the calling thread
 until the Task is complete.
 
-Tasks are singleton with respects to the leaf child class. Therefore there are many tasks, but every task is
-unique. We do this by enforcing that the class name is unique upon construction. The uniqueness of tasks is very
-important to SPOONS distribution model that will be discussed in Chapter~\ref{arch-dist}.
+\paragraph{Implementation Notes:}
+Tasks are singleton with respects to the leaf child class.
+This ensures that although there there are many different Tasks, every Task can be uniquely referenced.
+This singleton behavior is enforced by checking the fully-qualified class name in the Task base class upon construction.
+The uniqueness of tasks is very important to SPOONS distribution model discussed in Chapter~\ref{arch-dist}.
 
 \section{Modelers}
 \label{arch-modelers}
@@ -892,27 +943,27 @@ Therefore, this Smoother always outputs a number for every number in the input s
 \section{Control}
 \label{arch-control}
 The Control is the center of a SPOONS instance. It handles the flow of all control and has the ability to start and
-stop any task or pipeline on demand. It holds references to all the threads for the Gatherers and Analysis Pipelines.
+stop any Task or Analysis Pipeline on demand. It holds references to all the threads for the Gatherers and Analysis Pipelines.
 The Control handles all the setup and tear down in the system.
 
-There are different types of Controls that decide the behavior SPOONS on each respective server.
-The Control is singleton with respects to the base class. Therefore, only one instance of any type of Control can be
-active at any given time.
+There are different types of Controls that decide the behavior of SPOONS on each respective server.
+There are three types of Controls: \textbf{Master Control}, \textbf{Worker Control}, and \textbf{Single Control}.
+The Control is singleton with respects to the base class.
+Therefore, only one instance of any type of Control can be active on a server at any given time.
 
+\paragraph{Implementation Notes:}
 The Control is very careful to never allow anyone to own a reference to the currently running Control.
-All requests to the Control are made statically to the ``Control'' base class. The base class then forwards the
-request onto the specific instance of Control. We do this so that the rest of the SPOONS system never knows
-what kind of Control is currently active. So we can switch a server between different roles without restarting the
-system or notifying any other components of the SPOONS system.
-
-All Controls always run the entire slate of Gatherers.
+All requests to the Control are made statically to the ``Control'' base class.
+The base class then forwards the request onto the specific instance of Control currently active on the server.
+This is done so that the rest of the SPOONS system never knows what kind of Control is currently active.
+Because of that, a server can be switched between different roles without restarting the system or notifying any other components of the SPOONS system.
 
 \subsection{Master Control}
 \label{arch-master-control}
 The Master Control is the Control that is responsible for the controlling SPOONS when it is in distributed mode.
-The Master Control maintains information on all the active worker servers. It sends the worker servers
-messages to tell them what work to do.
+The Master Control maintains information on all the active worker servers including what Tasks are currently assigned to them.
 
+\paragraph{Implementation Notes:}
 The Master Control maintains ``shallow execution'' of every pipeline in the system.
 This means that this control runs each pipeline, but then distributes work for each pipeline as the work is generated.
 
@@ -946,9 +997,9 @@ The Single Control is for a SPOONS instance that wants to run on a single server
 \end{figure}
 
 As discussed before, SPOONS is a multi-server system (Fig~\ref{fig:serverArch}).
-The SPOONS system uses the master/worker paradigm with a single master and N workers.
+The SPOONS system uses the master/worker paradigm with a single master and $N$ workers.
 
-All of the servers share two primary resources: the primary database and a NoSQL property store.
+All of the servers share two resources: the primary database and a NoSQL property store.
 When a master or worker comes online, it inserts an entry for itself into the shared property store.
 If the new server is a worker, it alerts the current master about its existence, and visa-versa,
 if the new server is a master. In addition, all workers are required to heartbeat to the master every
@@ -957,9 +1008,37 @@ always knowns about all of the workers and the worker always knows about the cur
 When a server misses three heartbeats, the server expecting that heartbeat assumes that the server has
 gone down.
 
+\section{Distribution Requirements}
+\label{arch-dist-requirements}
+The design of the SPOONS distribution model was dominated by two main concerns: performance and usability.
+
+\paragraph{Performance}
+\label{arch-dist-requirements-performance}
+SPOONS is a real-time system. Any attempt at distribution cannot compromise the response time of the system.
+In addition, SPOONS has to be able to survive a server dying. These two concerns led to three requirements:
+
+\begin{itemize}
+   \item[Efficiency:] A distributed SPOONS should have comparable response time to a single server SPOONS.
+   \item[Fault Tolerance:] SPOONS should be able to survive any non-database server failing.
+   \item[Scalability:] Scaling a SPOONS cluster should be trivial.
+\end{itemize}
+
+\paragraph{Usability}
+\label{arch-dist-requirements-usability}
+SPOONS is meant to be a general real-time analysis system that many different types of people can use.
+The average developer using SPOONS should be concerned only with the framework level.
+Server, network, and distribution semantics should remain transparent to a user of the framework.
+To make a distributed SPOONS easy to use for a developer working with the framework, three requirements
+are stipulated:
+
+\begin{itemize}
+   \item[DB:] There should be one database, and a framework developer should not have to do anything that is not required on a simple single-server system.
+   \item[Framework Complexity:] All distribution specifics should be hidden from the framework developer.
+   \item[Single Mode:] SPOONS should be able to run on a single server.
+\end{itemize}
+
 \section{Distribution Assumptions}
 \label{arch-dist-assumptions}
-
 The SPOONS distribution model relies on two assumptions about the system: every server contains
 exactly the same data in memory and every Task can be uniquely referenced.
 
@@ -967,29 +1046,29 @@ exactly the same data in memory and every Task can be uniquely referenced.
 SPOONS assumes that every server has the same data in memory on every server.
 This means that not only does every server need to have the same data structures in memory,
 but also that every server needs to have the same classes instantiated. The only exception to this
-assumption is the Control. Depending on the role of the server, a different Control will be
+assumption is the Control. Depending on the role of the server, a different Control is
 instantiated. Because of this assumption, we do not have to worry about active replication
 between servers or a worker being asked to do work that requires a class that is not instantiated.
 
 \subsection{Uniquely Referenced Tasks}
 As stated in Section~\ref{arch-tasks}, Tasks are the basic unit of work inside SPOONS.
-When a worker is told to execute some work, it is being asked to execute a specific task with specified
+When a worker is told to execute some work, it is being asked to execute a specific Task with specified
 parameters. Therefore, Tasks need to be able to be referenced by a key that can be serialized and
 sent over the wire from the master to the worker.
 
 \section{Distributable Tasks}
 \label{arch-dist-tasks}
-Distributable Task is a subclass of Task that provides some of the distribution mechanism for Tasks.
-When a task is to be distributed, the Distributable Task calls into the Control and requests that
+Distributable Task is a subclass of Task that provides the distribution mechanism for Tasks.
+When a Task is to be distributed, the Distributable Task calls into the Control and requests that
 the Control distributes it. The next step varies depending on the type of Control that is active:
 
 \subsection{Master Control}
-The task distributing control flow is described in Figure~\ref{fig:taskFlow}.
+The Task distributing control flow is described in Figure~\ref{fig:taskFlow}.
 A Master Control blocks the calling thread and send a message to a selected worker\footnote{The
-current scheduling algorithm chooses the worker that has the fewest tasks currently assigned to it.} telling to
-run the task with given parameters. The message that goes to the worker just contains the task's unique identifier
-and the parameters to the task's run. When the task is complete, the Worker Control sends the Task's return
-status back to the Master Control. When the master receives a message from the worker that the requested task
+current scheduling algorithm chooses the worker that has the fewest Tasks currently assigned to it.} telling it to
+run the Task with given parameters. The message that goes to the worker just contains the Task's unique identifier
+and the parameters to the Task's run. When the Task is complete, the Worker Control sends the Task's return
+status back to the Master Control. When the master receives a message from the worker that the requested Task
 has completed its run, it resumes the original calling thread and have it return with the return status given
 by the worker.
 
@@ -997,12 +1076,12 @@ by the worker.
 Worker Controls do not distribute Tasks.
 Because Tasks are atomic units of work, Tasks are not suppose to call other Tasks.
 If Task A calls upon a Worker Control to distribute a Task B, then that means that Task A has violated
-its own atomicity. This is considered a violation of the framework and will cause the Worker Control to throw an error.
+its own atomicity. This is considered a violation of the framework and causes the Worker Control to throw an error.
 
 \subsection{Single Control}
 Instead of blocking the calling thread like in the Master Control, a Single Control
-will just use the calling thread to run the task. When the task is complete,
-the Single Control will return control to the caller.
+just uses the calling thread to run the Task. When the Task is complete,
+the Single Control returns control to the caller.
 
 \section{Shared Properties}
 \label{arch-props}
@@ -1020,7 +1099,7 @@ Server B can have all the information gained from the run on Server A and not lo
 
 In addition to storing shared properties, the shared property store houses information on every active server.
 When a server comes online, it queries the property store to find all the other active servers and inserts itself into
-the store. If a server fails to heartbeat, then the rest of the cluster that is still active will remove the entry for that server from the property store.
+the store. If a server fails to heartbeat, then the rest of the cluster that is still active removes the entry for that server from the property store.
 
 \chapter{Database}
 \label{arch-database}
@@ -1181,7 +1260,7 @@ The different schema requirements are shown in Figure~\ref{fig:ui-expected-schem
    each of the thee different groupings described in Section~\ref{class-tweet-groups}.
 \end{description}
 
-The stored procedures will further divide the tables by language. The currently recognized languages are English,
+The stored procedures further divides the tables by language. The currently recognized languages are English,
 Spanish, and Portuguese.
 
 % TODO(eriq): Better name
@@ -1403,8 +1482,8 @@ same topic. A hashtag does not have to reference a pre-existing topic.
 \paragraph{\@.}
 \label{class-twitter-symbols-at}
 An ``@'' in Twitter, simply pronounced ``at'', is a reference to another Twitter user.
-A reference to a user will alert that user about the posted tweet.
-For example, the following tweet will reference my Twitter account.
+A reference to a user alerts that user about the posted tweet.
+For example, the following tweet references my Twitter account.
 
 \begin{center}
 Hi there, @eriqaugustine
@@ -1437,7 +1516,7 @@ $\langle$\$title\$$\rangle$ is hilarious!  \#netflix
 \end{center}
 
 SPOONS contains a table that has over 50,000 movie and show titles on Netflix. The titles were gathered
-using the Netflix API. On startup, SPOONS will build a trie (prefix tree)\cite{trie} of all of the titles. In this trie titles can
+using the Netflix API. On startup, SPOONS builds a trie (prefix tree)\cite{trie} of all of the titles. In this trie titles can
 only be split on a word level, not on a character level. Therefore, moving to the next node consumes a single word.
 Searching for a title becomes a simple walk down the trie.
 If the walk of the trie ends on a terminal node, then a title is found. If not, then the trie is walked again from the beginning
@@ -1971,15 +2050,16 @@ CREATE TABLE DATA_tweets (
 
 \newglossaryentry{aws}
       {name={AWS},
-       description={Amazon Web Services. Cloud computing offerd by Amazon}}
+       description={Amazon Web Services. Cloud computing offered by Amazon}}
 
 \newglossaryentry{ec2}
       {name={EC2},
        description={Elastic Compute Cloud. Instance based cloud computing machines offered through AWS}}
 
-\glsaddall
-\addcontentsline{toc}{chapter}{Glossary}
-\printglossaries
+% Don't really care for glossary
+%\glsaddall
+%\addcontentsline{toc}{chapter}{Glossary}
+%\printglossaries
 
 \clearpage
 \bibliography{bibliography}
