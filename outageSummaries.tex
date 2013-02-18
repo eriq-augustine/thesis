@@ -1,0 +1,72 @@
+{
+   \setlength{\LTleft}{-20cm plus -1fill}
+   \setlength{\LTright}{\LTleft}
+   \small
+   \begin{longtable}{|l|l|l|c|c|c|c|c|}
+      \hline
+         Monitor & Classifier & Filtering & Precision & Recall & F$_{0.5}$ Score & Coverage & Adjusted Score
+      \tabularnewline\hline
+         \textbf{WeeklyWindowStdDev} & \textbf{SMO} & \textbf{Full} & \textbf{0.9583} & \textbf{0.4510} & \textbf{0.6970} & \textbf{0.2890} & \textbf{0.4956}
+      \tabularnewline\hline
+         WeeklyWindowStdDev & BinarySMO & None & 0.9588 & 0.4559 & 0.7010 & 0.3116 & 0.4825
+      \tabularnewline\hline
+         WeeklyWindowStdDev & SMO & None & 0.9659 & 0.4167 & 0.6711 & 0.2837 & 0.4807
+      \tabularnewline\hline
+         WeeklyWindowStdDev & BinarySMO & Full & 0.8481 & 0.3284 & 0.5552 & 0.1542 & 0.4697
+      \tabularnewline\hline
+         WeeklyWindowStdDev & BPNB & Full & 0.9266 & 0.4951 & 0.7180 & 0.3509 & 0.4661
+      \tabularnewline\hline
+         Baseline & BinarySMO & Full & 0.8947 & 0.3333 & 0.5730 & 0.2019 & 0.4573
+      \tabularnewline\hline
+         Baseline & SMO & None & 0.8767 & 0.3137 & 0.5486 & 0.2056 & 0.4358
+      \tabularnewline\hline
+         MSE & BinarySMO & None & 0.7982 & 0.4461 & 0.6319 & 0.3193 & 0.4302
+      \tabularnewline\hline
+         MSE & BinarySMO & Full & 0.8367 & 0.4020 & 0.6150 & 0.3032 & 0.4286
+      \tabularnewline\hline
+         Baseline & BinarySMO & None & 0.7524 & 0.3873 & 0.5725 & 0.2526 & 0.4279
+      \tabularnewline\hline
+         MSE & SMO & None & 0.8800 & 0.4314 & 0.6535 & 0.3482 & 0.4259
+      \tabularnewline\hline
+         Baseline & BPNB & Full & 0.9041 & 0.3235 & 0.5657 & 0.2486 & 0.4251
+      \tabularnewline\hline
+         Ratio & BPNB & Full & 0.8947 & 0.3333 & 0.5730 & 0.2607 & 0.4237
+      \tabularnewline\hline
+         Baseline & SMO & Full & 0.8526 & 0.3971 & 0.6168 & 0.3166 & 0.4215
+      \tabularnewline\hline
+         Ratio & SMO & Full & 0.6600 & 0.3235 & 0.4901 & 0.1430 & 0.4200
+      \tabularnewline\hline
+         Ratio & SMO & None & 0.7250 & 0.2843 & 0.4780 & 0.1420 & 0.4101
+      \tabularnewline\hline
+         Ratio & BinarySMO & Full & 0.5980 & 0.2990 & 0.4485 & 0.1081 & 0.4001
+      \tabularnewline\hline
+         Correlation & SMO & Full & 0.5636 & 0.3039 & 0.4387 & 0.1097 & 0.3906
+      \tabularnewline\hline
+         Ratio & BinarySMO & None & 0.7333 & 0.2157 & 0.4074 & 0.0533 & 0.3857
+      \tabularnewline\hline
+         Correlation & BPNB & Full & 0.5500 & 0.2696 & 0.4084 & 0.0978 & 0.3685
+      \tabularnewline\hline
+         Correlation & SMO & None & 0.6275 & 0.1569 & 0.3137 & 0.0480 & 0.2987
+      \tabularnewline\hline
+         Correlation & BinarySMO & Full & 0.4507 & 0.1569 & 0.2775 & 0.0650 & 0.2594
+      \tabularnewline\hline
+         Correlation & BinarySMO & None & 0.4384 & 0.1569 & 0.2743 & 0.0661 & 0.2562
+      \tabularnewline\hline
+         MSE & SMO & Full & 0.5260 & 0.7941 & 0.5927 & 0.5986 & 0.2379
+      \tabularnewline\hline
+         MSE & BPNB & Full & 0.5327 & 0.7990 & 0.5993 & 0.6247 & 0.2249
+      \tabularnewline\hline
+         WindowStdDev & BinarySMO & None & 0.7029 & 0.9510 & 0.7698 & 0.8537 & 0.1126
+      \tabularnewline\hline
+         WindowStdDev & BinarySMO & Full & 0.7029 & 0.9510 & 0.7698 & 0.8591 & 0.1084
+      \tabularnewline\hline
+         WindowStdDev & SMO & None & 0.7055 & 0.9510 & 0.7719 & 0.8610 & 0.1073
+      \tabularnewline\hline
+         WindowStdDev & BPNB & Full & 0.7091 & 0.9559 & 0.7759 & 0.8670 & 0.1032
+      \tabularnewline\hline
+         WindowStdDev & SMO & Full & 0.7132 & 0.9510 & 0.7781 & 0.8689 & 0.1020
+      \tabularnewline\hline
+      \caption[Outage Detection Results Summary]{Outage Detection Results Summary}
+      \label{table:outage-detection-summary}
+   \end{longtable}
+}
