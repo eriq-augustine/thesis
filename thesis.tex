@@ -169,8 +169,8 @@ outage. Figure~\ref{fig:tweetEx} shows some tweets that occurred during a disrup
 the Nintendo Wii. However without any infrastructure, Twitter observation is slow and inconsistent.
 It is also very time consuming to have someone constantly watching Twitter for signs of an outage.
 
-Given all these deficiencies Netflix wanted a monitoring system that is separate from their infrastructure,
-fast, and does not require any human intervention\cite{kevin}.
+\emph{Given all these deficiencies Netflix wanted a monitoring system that is separate from their infrastructure,
+fast, and does not require any human intervention\cite{kevin}.}
 
 \begin{figure}
    \begin{center}
@@ -203,7 +203,7 @@ analysis, and filtering.
 \end{figure}
 
 Figure~\ref{fig:systemFlow} shows how the SPOONS system can be divided into three
-main parts: input (blue); analysis pipelines (yellow); and output (red).
+main parts: input; analysis pipelines; and output.
 The inputs are tweets gathered from Twitter. Then the
 analysis pipelines use a combination of sentiment estimation, classification, and
 traffic volume analysis to detect when an outage is occurring.
@@ -287,7 +287,7 @@ the outage detection system shall detect outages and generate alerts with as
 high precision as possible.
 
 \paragraph{Comprehensive Outage Detection.}
-Not all Netflix outages generates a signal on Twitter. Those that don't may
+Not all Netflix service outages generate a signal on Twitter. Those that don't may
 be allowed to go unnoticed by the outage detection system (as the system
 has no basis for detecting them), but any outage that causes a signal on
 Twitter shall be detected.
@@ -319,7 +319,7 @@ The main contributions of this work are as follows:
    \item Design and implementation of the SPOONS system.
    \item Design and implementation of the SPOONS framework.
    \item Design and implementation of the SPOONS server architecture.
-   \item Design and implementation of the SPOONS distribution model.
+   \item Design and implementation of the SPOONS distributed computation model.
    \item Design of the SPOONS database structure and all table schemas.
    \item Design and implementation of all SPOONS classification based outage detection methods.
 \end{itemize}
@@ -339,15 +339,15 @@ Part~\ref{conclusions} wraps up the paper.
 %\label{background-text-stream}
 %Text Stream Analysis \cite{Bansal}\cite{Grinev}\cite{Huang}.
 
-\section{Twitter Classification}
+\section{Twitter Traffic Analysis}
 \label{background-classification}
 There has been much work in using classifiers on both tweets and Twitter users.
-Most of the classification effort has gone into trying to determine the sentiment,
+Most of the classification efforts has gone into trying to determine the sentiment,
 the general feeling, of a tweet \cite{Jiang}\cite{Mukherjee}\cite{Saif}\cite{Wang}.
 Raz et al. tackle the task of classifying humorous tweets as a specific type of humor
 such as irony, observational, or wordplay\cite{Raz}.
 The traditional text classification task of topic modeling has also been attempted various times\cite{hong}\cite{Zhao}.
-Instead of trying to classify tweets, Pennacchiotti et al. try to classify a user associations from
+Instead of trying to classify tweets, Pennacchiotti et al. try to classify user associations from
 their tweets\cite{Pennacchiotti}.
 
 The common theme in all of these classification attempts is that tweets are much more difficult to
@@ -362,7 +362,7 @@ This section gives an overview of each different type of classifier used.
 
 \subsection{Naive Bayes}
 \label{background-classification-classifiers-naive-bayes}
-Naive Bayes classifier work by applying the Bayes' theorem with the assumption that
+Naive Bayes classifier works by applying the Bayes' theorem with the assumption that
 the probability of each feature in a document is independent from the probability of
 any other feature appearing in the same document.\cite{Kibriya}\cite{Frank}
 
@@ -375,14 +375,14 @@ can be represented as:
    Pr(c|d) = \frac{Pr(c) \cdot Pr(d|c)}{Pr(d)}
 \end{equation}
 
-$Pr(c)$ is the \textsf{prior probability} of class $c$. That is, the probability of
+$Pr(c)$ is the \textsf{prior probability} of class $c$, that is, the probability of
 observing $c$ regardless of the document attached to it. When training the classifier, this
 is just the percentage of times that the class appeared in the training set.
 
 $Pr(d)$ is the \textsf{prior probability} of document $d$. Like $Pr(c)$, it is just the
 probability of observing the collection of features $d$ regardless of the class associated with it.
-Note that for classification, it may not be necessary to compute $Pr(d)$ because it is constant among all
-documents and classes. A classifier can just choose the class with the largest $Pr(c) \cdot Pr(d|c$ term.
+Note that for classification, it is not necessary to compute $Pr(d)$ because it is constant among all
+documents and classes. A classifier can just choose the class with the largest $Pr(c) \cdot Pr(d|c)$ term.
 
 $Pr(d|c)$ is the probability of observing document $d$ given that $d$ is already recognized as belonging to
 class $c$. Remember that document $d$ is really just a vector of $n$ features, $(\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
@@ -399,15 +399,15 @@ finding the percentage of training documents that contain feature $\textrm{f}_{m
 
 \subsection{Bayes Net}
 \label{background-classification-classifiers-bayes-net}
-A Bayesian Networks are probabilistic, directed acyclic graphs that represents a set of random variables and their conditional probabilities.
-In a Bayesian Network, each edge represents the conditional probability between two nodes. Each node represents a variable and a probability
-function that takes as input the state of the node's parents.\cite{Pearl}\cite{Neapolitan}
+A Bayesian Network is a probabilistic, directed acyclic graphs that represents a set of random variables and their conditional probabilities.
+In a Bayesian Network, the collection of incoming edges represent the conditional probability distribution between two random variables.
+Each node represents a variable and a probability function that takes as input the state of the node's parents.\cite{Pearl}\cite{Neapolitan}
 
 Figure~\ref{fig:bayesNet1} shows a simple Bayesian Network that models the chance of going on a picnic.
-Note that the whether or not it is Spring affects the chance of it raining; and both the season and weather
+Note that whether or not it is Spring affects the chance of it raining; and both the season and weather
 affect the chance of going on a picnic.
 
-Figure~\ref{fig:bayesNet2} shows the probability functions for the network. The chance of the season being Spring if
+Figure~\ref{fig:bayesNet2} shows the probability distributions for the network. The chance of the season being Spring if
 fully independent, and therefore takes no parameters into its probability function. However, the weather and picnic decision
 takes one and two input parameters respectively.
 
@@ -454,7 +454,7 @@ for that attribute, and each terminal node is a class. Each attribute can only a
 Figure~\ref{fig:decisionTree} shows a decision tree that may be generated for the picnic example discussed in Section~\ref{background-classification-classifiers-bayes-net}.
 Note that once the decision tree is built, reaching a terminal node is fairly trivial.
 
-\subsubsection{C4.5}
+\subsubsection{C4.5 --- Decision Tree Induction Algorithm}
 \label{background-classification-classifiers-j48-c45}
 C4.5 recursively builds a decision tree by continually splitting the dataset on a single attribute\cite{Quinlan}.
 The splitting attribute is determined by the normalized information gain (Kullback-Leibler divergence) and becomes a
@@ -634,10 +634,9 @@ The id of the oldest tweet that should be returned. This is not a hard limit, bu
 
 \item[max\_id:]
 The id of the most recent tweet that should be returned. It may seem counter-intuitive to provide a cap on the
-most recent tweet, when one wants to query for all of the most recent tweets. However when a query spans across
+most recent tweet, when one wants to query for all of the most recent tweets. However when a query's results spans across
 more than 15 pages, it needs to be broken into a new query restarting at the first page. In this situation,
-not providing an upper limit includes new tweets outside of the original search scope. This can result in tweets
-are forever lost to us.
+not providing an upper limit includes new tweets outside of the original search scope. This can result in tweets that are forever lost to us.
 
 \end{description}
 
@@ -704,9 +703,9 @@ The general solution taken by SPOONS consists of four main steps:
 
 \begin{description}
    \item[Collect:]
-      Tweets are collected from Twitter.
+      Collect tweets from Twitter.
    \item[Process:]
-      The tweets are converted from plain text to some form of information that can be analyzed.
+      Convert the tweets from plain text to some form of information that can be analyzed.
    \item[Model:]
       Use the information generated from the previous step to build a mathematical model of the information.
       Use past information to predict what the current model of the data should look like.
@@ -726,18 +725,18 @@ Gatherers are responsible for collecting documents from a specified data source 
 
 \paragraph{Database.}
 After the tweets are gathered, they are placed in the database. In addition to storing just tweets, the database also stores
-configuration data, intermediary calculations, and the results of the Analysis Pipelines.
+configuration data, intermediate calculations, and the results of the Analysis Pipelines.
 
 \paragraph{Control.}
 The Control is responsible for controlling the SPOONS server. It maintains data structures with all of the Gatherers and
 Analysis Pipelines. It is also responsible for communication with other servers in the SPOONS cluster.
 
 \paragraph{Processor.}
-Processors are data transformation utilities that takes raw data and puts it in a form that other components can use.
+Processors are data transformation utilities that take raw data and puts it in a form that other components can use.
 
 \paragraph{Modeler.}
 Modelers are responsible for building a mathematical model of the data and can be split into two groups: \textbf{Predictors} and \textbf{Counters}.
-Predictors build a predictive model of the data. Counters to build a model of the data that was actually gathered by the system.
+Predictors build a predictive model of the data. Counters build a model of the data that was actually gathered by the system.
 
 \paragraph{Monitor.}
 Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
@@ -772,19 +771,18 @@ into the database.
 \label{arch-processors}
 Processors are responsible for processing or transforming data before it goes into the analysis pipelines.
 \begin{itemize}
-   \item{\underline{Classifier Processors}:} There exists a Processor for every tweet classifier used in SPOONS (see Chapter~\ref{classifiers}.
+   \item \underline{Classifier Processors}: There exists a Processor for every tweet classifier used in SPOONS (see Chapter~\ref{classifiers}).
    Because of the high number of classifiers used, these constitute the majority of Processors and form the largest unit of work in SPOONS.
    These Processors classify every tweet into one of the nine tweet categories discussed in Section~\ref{class-tweet-classes}.
 
-   \item{\underline{Author Processors}:} The Author Processors extract the author of tweets and try to establish which authors are credible. These Processors are
+   \item \underline{Author Processors}: The Author Processors extract the author of tweets and try to establish which authors are credible. These Processors are
    outside the scope of this work and are discussed in other work\cite{cailinThesis}.
 
-   \item{\underline{Valence Processors}:} The Valence Processors assign a numeric ``happiness'' score to every tweet. How that score is produced is outside the
+   \item \underline{Valence Processors}: The Valence Processors assign a numeric ``happiness'' score to every tweet. How that score is produced is outside the
    scope of this work (see Section~\ref{future-work-kim}).
 
-   \item{\underline{Document Frequency Processors}:} The Document Frequency Processors maintain term frequencies and inverse document frequencies for the collection
+   \item \underline{Document Frequency Processors}: The Document Frequency Processors maintain term frequencies and inverse document frequencies for the collection
    of tweets in SPOONS.
-
 \end{itemize}
 
 \paragraph{Implementation Notes:}
@@ -973,7 +971,7 @@ Worker Controls do not take any initiative to run any tasks. Instead, they just 
 \label{arch-single-control}
 The Single Control is for a SPOONS instance that wants to run on a single server.
 
-\chapter{Distributed Model}
+\chapter{Distributed Computation Model}
 \label{arch-dist}
 
 \begin{figure}
@@ -1010,19 +1008,17 @@ gone down.
 \label{arch-dist-requirements}
 The design of the SPOONS distribution model was dominated by two main concerns: performance and usability.
 
-\paragraph{Performance}
-\label{arch-dist-requirements-performance}
+\paragraph{Performance.}
 SPOONS is a real-time system. Any attempt at distribution cannot compromise the response time of the system.
 In addition, SPOONS has to be able to survive a server dying. These two concerns led to three requirements:
 
 \begin{itemize}
-   \item[Efficiency:] A distributed SPOONS should have comparable response time to a single server SPOONS.
-   \item[Fault Tolerance:] SPOONS should be able to survive any non-database server failing.
-   \item[Scalability:] Scaling a SPOONS cluster should be trivial.
+   \item Efficiency: A distributed SPOONS should have comparable response time to a single server SPOONS.
+   \item Fault Tolerance: SPOONS should be able to survive any non-database server failing.
+   \item Scalability: Scaling a SPOONS cluster should be straightforward.
 \end{itemize}
 
-\paragraph{Usability}
-\label{arch-dist-requirements-usability}
+\paragraph{Usability.}
 SPOONS is meant to be a general real-time analysis system that many different types of people can use.
 The average developer using SPOONS should be concerned only with the framework level.
 Server, network, and distribution semantics should remain transparent to a user of the framework.
@@ -1030,9 +1026,9 @@ To make a distributed SPOONS easy to use for a developer working with the framew
 are stipulated:
 
 \begin{itemize}
-   \item[DB:] There should be one database, and a framework developer should not have to do anything that is not required on a simple single-server system.
-   \item[Framework Complexity:] All distribution specifics should be hidden from the framework developer.
-   \item[Single Mode:] SPOONS should be able to run on a single server.
+   \item DB: There should be one database, and a framework developer should not have to do anything that is not required on a simple single-server system.
+   \item Framework Complexity: All distribution specifics should be hidden from the framework developer.
+   \item Single Mode: SPOONS should be able to run on a single server.
 \end{itemize}
 
 \section{Distribution Assumptions}
@@ -1072,7 +1068,7 @@ by the worker.
 
 \subsection{Worker Control}
 Worker Controls do not distribute Tasks.
-Because Tasks are atomic units of work, Tasks are not suppose to call other Tasks.
+Because Tasks are atomic units of work, Tasks are not supposed to call other Tasks.
 If Task A calls upon a Worker Control to distribute a Task B, then that means that Task A has violated
 its own atomicity. This is considered a violation of the framework and causes the Worker Control to throw an error.
 
@@ -1086,12 +1082,12 @@ the Single Control returns control to the caller.
 As previously stated, all servers must maintain a consistent in-memory view of the system.
 This can be troublesome if a Task needs to maintain cumulative settings or member datum.
 Not only will this data need to be consistent on all the servers, but it also needs to maintain this
-data between starts and stop of the system. An Analysis Pipeline should be able to the stopped for an arbitrary amount
-of time and then restarted without losing data or its place.
+data between starts and stop of the system.
+An Analysis Pipeline should be able to be interrupted at any moment, and then restarted later without losing data or its place.
 
 To enforce these restrictions, SPOONS uses a shared property store. The shared property store is a MongoDB server.
-Whenever a Task needs to store member datum, it places the data in the shared store. Making the data available to any server in the cluster.
-A Task can first be run to completion on Server A and then when new data is available run on Server B.
+Whenever a Task needs to store member datum, it places the data in the shared store, making the data available to any server in the cluster.
+A Task can first be run to completion on Server A and then, when new data is available, run on Server B.
 Because the Task stores the necessary information in the shared property store,
 Server B can have all the information gained from the run on Server A and not lose any positional information.
 
@@ -1102,7 +1098,7 @@ the store. If a server fails to heartbeat, then the rest of the cluster that is 
 \chapter{Database}
 \label{arch-database}
 SPOONS is backed by a MySQL database. SPOONS currently uses 225 tables and 35 stored procedures. The 225 tables are further divided into
-six different categories that are used in different stages of the analysis pipeline. In addition to tweets being stored in the database,
+six different categories that are used in different stages of the analysis pipeline. In addition to tweets,
 configuration data, intermediate calculations, analysis results, and final alerting decisions are stored in the database. Keeping all of this
 data allows the users to look back at any point in time for reference or debugging.
 
@@ -1114,15 +1110,14 @@ to represent new tables without the need for specifying them.
 \label{arch-database-tables}
 Each stage in an analysis pipeline generally stores some information in the database. Because each stage generally deals with similar
 types of data, these tables are considered to be in the same group. We enforce group membership using hints in the table names. For example, the
-table name ``RESULT\_EN\_class\_heuristic\_bayes\_net''
-gives five hints as to the type of the table.
+table name ``\texttt{RESULT\_EN\_class\_heuristic\_bayes\_net}'' gives five hints as to the type of the table.
 
 \begin{enumerate}
-   \item RESULT - Marks this table as a result table. This means that it is guaranteed to be shown in the UI.
-   \item EN - The language of the tweets that were input into this method.
-   \item class - Indicates that this these results are output from a tweet classifier.
-   \item heuristic - States that the type of classifier used was a heuristic classifier.
-   \item bayes\_net - The name of the classifier used.
+   \item \texttt{RESULT} - Marks this table as a result table. This means that it is guaranteed to be shown in the UI.
+   \item \texttt{EN} - The language of the tweets that were input into this method.
+   \item \texttt{class} - Indicates that this these results are output from a tweet classifier.
+   \item \texttt{heuristic} - States that the type of classifier used was a heuristic classifier.
+   \item \texttt{bayes\_net} - The name of the classifier used.
 \end{enumerate}
 
 Using all of these hints, the UI can then ask for data for specific types of tables (eg. all result tables that are for English tweets).
@@ -1134,7 +1129,7 @@ The six different top level categories that SPOONS recognizes are:
    \item CONFIG - Contains information that analysis methods used to configure themselves before runs. These tables have been mostly replaced with the shared property store (see Section~\ref{arch-props}).
    \item DATA - Raw input data. These tables are generally the output from the Gatherers.
    \item META - Contains information that is not analyzed, but required by the system. For example, the different classes that the classifiers use along with descriptions of each class.
-   \item RESULT - These tables are output from some analysis pipeline. They are guaranteed to be shown in the UI.
+   \item RESULT - These tables are output from some analysis pipeline. They are guaranteed to be shown in the UI. These tables typically contain time series of some analytical signal.
    \item TEST - These tables are used for debugging and development. They are never shown in a user-facing UI, however may be shown in development UIs.
 \end{enumerate}
 
@@ -1208,7 +1203,7 @@ This keeps the UI fairly stable in the face of database changes.
 
 \subsection{Expected Schemas}
 \label{arch-database-sp-schemas}
-The UI Stored Procedures look for 6 distinct name/schema combinations all of which are required to be RESULT tables.
+The UI Stored Procedures look for 6 distinct name/schema combinations all of which are required to have the ``\texttt{RESULT}'' prefix.
 The different schema requirements are shown in Table~\ref{table:ui-expected-schema}, and described below:
 
 \begin{table}
@@ -1341,7 +1336,7 @@ After the off-line prep work is complete, the online analysis can begin:
 
 \begin{enumerate}
    \item Use the best classifiers in an Analysis Pipeline.
-   \item Observe the differences between the total traffic and the classified traffic.
+   \item Observe the differences between the total traffic and the traffic classified as anomalous.
    \item Declare an outage when the two traffics diverge significantly.
 \end{enumerate}
 
@@ -1418,8 +1413,9 @@ periods.
 
 \section{WEKA Classifiers}
 \label{class-weka}
-SPOONS uses several classifier from the WEKA machine learning package\cite{weka}.
+SPOONS uses several classifiers from the WEKA machine learning package\cite{weka}.
 All of these classifiers have been discussed in Section~\ref{background-classification-classifiers}.
+The WEKA classifiers used are:
 
 \begin{itemize}
    \item Naive Bayes
@@ -1436,9 +1432,9 @@ Because of low performance and inflexible API, the WEKA classifiers are being re
 As of now, only Naive Bayes has been reimplemented. The other classifier implemented from scratch is
 a BPNB classifier which is discussed in Section~\ref{background-classification-classifiers-bpnb}.
 
-\section{Text Processing}
+\section{Text Pre-Processing}
 \label{class-processing}
-Before the tweets are classified, they are processed. During processing, the text is transformed
+Before the tweets are classified, they are pre-processed. During processing, the text is transformed
 to make classification of the text easier. Standard text operations like stemming, stopword removal,
 and case normalization; as well as Twitter and Netflix specific operations like hashtag and movie title
 recognition are preformed. After the text is processed, it is split into unigrams to be used as features
@@ -1456,7 +1452,7 @@ Following a link may provide information about a tweet, however the link text of
 itself provides no information. The presence of a link, however, can provide information about
 a tweet.
 
-\subsubsection{Twitter Specific Symbols}
+\subsubsection{Twitter-Specific Symbols}
 \label{class-filter-twitter-symbols}
 Tweets often contain several special symbols specific to tweets.
 
@@ -1468,35 +1464,35 @@ a tweet made by another user. This symbol contains no reference to the original 
 Conan O'Brien posted the following tweet:
 
 \begin{center}
-   If I'm ever a ghost, I hope the person I haunt has Netflix.
+   \texttt{If I'm ever a ghost, I hope the person I haunt has Netflix.}
 \end{center}
 
 There were hundreds of identical tweets that said:
 
 \begin{center}
-   RT: If I'm ever a ghost, I hope the person I haunt has Netflix.
+   \texttt{RT: If I'm ever a ghost, I hope the person I haunt has Netflix.}
 \end{center}
 
 \paragraph{\#.}
 \label{class-twitter-symbols-hash}
-In Twitter, a ``\#'' (pronounced ``hashtag'') is a reference to some topic in Twitter.
+A ``\#'' (pronounced ``hashtag'') is used to mark keywords or topics.
 Users can search for tweets by hashtag and see the collection of tweets supposedly about the
 same topic. A hashtag does not have to reference a pre-existing topic.
 
-\paragraph{\@.}
+\paragraph{@.}
 \label{class-twitter-symbols-at}
 An ``@'' in Twitter, simply pronounced ``at'', is a reference to another Twitter user.
 A reference to a user alerts that user about the posted tweet.
 For example, the following tweet references my Twitter account.
 
 \begin{center}
-Hi there, @eriqaugustine
+   \texttt{Hi there, @eriqaugustine}
 \end{center}
 
 \subsubsection{Emoticon Parsing}
 \label{class-filter-emoticon}
 Emoticons are parsed out and replaced with meta words.
-SPOONS emoticon parser was written by Ryan Hanarkis and Allen Dunlea as part of a project for Graduate Artificial Intelligence.
+SPOONS emoticon parser was written by Ryan Hanarkis and Allen Dunlea as part of a project for Graduate Artificial Intelligence course.
 Emoticons provide a plethora of information about a tweet. Sarcasm aside,
 an emoticon can surmise the sentiment of an entire tweet.
 
@@ -1510,13 +1506,13 @@ two words that have very negative connotations: ``death'' and ``funeral''.
 Without title replacement, the following tweet would be very difficult to classify:
 
 \begin{center}
-Death at a Funeral is hilarious!  \#netflix
+   \texttt{Death at a Funeral is hilarious!  \#netflix}
 \end{center}
 
 However after title replacement, the tweet becomes very easy to classify:
 
 \begin{center}
-$\langle$\$title\$$\rangle$ is hilarious!  \#netflix
+   \texttt{$\langle$\$title\$$\rangle$ is hilarious!  \#netflix}
 \end{center}
 
 SPOONS contains a table that has over 50,000 movie and show titles on Netflix. The titles were gathered
@@ -1559,6 +1555,7 @@ comparison.
 Below is an overview of meta words that SPOONS recognizes:
 
 \begin{description}
+   \item[$\langle$\$title\$$\rangle$] Indicates the presence of a movie or show title.
    \item[$\langle$\$link\$$\rangle$] Indicates the presence of a URL.
    \item[$\langle$\$emote:*\$$\rangle$] Replaces an emoticon.
    \item[$\langle$\$RT\$$\rangle$] Indicates that a tweet is a ``retweet'' (a repeat of another tweet).
@@ -1602,38 +1599,52 @@ See Appendix~\ref{appendix-full-training} for the full training set.
 \section{Evaluation}
 \label{class-evaluation}
 Each classifier is individually evaluated just on its ability to classify tweets against the training set.
-Each classifier will vary the type of filtering it uses between no filtering and full filtering (every method discussed in Section~\ref{class-filter}).
+Each classifier varies the type of filtering it uses between no filtering and full filtering (every method discussed in Section~\ref{class-filter}).
 Table~\ref{table:classifierEvaluationSpace} shows the combinations of classifiers and filters used for the classifier evaluation.
+There will be 24 classifier/filtering combinations.
 
 \begin{table}[H]
    \begin{center}
-      \begin{tabular}{|l|l|}
+      \begin{tabular}{|l|}
          \hline
-            Classifiers & Filtering
+            \textbf{Classifiers}
          \tabularnewline\hline
-            BayesNetClassifier & None
+            BayesNetClassifier
          \tabularnewline\hline
-            BinaryBayesNetClassifier & Full
+            BinaryBayesNetClassifier
          \tabularnewline\hline
-            BinaryJ48Classifier &
+            BinaryJ48Classifier
          \tabularnewline\hline
-            BinaryKNNClassifier &
+            BinaryKNNClassifier
          \tabularnewline\hline
-            BinaryNaiveBayesClassifier &
+            BinaryNaiveBayesClassifier
          \tabularnewline\hline
-            BinarySMOClassifier &
+            BinarySMOClassifier
          \tabularnewline\hline
-            J48Classifier &
+            J48Classifier
          \tabularnewline\hline
-            KNNClassifier &
+            KNNClassifier
          \tabularnewline\hline
-            NaiveBayesClassifier &
+            NaiveBayesClassifier
          \tabularnewline\hline
-            Non-Weka BPNBClassifier &
+            Non-Weka BPNBClassifier
          \tabularnewline\hline
-            Non-Weka NaiveBayesClassifier &
+            Non-Weka NaiveBayesClassifier
          \tabularnewline\hline
-            SMOClassifier &
+            SMOClassifier
+         \tabularnewline\hline
+      \end{tabular}
+      {
+         \Huge
+         $\times$
+      }
+      \begin{tabular}{|l|}
+         \hline
+            \textbf{Filtering}
+         \tabularnewline\hline
+            None
+         \tabularnewline\hline
+            Full
          \tabularnewline\hline
       \end{tabular}
       \caption[Classifier Evaluation Combinations]{The cross product of the classifier and filtering will be used to evaluate the classifiers.}
@@ -1643,8 +1654,8 @@ Table~\ref{table:classifierEvaluationSpace} shows the combinations of classifier
 
 \subsection{Confusion Matrices}
 \label{class-evaluation-confusion}
-The results of the classification evaluation will be shown in confusion matrices.
-Table~\ref{table:confusionExample} shows an example of a classification confusion matrix.
+The results of the classification evaluation are shown in confusion matrices.
+Table~\ref{table:confusionExample} shows the confusion matrix of the Naive Bayes classifier using full filtering as an example.
 Down the vertical are the actual classes of the tweets, and across the horizontal are the predicted classes that the classifiers output.
 Note that the example shows that this classifier incorrectly classified eight \texttt{media} tweets as another class (seen by looking down the \texttt{media} column),
 and misclassified 22 non-media tweets as \texttt{media} (seen by looking across the \texttt{row}).
@@ -1652,32 +1663,30 @@ Overall accuracy for the classifier can be calculated by taking the number of co
 
 \begin{table}[H]
    \begin{center}
-      \scalebox{0.65}{
-         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+      \scalebox{0.71}{
+         \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Classified}{Actual} & undecided & media & neutral & snafu & watching & response & complaint & refuse to rate & happy \\
+            \diaghead{\theadfont Diag ColumnmnHead II}{Classified}{Actual} & media & neutral & snafu & watching & response & complaint & refuse to rate & happy \\
          \hline
-            undecided & \textbf{0} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+            media & \textbf{81} & 3 & 0 & 1 & 3 & 0 & 14 & 1 \\
          \hline
-            media & 0 & \textbf{81} & 3 & 0 & 1 & 3 & 0 & 14 & 1 \\
+            neutral & 0 & \textbf{23} & 3 & 14 & 11 & 11 & 1 & 3 \\
          \hline
-            neutral & 0 & 0 & \textbf{23} & 3 & 14 & 11 & 11 & 1 & 3 \\
+            snafu & 0 & 7 & \textbf{81} & 8 & 4 & 55 & 2 & 1 \\
          \hline
-            snafu & 0 & 0 & 7 & \textbf{81} & 8 & 4 & 55 & 2 & 1 \\
+            watching & 0 & 26 & 0 & \textbf{82} & 5 & 12 & 0 & 10 \\
          \hline
-            watching & 0 & 0 & 26 & 0 & \textbf{82} & 5 & 12 & 0 & 10 \\
+            response & 2 & 12 & 3 & 6 & \textbf{3} & 1 & 0 & 3 \\
          \hline
-            response & 0 & 2 & 12 & 3 & 6 & \textbf{3} & 1 & 0 & 3 \\
+            complaint & 1 & 9 & 36 & 9 & 8 & \textbf{77} & 3 & 3 \\
          \hline
-            complaint & 0 & 1 & 9 & 36 & 9 & 8 & \textbf{77} & 3 & 3 \\
+            refuse to rate & 5 & 4 & 1 & 2 & 4 & 9 & \textbf{21} & 2 \\
          \hline
-            refuse to rate & 0 & 5 & 4 & 1 & 2 & 4 & 9 & \textbf{21} & 2 \\
-         \hline
-            happy & 0 & 0 & 18 & 5 & 22 & 5 & 31 & 1 & \textbf{65} \\
+            happy & 0 & 18 & 5 & 22 & 5 & 31 & 1 & \textbf{65} \\
          \hline
          \end{tabular}
       }
-      \caption[Example Classification Confusion Matrix]{A example confusion matrix for a classifier.}
+      \caption[Example Classification Confusion Matrix]{A example confusion matrix for a classifier. The \texttt{undecided} class was removed because there were no tweets in that class.}
       \label{table:confusionExample}
    \end{center}
 \end{table}
@@ -1706,19 +1715,19 @@ will be compressed into their respective groups before the results are evaluated
          \hline
             media    & 0 & 98 & 0 & 0 & 2 & 2 & 0 & 0 & 1 \\
          \hline
-            neutral  & 0 & 3 & 11 & 2 & \textbf{16} & \textbf{7} & 7 & 0 & \textbf{20} \\
+            neutral  & 0 & 3 & 11 & 2 & \textbf{\large 16} & \textbf{\large 7} & 7 & 0 & \textbf{\large 20} \\
          \hline
             snafu    & 0 & 0 & 1 & 87 & 4 & 4 & 41 & 0 & 21 \\
          \hline
-            watching & 0 & 2 & \textbf{12} & 3 & 88 & \textbf{5} & 4 & 0 & \textbf{21} \\
+            watching & 0 & 2 & \textbf{\large 12} & 3 & 88 & \textbf{\large 5} & 4 & 0 & \textbf{\large 21} \\
          \hline
-            response & 0 & 2 & \textbf{5} & 4 & \textbf{7} & 0 & 3 & \textbf{1} & \textbf{8} \\
+            response & 0 & 2 & \textbf{\large 5} & 4 & \textbf{\large 7} & 0 & 3 & \textbf{\large 1} & \textbf{\large 8} \\
          \hline
             complaint& 0 & 2 & 5 & 40 & 4 & 1 & 68 & 1 & 25 \\
          \hline
-            refuse to rate & 0 & 9 & \textbf{1} & 1 & \textbf{1} & \textbf{1} & 0 & 18 & \textbf{17} \\
+            refuse to rate & 0 & 9 & \textbf{\large 1} & 1 & \textbf{\large 1} & \textbf{\large 1} & 0 & 18 & \textbf{\large 17} \\
          \hline
-            happy    & 0 & 1 & \textbf{9} & 3 & \textbf{13} & \textbf{6} & 8 & 0 & 107 \\
+            happy    & 0 & 1 & \textbf{\large 9} & 3 & \textbf{\large 13} & \textbf{\large 6} & 8 & 0 & 107 \\
          \hline
          \end{tabular}
       }
@@ -1785,9 +1794,9 @@ The accuracy of outage detection is measured using three metrics: Recall, Precis
 
 The following definitions are used to calculate the accuracy metrics:
 \begin{itemize}
-   \item{tp} - True Positive. Any intersection between a reported outage range and a detected outage range.
-   \item{fp} - False Positive. Any detected outage that has no intersection in the events reported by Netflix.
-   \item{fn} - False Negative. An alert that has no intersection on an event reported by Netflix is a false negative.
+   \item tp --- True Positive. Any intersection between a reported outage range and a detected outage range.
+   \item fp --- False Positive. Any detected outage that has no intersection in the events reported by Netflix.
+   \item fn --- False Negative. An alert that has no intersection on an event reported by Netflix is a false negative.
 \end{itemize}
 
 \subsection{Recall}
