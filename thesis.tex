@@ -340,7 +340,30 @@ Part~\ref{conclusions} wraps up the paper.
 %Text Stream Analysis \cite{Bansal}\cite{Grinev}\cite{Huang}.
 
 \section{Twitter Traffic Analysis}
-\label{background-classification}
+\label{background-twitter}
+Twitter proves to be a great resource for data mining because of the large number of real-time, posts from millions of users.
+However, tweets can be very difficult to work with because they suffer from three large drawbacks:
+
+\paragraph{Length.}
+Tweets can only be 140 characters long. This limit severely restricts the possible information content of a tweet.
+Compared to more traditional media sources, e.g. news articles, the text of tweets contain almost no information.
+Although this makes it very difficult to do naive text classification on tweets, Twitter users have found ways to increase their information density.
+Links to news stories, slang, and Twitter symbols (see Section~\ref{class-filter-twitter-symbols}) help Twitter users express more with fewer characters.
+
+\paragraph{Informal Language.}
+Informal language, e.g. slang, jargon, and abbreviations, is common place on Twitter.
+The use of informal language can be partially attributed to the strict character limit.
+Informal language can be difficult to deal with because it it less likely to appear in well established
+Natural Language Processing corpora. Not having a corpus forces researchers to either only use unsupervised methods, or
+build their own corpus.
+
+\paragraph{Typos.}
+The nature of Twitter is very informal for most users whose tweets are only read by their friends.
+This informal environment and the large amount of tweets coming from hand-held devices without a traditional keyboard leads to many tweets containing typos.
+Typos make text analysis difficult because it obfuscates words and increases the number of unique words.
+
+\subsection{Twitter Classification}
+\label{background-twitter-classification}
 There has been much work in using classifiers on both tweets and Twitter users.
 Most of the classification efforts has gone into trying to determine the sentiment,
 the general feeling, of a tweet \cite{Jiang}\cite{Mukherjee}\cite{Saif}\cite{Wang}.
@@ -350,26 +373,43 @@ The traditional text classification task of topic modeling has also been attempt
 Instead of trying to classify tweets, Pennacchiotti et al. try to classify user associations from
 their tweets\cite{Pennacchiotti}.
 
-The common theme in all of these classification attempts is that tweets are much more difficult to
-classify than more traditional media sources, eg. news articles, because of their length and language.
-The 140 character limit on tweets severely limits the information content of a tweet.
-Partially because of the character limit, slang and informal language are commonplace in tweets.
+\subsection{Twitter Anomaly Detection}
+\label{background-twitter-anomaly}
+TODO(eriq): levchenko
 
 \section{Classifiers}
-\label{background-classification-classifiers}
+\label{background-classifiers}
 SPOONS uses a variety of different classifiers for text classification.
 This section gives an overview of each different type of classifier used.
 
+\subsubsection{Formal Definition}
+\label{background-classifiers-def}
+The classification problem that the classifiers are trying to solve can be defined as follows:
+
+Given a set of documents $D$
+\begin{equation*}
+   D = \left \{ d | d \in D \right \}
+\end{equation*}
+where each document $d$ is a vector of $n$ features
+\begin{equation*}
+   d = (\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})
+\end{equation*}
+and a set of classes $C$ where
+\begin{equation*}
+   C = \left \{ c | c \in C \right \}
+\end{equation*}
+We want to associate each document with a class based off the patterns observed in a training set $T$ of already classified documents.
+\begin{equation*}
+   T = \left \{ (d, c) | c \in C \right \}
+\end{equation*}
+
 \subsection{Naive Bayes}
-\label{background-classification-classifiers-naive-bayes}
+\label{background-classifiers-naive-bayes}
 Naive Bayes classifier works by applying the Bayes' theorem with the assumption that
 the probability of each feature in a document is independent from the probability of
 any other feature appearing in the same document.\cite{Kibriya}\cite{Frank}
 
-Let $c$ be a specific class in the set of possible classes $C$.
-Let $d$ be a document composed of a vector of $n$ features, $d = (\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
-The Bayes' theorem states that the probability of observing class $c$ given document $d$
-can be represented as:
+The Bayes' theorem states that the probability of observing class $c$ given document $d$, $Pr(c|d)$, can be represented as:
 
 \begin{equation}
    Pr(c|d) = \frac{Pr(c) \cdot Pr(d|c)}{Pr(d)}
@@ -398,7 +438,7 @@ When dealing with discrete features, then estimating $Pr(\textrm{f}_{m}|c)$ ($1 
 finding the percentage of training documents that contain feature $\textrm{f}_{m}$ and have class $c$.
 
 \subsection{Bayes Net}
-\label{background-classification-classifiers-bayes-net}
+\label{background-classifiers-bayes-net}
 A Bayesian Network is a probabilistic, directed acyclic graphs that represents a set of random variables and their conditional probabilities.
 In a Bayesian Network, the collection of incoming edges represent the conditional probability distribution between two random variables.
 Each node represents a variable and a probability function that takes as input the state of the node's parents.\cite{Pearl}\cite{Neapolitan}
@@ -430,12 +470,12 @@ takes one and two input parameters respectively.
 \end{figure}
 
 \subsection{J48}
-\label{background-classification-classifiers-j48}
+\label{background-classifiers-j48}
 J48 is a specific implementation of the C4.5 algorithm.
 C4.5 is an algorithm that is used to generate a decision tree given a training set.
 
 \subsubsection{Decision Trees}
-\label{background-classification-classifiers-j48-decision-trees}
+\label{background-classifiers-j48-decision-trees}
 A decision tree is a simple data structure used to come to come conclusion based off of a number of observations.
 At each non-terminal node, a question is asked. The answers to the question are represented by the node's outgoing edges.
 The tree is traversed in this fashion until a terminal node is reached. The terminal node contains the final conclusion.
@@ -451,11 +491,11 @@ for that attribute, and each terminal node is a class. Each attribute can only a
    \end{center}
 \end{figure}
 
-Figure~\ref{fig:decisionTree} shows a decision tree that may be generated for the picnic example discussed in Section~\ref{background-classification-classifiers-bayes-net}.
+Figure~\ref{fig:decisionTree} shows a decision tree that may be generated for the picnic example discussed in Section~\ref{background-classifiers-bayes-net}.
 Note that once the decision tree is built, reaching a terminal node is fairly trivial.
 
 \subsubsection{C4.5 --- Decision Tree Induction Algorithm}
-\label{background-classification-classifiers-j48-c45}
+\label{background-classifiers-j48-c45}
 C4.5 recursively builds a decision tree by continually splitting the dataset on a single attribute\cite{Quinlan}.
 The splitting attribute is determined by the normalized information gain (Kullback-Leibler divergence) and becomes a
 node in the tree and the possible values for the attribute become edges. Each subtree is then recursively built using only the
@@ -465,7 +505,7 @@ Secondly, when there are no more attributes or when the information gain from sp
 In this case, a single node tree is constructed which contains the plurality class.
 
 \subsection{K-Nearest Neighbors}
-\label{background-classification-classifiers-knn}
+\label{background-classifiers-knn}
 $k$-Nearest Neighbors (KNN) is simple and effective classification technique\cite{Duda}.
 While training, the classifier remembers the entire training set.
 During the classification phase, the classifier finds the $k$ nearest neighbors
@@ -482,7 +522,7 @@ Figure~\ref{fig:knn} shows an example of $k$-Nearest Neighbors with a simple sea
 \end{figure}
 
 \subsection{Support Vector Machines}
-\label{background-classification-classifiers-svm}
+\label{background-classifiers-svm}
 Support Vector Machines (SVMs) are considered one of the best off-the-shelf classification techniques\cite{Vapnik}.
 When training, SVMs use hyperplanes to partition the data into surfaces based off of the different classes of the training examples.
 When classifying, the SVM finds which surface the query point falls on and give that class to the point.
@@ -503,18 +543,15 @@ Note that the partition line is chosen to maximize the distance between the tria
 The query point (the star) falls into the squares' partition and is therefore classified as a square.
 
 \subsubsection{Sequential Minimal Optimization}
-\label{background-classification-classifiers-svm-smo}
+\label{background-classifiers-svm-smo}
 Sequential Minimal Optimization (SMO) is an efficient algorithm for solving SVMs invented by John Platt in 1998\cite{Platt}.
 
 \subsection{BPNB}
-\label{background-classification-classifiers-bpnb}
+\label{background-classifiers-bpnb}
 BPNB is a method developed by Chu\cite{bpnb}.
 It is based off of Naive Bayes, except the relative probability of each feature is accounted for.
 
-Let $c$ be a specific class in the set of possible classes $C$.
-Let $d$ be a document composed of a vector of $n$ features, $d = (\textrm{f}_{1}, \textrm{f}_{2}, ..., \textrm{f}_{n})$.
-BPNB states that the probability of observing class $c$ given document $d$
-can be represented as:
+BPNB states that the probability of observing class $c$ given document $d$, $Pr(c|d)$, can be represented as:
 
 \begin{equation}
    Pr(c|d) = Pr(c) \cdot \prod_{i = 1}^{n}g(\textrm{f}_{i},c)
@@ -538,7 +575,7 @@ WEKA is an open source package written under the GNU General Public License\cite
 \section{Singletons}
 \label{background-singletons}
 The SPOONS architecture makes heavy use of singletons to guarantee certain assumptions.
-A \textbf{singleton} is a class that may only every have at most one instance of itself instantiated at a time.
+A \textbf{singleton} is an object-oriented class that may have at most one instance of itself instantiated at a time.
 SPOONS uses two types of singletons: singletons that are relative to the base class and singletons that are relative to the
 child classes.
 
@@ -799,11 +836,13 @@ An Analysis Pipeline (also called Analysis Method) is the analytical center of t
 Pipelines are split into Tasks (see Section~\ref{arch-tasks}) which are chunked units of work.
 The exact number and types of Tasks used are different for each pipeline.
 
-An Analysis Pipeline typically starts with running any number of Processors on the data.
-Then, the pipeline invokes modelers on the data from the Processors. These modelers typically build models for the
-actual data coming into SPOONS as well as predictive models.
-Finally, the pipeline invokes tasks that assess the models produced in the previous
-step and decides whether or not there is an anomaly.
+The run of an Analysis Pipeline is typically as follows:
+\begin{enumerate}
+   \item Pre-process incoming traffic.
+   \item Model the existing traffic.
+   \item Predict what the current traffic should be.
+   \item Raise an alert if the existing traffic varies significantly from the predicted traffic.
+\end{enumerate}
 
 Every Analysis Pipeline gets its own thread, and there is no interdependence between the different pipelines.
 Currently, SPOONS usually runs more than 20 Analysis Pipelines at a time.
@@ -815,7 +854,7 @@ Every Task gets its own thread, and callers into the Task may request that the T
 until the Task is complete.
 
 \paragraph{Implementation Notes:}
-Tasks are singleton with respects to the leaf child class.
+Tasks are singleton with respect to the leaf child class.
 This ensures that although there there are many different Tasks, every Task can be uniquely referenced.
 This singleton behavior is enforced by checking the fully-qualified class name in the Task base class upon construction.
 The uniqueness of tasks is very important to SPOONS distribution model discussed in Chapter~\ref{arch-dist}.
@@ -837,21 +876,25 @@ the Counter for modeling tweet volume would simply count the number of tweets ga
 
 \section{Monitors}
 \label{arch-monitors}
-Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
-making the final decision about a period of time being anomalous.
+Monitors take the models produced by the Predictors and Counters and compares them one point at a time.
+If the two models differ significantly, then an alert is raised.
+The different types of Monitors are described in detail in Section~\ref{outage-detection-monitors}.
+The Monitors are responsible for making the final decision about a period of time being anomalous.
 
 \subsection{Auto-Tuning}
 \label{arch-autotuning}
-Monitors take anywhere from two to six tuning parameters. To find the best set of parameters, the Monitors can
-automatically run themselves on a training set and search the space of all possible parameters. They then keep the
-parameters that result in the best score.
+Monitors are the most configurable part of the Analysis Pipeline taking anywhere from two to six configurable parameters.
+To find the best set of parameters, the Monitors can automatically run themselves on a training set and search the space of all possible parameters.
+They then keep the parameters that result in the best score.
+This process is called ``auto-tuning''.
 
 \subsection{Resistance}
 \label{arch-resistance}
-A monitor's ``resistance'' is its tendency not to move into or out of an alert state.
+At any given time, a Monitor is either in a normal, non-alerting, state or an alerting state.
+A Monitor's ``resistance'' is its tendency not to move into or out of an alerting state.
 The resistance is the number of normal or abnormal observations it needs to be
-trigger a state change. Monitors are given resistance because otherwise outliers could cause
-monitor to rapidly switch between alert and normal states.
+trigger a state change. Monitors are given resistance because otherwise an outliers could cause
+a Monitor to rapidly switch between alerting and normal states.
 There currently are three different methods of observing resistance.
 The method of resistance as well as the resistance thresholds can also be auto-tuned.
 
@@ -862,7 +905,7 @@ The method of resistance as well as the resistance thresholds can also be auto-t
          \hline
             Parameter & Description & Restrictions \\
          \hline
-            A & The number the counter must reach to enter an alert state. & $ A > 0 $ \\
+            A & The number the counter must reach to enter an alerting state. & $ A > 0 $ \\
          \hline
             R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
          \hline
@@ -871,8 +914,8 @@ The method of resistance as well as the resistance thresholds can also be auto-t
 \end{table}
 
 Fighting resistance counts every time that there is a normal period as a +1, and every time there is
-an anomalous period as a -1. If the counter reaches $-A$, then the monitor is put into an alert state.
-If the counter reaches $R$, then the monitor is put into a normal state.
+an anomalous period as a -1. If the counter reaches $-A$, then the Monitor is put into an alerting state.
+If the counter reaches $R$, then the Monitor is put into a normal state.
 
 \subsubsection{Continuous Resistance}
 \begin{table}[H]
@@ -881,7 +924,7 @@ If the counter reaches $R$, then the monitor is put into a normal state.
          \hline
             Parameter & Description & Restrictions \\
          \hline
-            A & The number the counter must reach to enter an alert state. & $ A > 0 $ \\
+            A & The number the counter must reach to enter an alerting state. & $ A > 0 $ \\
          \hline
             R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
          \hline
@@ -889,7 +932,7 @@ If the counter reaches $R$, then the monitor is put into a normal state.
    \end{center}
 \end{table}
 
-Continuous resistance must get $A$ continuous anomalous observations to enter an alert state, and $R$ continuous normal
+Continuous resistance must get $A$ continuous anomalous observations to enter an alerting state, and $R$ continuous normal
 observations to enter a normal state.
 
 \subsubsection{Window Resistance}
@@ -901,18 +944,18 @@ observations to enter a normal state.
          \hline
             W & The window size. & $ W > 0 $ \\
          \hline
-            C & The number of anomalous observations necessary for an alert state. & $ 0 < C <= W $ \\
+            C & The number of anomalous observations necessary for an alerting state. & $ 0 < C <= W $ \\
          \hline
       \end{tabular}
    \end{center}
 \end{table}
 
 Window resistance remembers $W$  previous observations as being normal or anomalous. If the number of anomalous
-observations is or exceeds $C$, then an alert state is declared. Otherwise, the monitor stays in a normal state.
+observations is or exceeds $C$, then an alerting state is declared. Otherwise, the Monitor stays in a normal state.
 
 \subsection{Smoothers}
 \label{arch-smoothers}
-The monitors have a chance to smooth the data before it gets analyzed.
+The Monitors have a chance to smooth the data before it gets analyzed.
 Smoothers take in a stream of data.
 As with resistance methods, different smoothers and smoothing parameters can be auto-tuned.
 
@@ -1285,7 +1328,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Normal_Traffic.eps}
       \captionfonts
-      \caption[Normal Traffic]{A weeks worth of Netflix-related Twitter traffic. Notice the daily periodicity.}
+      \caption[Normal Traffic]{A week's worth of Netflix-related Twitter traffic. Notice the daily periodicity.}
       \label{fig:normal-traffic}
    \end{center}
 \end{figure}
@@ -1414,7 +1457,7 @@ periods.
 \section{WEKA Classifiers}
 \label{class-weka}
 SPOONS uses several classifiers from the WEKA machine learning package\cite{weka}.
-All of these classifiers have been discussed in Section~\ref{background-classification-classifiers}.
+All of these classifiers have been discussed in Section~\ref{background-classifiers}.
 The WEKA classifiers used are:
 
 \begin{itemize}
@@ -1430,7 +1473,7 @@ The WEKA classifiers used are:
 In addition to the WEKA classifiers, SPOONS uses two classifiers implemented from scratch.
 Because of low performance and inflexible API, the WEKA classifiers are being reimplemented.
 As of now, only Naive Bayes has been reimplemented. The other classifier implemented from scratch is
-a BPNB classifier which is discussed in Section~\ref{background-classification-classifiers-bpnb}.
+a BPNB classifier which is discussed in Section~\ref{background-classifiers-bpnb}.
 
 \section{Text Pre-Processing}
 \label{class-processing}
@@ -1521,6 +1564,8 @@ only be split on a word level, not on a character level. Therefore, moving to th
 Searching for a title becomes a simple walk down the trie.
 If the walk of the trie ends on a terminal node, then a title is found. If not, then the trie is walked again from the beginning
 starting at the next word in the tweet. Figure~\ref{fig:title-trie} shows a sample walk in the title trie.
+
+% TODO(eriq): [Lowest Priority] Formalize algorithm with pseudocode.
 
 \begin{figure}
    \begin{center}
@@ -1659,7 +1704,12 @@ Table~\ref{table:confusionExample} shows the confusion matrix of the Naive Bayes
 Down the vertical are the actual classes of the tweets, and across the horizontal are the predicted classes that the classifiers output.
 Note that the example shows that this classifier incorrectly classified eight \texttt{media} tweets as another class (seen by looking down the \texttt{media} column),
 and misclassified 22 non-media tweets as \texttt{media} (seen by looking across the \texttt{row}).
-Overall accuracy for the classifier can be calculated by taking the number of correctly classified tweest (down the diagonal) over the total number of tweets.
+
+Overall accuracy for the classifier can be calculated by taking the number of correctly classified tweets (down the diagonal) over the total number of tweets.
+Accuracy for a specific classification can be considered two ways: accuracy of classifying tweets \textbf{from} that class and accuracy of classifying \textbf{into} that class.
+The accuracy of classifying tweets \textbf{from} a class can be seen by looking down a column.
+The number correctly classified tweets (\textbf{bold}) over the total number of tweets in that column.
+The accuracy of classifying tweets \textbf{info} a class can be seen using the same method as before, except looking across the class's row instead of its column.
 
 \begin{table}[H]
    \begin{center}
@@ -1837,10 +1887,10 @@ TODO(eriq)
 
 \subsection{Monitors}
 \label{outage-detection-monitors}
-SPOONS uses a number of monitors that use different methods to try and detect anomalies in the traffic.
-This section will describe each monitor used.
-Each monitor described will have two tables describing the parameters that can tune this monitor and
-the inputs that the monitor takes. In addition, each monitor will have a text description along with it.
+SPOONS uses a number of Monitors that use different methods to try and detect anomalies in the traffic.
+This section will describe each Monitor used.
+Each Monitor described will have two tables describing the parameters that can tune this Monitor and
+the inputs that the Monitor takes. In addition, each Monitor will have a text description along with it.
 
 \subsubsection{Baseline Monitor}
 \label{outage-detection-monitors-Baseline}
@@ -1901,7 +1951,7 @@ Ironically, because of its naivety it also provides a decent baseline for the Mo
    \end{center}
 \end{table}
 
-The Windowed Standard Deviation Monitor is one of the simplest monitors. This monitor takes a $W$ sized window worth of data
+The Windowed Standard Deviation Monitor is one of the simplest Monitors. This Monitor takes a $W$ sized window worth of data
 and uses the standard deviation of the window to find outliers. Any outliers more than $L$ are considered anomalies and counts towards
 an alert, but are still included in the windowed standard deviation calculation. Any value above $U$ is considered an anomaly, but not included
 in the standard deviation calculation. The reason for this is that values above $U$ are extreme outliers.
@@ -1960,9 +2010,9 @@ The stronger weekly pattern makes sense if one views Netflix-related Twitter tra
 people currently watching Netflix. People tend to have pattern that they follow, and people are more available
 on different days of the week (especially Friday).
 
-This monitor holds a windowed standard deviation for every 30 minute time period with 15 minute offsets
+This Monitor holds a windowed standard deviation for every 30 minute time period with 15 minute offsets
 for every week. Therefore, values are not compared to the other values around it, but to expected values from
-previous weeks. This monitor uses the same tactics as the Windows Standard Deviation Monitor for counting anomalies.
+previous weeks. This Monitor uses the same tactics as the Windows Standard Deviation Monitor for counting anomalies.
 
 \subsubsection{Mean Squared Error Monitor}
 \label{outage-detection-monitors-MSE}
@@ -1994,7 +2044,7 @@ previous weeks. This monitor uses the same tactics as the Windows Standard Devia
    \end{center}
 \end{table}
 
-The Mean square Error Monitor keeps a windowed mean squared error (MSE). This monitor requires two sets of input, a set
+The Mean square Error Monitor keeps a windowed mean squared error (MSE). This Monitor requires two sets of input, a set
 of expected values and a set of actual values. Any value that causes the MSE to go above a certain threshold, $T$,
 counts towards an anomaly.
 
@@ -2037,8 +2087,8 @@ $$
 
 The Ratio Monitor takes the ratio of the actual value over the expected value for every time period.
 Whenever the ratio dips under the threshold $T$, then that period counts towards an anomaly.
-This monitor may seem simple, but the real challenge lies in picking a proper $X$ and $Y$.
-If a good approximating time series can be chosen, then the monitor can be very successful.
+This Monitor may seem simple, but the real challenge lies in picking a proper $X$ and $Y$.
+If a good approximating time series can be chosen, then the Monitor can be very successful.
 
 \subsubsection{Class Correlation Monitor}
 \label{outage-detection-monitors-Correlation}
