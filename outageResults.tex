@@ -1,10 +1,11 @@
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -21,7 +22,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 92 & 112
          \tabularnewline\hline
@@ -33,13 +34,124 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 9
+         \tabularnewline\hline
+            Recovery Resistance & 9
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 90
+         \tabularnewline\hline
+            Lower Tolerence & 2.0
+         \tabularnewline\hline
+            Upper Tolerence & 4.0
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 92 & 112
+         \tabularnewline\hline
+            False & 12 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WeeklyWindowStdDev BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the WeeklyWindowStdDev Monitor.}
+      \label{table:weeklywindowstddev-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 6
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 1.0
+         \tabularnewline\hline
+            Upper Tolerence & 6.0
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 84 & 120
+         \tabularnewline\hline
+            False & 4 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WeeklyWindowStdDev J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the WeeklyWindowStdDev Monitor.}
+      \label{table:weeklywindowstddev-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 7
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 1.0
+         \tabularnewline\hline
+            Upper Tolerence & 5.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 87 & 117
+         \tabularnewline\hline
+            False & 3 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WeeklyWindowStdDev BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the WeeklyWindowStdDev Monitor.}
+      \label{table:weeklywindowstddev-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 8
          \tabularnewline\hline
@@ -56,7 +168,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 93 & 111
          \tabularnewline\hline
@@ -68,13 +180,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -91,7 +204,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 85 & 119
          \tabularnewline\hline
@@ -103,13 +216,86 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 8
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 1.0
+         \tabularnewline\hline
+            Upper Tolerence & 6.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 77 & 127
+         \tabularnewline\hline
+            False & 3 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WeeklyWindowStdDev BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the WeeklyWindowStdDev Monitor.}
+      \label{table:weeklywindowstddev-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 5
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 1.0
+         \tabularnewline\hline
+            Upper Tolerence & 9.0
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 81 & 123
+         \tabularnewline\hline
+            False & 7 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WeeklyWindowStdDev NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the WeeklyWindowStdDev Monitor.}
+      \label{table:weeklywindowstddev-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 6
          \tabularnewline\hline
@@ -128,7 +314,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 67 & 137
          \tabularnewline\hline
@@ -140,13 +326,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -163,7 +350,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 101 & 103
          \tabularnewline\hline
@@ -175,13 +362,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 2
          \tabularnewline\hline
@@ -196,7 +384,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 68 & 136
          \tabularnewline\hline
@@ -208,13 +396,152 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 84 & 120
+         \tabularnewline\hline
+            False & 5 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Ratio J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the Ratio Monitor.}
+      \label{table:ratio-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 9
+         \tabularnewline\hline
+            Tolerence & 1900.0000
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 90
+         \tabularnewline\hline
+            Window Size & 40
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 70 & 134
+         \tabularnewline\hline
+            False & 2 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[MSE BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the MSE Monitor.}
+      \label{table:mse-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 8
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 1800.0000
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 30
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 83 & 121
+         \tabularnewline\hline
+            False & 13 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[MSE NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the MSE Monitor.}
+      \label{table:mse-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 2
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 50
+         \tabularnewline\hline
+            Baseline & 80.0
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 58 & 146
+         \tabularnewline\hline
+            False & 3 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Baseline J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the Baseline Monitor.}
+      \label{table:baseline-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
@@ -229,7 +556,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 64 & 140
          \tabularnewline\hline
@@ -241,19 +568,122 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & WindowResistanceMethod
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 2
+         \tabularnewline\hline
+            Recovery Resistance & 8
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 50
+         \tabularnewline\hline
+            Baseline & 90.0
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 68 & 136
+         \tabularnewline\hline
+            False & 7 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Baseline BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the Baseline Monitor.}
+      \label{table:baseline-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 7
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 50
+         \tabularnewline\hline
+            Baseline & 40.0
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 87 & 117
+         \tabularnewline\hline
+            False & 16 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Baseline NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the Baseline Monitor.}
+      \label{table:baseline-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 6
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 100
+         \tabularnewline\hline
+            Baseline & 40.0
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 81 & 123
+         \tabularnewline\hline
+            False & 9 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Baseline BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the Baseline Monitor.}
+      \label{table:baseline-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Window
          \tabularnewline\hline
             Window Size & 6
          \tabularnewline\hline
             Control & 2
          \tabularnewline\hline
-            Tolerence & 1900.0
+            Tolerence & 1900.0000
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
@@ -262,7 +692,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 91 & 113
          \tabularnewline\hline
@@ -274,19 +704,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 1800.0
+            Tolerence & 1800.0000
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -297,7 +728,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 82 & 122
          \tabularnewline\hline
@@ -309,13 +740,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
@@ -330,7 +762,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 79 & 125
          \tabularnewline\hline
@@ -342,19 +774,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & FightingResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
             Alert Resistance & 9
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 1900.0
+            Tolerence & 1900.0000
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -365,7 +798,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 88 & 116
          \tabularnewline\hline
@@ -377,13 +810,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
@@ -398,7 +832,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 66 & 138
          \tabularnewline\hline
@@ -410,19 +844,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & WindowResistanceMethod
+            Resistance Method & Window
          \tabularnewline\hline
             Window Size & 15
          \tabularnewline\hline
             Control & 2
          \tabularnewline\hline
-            Tolerence & 0.75
+            Tolerence & 0.7500
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -431,7 +866,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 68 & 136
          \tabularnewline\hline
@@ -443,13 +878,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 2
          \tabularnewline\hline
@@ -464,7 +900,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 81 & 123
          \tabularnewline\hline
@@ -476,26 +912,27 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 3
          \tabularnewline\hline
             Recovery Resistance & 9
          \tabularnewline\hline
-            Tolerence & 0.75
+            Tolerence & 0.7500
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 66 & 138
          \tabularnewline\hline
@@ -507,26 +944,61 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 9
+         \tabularnewline\hline
+            Recovery Resistance & 9
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 40
+         \tabularnewline\hline
+            Baseline & 60.0
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 80 & 124
+         \tabularnewline\hline
+            False & 9 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Baseline BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the Baseline Monitor.}
+      \label{table:baseline-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 3
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 58 & 146
          \tabularnewline\hline
@@ -538,26 +1010,91 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & WindowResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
-            Window Size & 15
+            Alert Resistance & 1
          \tabularnewline\hline
-            Control & 2
+            Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8000
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 61 & 143
+         \tabularnewline\hline
+            False & 42 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Ratio BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the Ratio Monitor.}
+      \label{table:ratio-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 3
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 46 & 158
+         \tabularnewline\hline
+            False & 12 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Ratio NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the Ratio Monitor.}
+      \label{table:ratio-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Window
+         \tabularnewline\hline
+            Window Size & 15
+         \tabularnewline\hline
+            Control & 2
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 61 & 143
          \tabularnewline\hline
@@ -569,19 +1106,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -592,7 +1130,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 62 & 142
          \tabularnewline\hline
@@ -604,26 +1142,27 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 2
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 44 & 160
          \tabularnewline\hline
@@ -635,19 +1174,52 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8
+            Tolerence & 0.7500
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 62 & 142
+         \tabularnewline\hline
+            False & 59 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Ratio BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the Ratio Monitor.}
+      \label{table:ratio-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8000
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -658,7 +1230,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 55 & 149
          \tabularnewline\hline
@@ -670,19 +1242,52 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Fighting
          \tabularnewline\hline
-            Alert Resistance & 1
+            Alert Resistance & 10
          \tabularnewline\hline
             Recovery Resistance & 9
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8000
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 84 & 120
+         \tabularnewline\hline
+            False & 13 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Ratio BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the Ratio Monitor.}
+      \label{table:ratio-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -693,7 +1298,115 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 47 & 157
+         \tabularnewline\hline
+            False & 35 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Correlation BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the Correlation Monitor.}
+      \label{table:correlation-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 80
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 51 & 153
+         \tabularnewline\hline
+            False & 45 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Correlation BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the Correlation Monitor.}
+      \label{table:correlation-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 9
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 90
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 38 & 166
+         \tabularnewline\hline
+            False & 24 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Correlation J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the Correlation Monitor.}
+      \label{table:correlation-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 9
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 90
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 32 & 172
          \tabularnewline\hline
@@ -705,19 +1418,124 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Tolerence & 1900.0000
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 132 & 72
+         \tabularnewline\hline
+            False & 165 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[MSE J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the MSE Monitor.}
+      \label{table:mse-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 9
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Tolerence & 1900.0000
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 136 & 68
+         \tabularnewline\hline
+            False & 165 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[MSE BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the MSE Monitor.}
+      \label{table:mse-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 90
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 29 & 175
+         \tabularnewline\hline
+            False & 26 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Correlation BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the Correlation Monitor.}
+      \label{table:correlation-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 10
+         \tabularnewline\hline
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -728,7 +1546,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 32 & 172
          \tabularnewline\hline
@@ -740,19 +1558,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 1
          \tabularnewline\hline
             Recovery Resistance & 10
          \tabularnewline\hline
-            Tolerence & 0.8500000000000001
+            Tolerence & 0.8500
          \tabularnewline\hline
             Smoothing Method & Moving Mean
          \tabularnewline\hline
@@ -763,7 +1582,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 32 & 172
          \tabularnewline\hline
@@ -775,19 +1594,56 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 1
+         \tabularnewline\hline
+            Recovery Resistance & 8
+         \tabularnewline\hline
+            Tolerence & 0.8500
+         \tabularnewline\hline
+            Smoothing Method & Moving Mean
+         \tabularnewline\hline
+            Smoothing Window Size & 10
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 22 & 182
+         \tabularnewline\hline
+            False & 12 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Correlation NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the Correlation Monitor.}
+      \label{table:correlation-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
             Recovery Resistance & 1
          \tabularnewline\hline
-            Tolerence & 1900.0
+            Tolerence & 1900.0000
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
@@ -796,7 +1652,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 162 & 42
          \tabularnewline\hline
@@ -808,19 +1664,20 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
             Recovery Resistance & 1
          \tabularnewline\hline
-            Tolerence & 1900.0
+            Tolerence & 1900.0000
          \tabularnewline\hline
             Smoothing Method & None
          \tabularnewline\hline
@@ -829,7 +1686,41 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 153 & 51
+         \tabularnewline\hline
+            False & 153 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[MSE BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the MSE Monitor.}
+      \label{table:mse-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Tolerence & 1900.0000
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 163 & 41
          \tabularnewline\hline
@@ -841,13 +1732,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -864,7 +1756,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 194 & 10
          \tabularnewline\hline
@@ -876,13 +1768,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -899,7 +1792,79 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 194 & 10
+         \tabularnewline\hline
+            False & 82 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WindowStdDev NaiveBayes (No Filtering) Results]{The parameters and confusion matrix for NaiveBayes (no filtering) using the WindowStdDev Monitor.}
+      \label{table:windowstddev-naivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 3.0
+         \tabularnewline\hline
+            Upper Tolerence & 3.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 194 & 10
+         \tabularnewline\hline
+            False & 81 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WindowStdDev BinaryNaiveBayes (No Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (no filtering) using the WindowStdDev Monitor.}
+      \label{table:windowstddev-binarynaivebayes-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 3.0
+         \tabularnewline\hline
+            Upper Tolerence & 3.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 194 & 10
          \tabularnewline\hline
@@ -911,13 +1876,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -934,7 +1900,7 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 194 & 10
          \tabularnewline\hline
@@ -946,13 +1912,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -969,7 +1936,79 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 194 & 10
+         \tabularnewline\hline
+            False & 79 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WindowStdDev J48 (Full Filtering) Results]{The parameters and confusion matrix for J48 (full filtering) using the WindowStdDev Monitor.}
+      \label{table:windowstddev-j48-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 3.0
+         \tabularnewline\hline
+            Upper Tolerence & 3.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 194 & 10
+         \tabularnewline\hline
+            False & 81 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WindowStdDev BPNB (No Filtering) Results]{The parameters and confusion matrix for BPNB (no filtering) using the WindowStdDev Monitor.}
+      \label{table:windowstddev-bpnb-no}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 3.0
+         \tabularnewline\hline
+            Upper Tolerence & 3.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 195 & 9
          \tabularnewline\hline
@@ -981,13 +2020,14 @@
    \end{center}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
    \begin{center}
+      \footnotesize
       \begin{tabular}{|l|c|}
          \hline
             Parameter & Value
          \tabularnewline\hline
-            Resistance Method & ContinuiousResistanceMethod
+            Resistance Method & Continuious
          \tabularnewline\hline
             Alert Resistance & 10
          \tabularnewline\hline
@@ -1004,7 +2044,43 @@
       \end{tabular}
       \begin{tabular}{|c|c|c|}
          \hline
-            \diaghead{\theadfont Diag ColumnmnHead II}{Predicted}{Actual} & True & False
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 194 & 10
+         \tabularnewline\hline
+            False & 77 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[WindowStdDev BinaryNaiveBayes (Full Filtering) Results]{The parameters and confusion matrix for BinaryNaiveBayes (full filtering) using the WindowStdDev Monitor.}
+      \label{table:windowstddev-binarynaivebayes-full}
+   \end{center}
+\end{table}
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Continuious
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 1
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerence & 3.0
+         \tabularnewline\hline
+            Upper Tolerence & 3.0
+         \tabularnewline\hline
+            Window Size & 20
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
          \tabularnewline\hline
             True & 194 & 10
          \tabularnewline\hline

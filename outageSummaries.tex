@@ -1,16 +1,26 @@
 {
+   \footnotesize
    \setlength{\LTleft}{-20cm plus -1fill}
    \setlength{\LTright}{\LTleft}
-   \small
    \begin{longtable}{|l|l|l|c|c|c|c|c|}
       \hline
          Monitor & Classifier & Filtering & Precision & Recall & F$_{0.5}$ Score & Coverage & Adjusted Score
       \tabularnewline\hline
          \textbf{WeeklyWindowStdDev} & \textbf{SMO} & \textbf{Full} & \textbf{0.9583} & \textbf{0.4510} & \textbf{0.6970} & \textbf{0.2890} & \textbf{0.4956}
       \tabularnewline\hline
+         WeeklyWindowStdDev & BinaryNaiveBayes & Full & 0.8846 & 0.4510 & 0.6699 & 0.2618 & 0.4945
+      \tabularnewline\hline
+         WeeklyWindowStdDev & J48 & Full & 0.9545 & 0.4118 & 0.6632 & 0.2583 & 0.4919
+      \tabularnewline\hline
+         WeeklyWindowStdDev & BPNB & None & 0.9667 & 0.4265 & 0.6797 & 0.2894 & 0.4830
+      \tabularnewline\hline
          WeeklyWindowStdDev & BinarySMO & None & 0.9588 & 0.4559 & 0.7010 & 0.3116 & 0.4825
       \tabularnewline\hline
          WeeklyWindowStdDev & SMO & None & 0.9659 & 0.4167 & 0.6711 & 0.2837 & 0.4807
+      \tabularnewline\hline
+         WeeklyWindowStdDev & BinaryNaiveBayes & None & 0.9625 & 0.3775 & 0.6346 & 0.2462 & 0.4784
+      \tabularnewline\hline
+         WeeklyWindowStdDev & NaiveBayes & None & 0.9205 & 0.3971 & 0.6395 & 0.2529 & 0.4777
       \tabularnewline\hline
          WeeklyWindowStdDev & BinarySMO & Full & 0.8481 & 0.3284 & 0.5552 & 0.1542 & 0.4697
       \tabularnewline\hline
@@ -18,7 +28,21 @@
       \tabularnewline\hline
          Baseline & BinarySMO & Full & 0.8947 & 0.3333 & 0.5730 & 0.2019 & 0.4573
       \tabularnewline\hline
+         Ratio & J48 & Full & 0.9438 & 0.4118 & 0.6597 & 0.3201 & 0.4485
+      \tabularnewline\hline
+         MSE & BinaryNaiveBayes & None & 0.9722 & 0.3431 & 0.6034 & 0.2579 & 0.4478
+      \tabularnewline\hline
+         MSE & NaiveBayes & None & 0.8646 & 0.4069 & 0.6288 & 0.2949 & 0.4434
+      \tabularnewline\hline
+         Baseline & J48 & Full & 0.9508 & 0.2843 & 0.5337 & 0.1727 & 0.4416
+      \tabularnewline\hline
          Baseline & SMO & None & 0.8767 & 0.3137 & 0.5486 & 0.2056 & 0.4358
+      \tabularnewline\hline
+         Baseline & BinaryNaiveBayes & Full & 0.9067 & 0.3333 & 0.5763 & 0.2448 & 0.4352
+      \tabularnewline\hline
+         Baseline & NaiveBayes & None & 0.8447 & 0.4265 & 0.6366 & 0.3213 & 0.4321
+      \tabularnewline\hline
+         Baseline & BinaryNaiveBayes & None & 0.9000 & 0.3971 & 0.6328 & 0.3184 & 0.4313
       \tabularnewline\hline
          MSE & BinarySMO & None & 0.7982 & 0.4461 & 0.6319 & 0.3193 & 0.4302
       \tabularnewline\hline
@@ -36,7 +60,13 @@
       \tabularnewline\hline
          Ratio & SMO & Full & 0.6600 & 0.3235 & 0.4901 & 0.1430 & 0.4200
       \tabularnewline\hline
+         Baseline & BPNB & None & 0.8989 & 0.3922 & 0.6283 & 0.3345 & 0.4181
+      \tabularnewline\hline
          Ratio & SMO & None & 0.7250 & 0.2843 & 0.4780 & 0.1420 & 0.4101
+      \tabularnewline\hline
+         Ratio & BinaryNaiveBayes & None & 0.5922 & 0.2990 & 0.4463 & 0.0912 & 0.4056
+      \tabularnewline\hline
+         Ratio & NaiveBayes & None & 0.7931 & 0.2255 & 0.4313 & 0.0627 & 0.4042
       \tabularnewline\hline
          Ratio & BinarySMO & Full & 0.5980 & 0.2990 & 0.4485 & 0.1081 & 0.4001
       \tabularnewline\hline
@@ -44,25 +74,55 @@
       \tabularnewline\hline
          Ratio & BinarySMO & None & 0.7333 & 0.2157 & 0.4074 & 0.0533 & 0.3857
       \tabularnewline\hline
+         Ratio & BPNB & None & 0.5124 & 0.3039 & 0.4170 & 0.1134 & 0.3697
+      \tabularnewline\hline
          Correlation & BPNB & Full & 0.5500 & 0.2696 & 0.4084 & 0.0978 & 0.3685
       \tabularnewline\hline
+         Ratio & BinaryNaiveBayes & Full & 0.8660 & 0.4118 & 0.6332 & 0.4423 & 0.3531
+      \tabularnewline\hline
+         Correlation & BPNB & None & 0.5732 & 0.2304 & 0.3832 & 0.0828 & 0.3514
+      \tabularnewline\hline
+         Correlation & BinaryNaiveBayes & Full & 0.5312 & 0.2500 & 0.3864 & 0.0921 & 0.3508
+      \tabularnewline\hline
+         Correlation & J48 & Full & 0.6129 & 0.1863 & 0.3476 & 0.0553 & 0.3284
+      \tabularnewline\hline
          Correlation & SMO & None & 0.6275 & 0.1569 & 0.3137 & 0.0480 & 0.2987
+      \tabularnewline\hline
+         MSE & J48 & Full & 0.4444 & 0.6471 & 0.4962 & 0.4363 & 0.2798
+      \tabularnewline\hline
+         MSE & BPNB & None & 0.4518 & 0.6667 & 0.5062 & 0.4683 & 0.2691
+      \tabularnewline\hline
+         Correlation & BinaryNaiveBayes & None & 0.5273 & 0.1422 & 0.2771 & 0.0518 & 0.2627
       \tabularnewline\hline
          Correlation & BinarySMO & Full & 0.4507 & 0.1569 & 0.2775 & 0.0650 & 0.2594
       \tabularnewline\hline
          Correlation & BinarySMO & None & 0.4384 & 0.1569 & 0.2743 & 0.0661 & 0.2562
       \tabularnewline\hline
+         Correlation & NaiveBayes & None & 0.6471 & 0.1078 & 0.2426 & 0.0234 & 0.2370
+      \tabularnewline\hline
          MSE & SMO & Full & 0.5260 & 0.7941 & 0.5927 & 0.5986 & 0.2379
+      \tabularnewline\hline
+         MSE & BinaryNaiveBayes & Full & 0.5000 & 0.7500 & 0.5625 & 0.5779 & 0.2374
       \tabularnewline\hline
          MSE & BPNB & Full & 0.5327 & 0.7990 & 0.5993 & 0.6247 & 0.2249
       \tabularnewline\hline
          WindowStdDev & BinarySMO & None & 0.7029 & 0.9510 & 0.7698 & 0.8537 & 0.1126
       \tabularnewline\hline
+         WindowStdDev & NaiveBayes & None & 0.7029 & 0.9510 & 0.7698 & 0.8576 & 0.1096
+      \tabularnewline\hline
+         WindowStdDev & BinaryNaiveBayes & None & 0.7055 & 0.9510 & 0.7719 & 0.8582 & 0.1094
+      \tabularnewline\hline
          WindowStdDev & BinarySMO & Full & 0.7029 & 0.9510 & 0.7698 & 0.8591 & 0.1084
       \tabularnewline\hline
          WindowStdDev & SMO & None & 0.7055 & 0.9510 & 0.7719 & 0.8610 & 0.1073
       \tabularnewline\hline
+         WindowStdDev & J48 & Full & 0.7106 & 0.9510 & 0.7760 & 0.8622 & 0.1069
+      \tabularnewline\hline
+         WindowStdDev & BPNB & None & 0.7055 & 0.9510 & 0.7719 & 0.8616 & 0.1068
+      \tabularnewline\hline
          WindowStdDev & BPNB & Full & 0.7091 & 0.9559 & 0.7759 & 0.8670 & 0.1032
+      \tabularnewline\hline
+         WindowStdDev & BinaryNaiveBayes & Full & 0.7159 & 0.9510 & 0.7802 & 0.8691 & 0.1021
       \tabularnewline\hline
          WindowStdDev & SMO & Full & 0.7132 & 0.9510 & 0.7781 & 0.8689 & 0.1020
       \tabularnewline\hline

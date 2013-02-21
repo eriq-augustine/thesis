@@ -9,6 +9,8 @@
 
 \documentclass[12pt]{ucthesis}
 
+\usepackage{etex}
+\usepackage[morefloats=125]{morefloats}
 \usepackage[hyphens]{url}
 \usepackage{hyperref}
 \usepackage{subfig}
@@ -1806,7 +1808,7 @@ affects the shape of the spike.
 
 Table~\ref{table:confusionPrecisionRecall} shows an example of a compressed classification confusion matrix.
 The \textbf{bold} cells shows \texttt{snafu} tweets that were misclassified as other groups. Our number one priority is to minimize these cells.
-These cells represent the precision of the classifier for the \texttt{snafu} group (lower numbers generate higher precision). 
+These cells represent the precision of the classifier for the \texttt{snafu} group (lower numbers generate higher precision).
 The \emph{italics} cells shows tweets that were incorrectly classified as \texttt{snafu}. Although we also want to minimize these
 cells, they are not as important as the \textbf{bold} cells.
 
@@ -2150,12 +2152,9 @@ $$
    && \frac{T(k) - (W * \bar{X} * \bar{Y})}{(W - 1) * WindowStdDev(X) * WindowStdDev(Y)}
 \end{eqnarray*}
 
-\section{Results}
-\label{outage-detection-results}
-TODO(eriq): Numbers
-Full = Appendix~\ref{appendix-full-outage-detection}.
-
-\input{outageSummaries.tex}
+\section{Evaluation}
+\label{outage-detection-evaluation}
+TODO(eriq): Describe tables
 
 \subsection{Coverage}
 \label{outage-detection-results-coverage}
@@ -2163,6 +2162,13 @@ TODO(eriq): Explain
 Took into account when scoring.
 %      score = (@fScore * (1 - @coverage)) - (other.fScore * (1 - other.coverage))
 %            return score > 0 ? -1 : score < 0 ? 1 : 0
+
+\section{Results}
+\label{outage-detection-results}
+TODO(eriq): Numbers
+Full = Appendix~\ref{appendix-full-outage-detection}.
+
+\input{outageSummaries.tex}
 
 \part{Conclusions}
 \label{conclusions}
@@ -2235,14 +2241,17 @@ CREATE TABLE DATA_tweets (
 \chapter{Full Classifier Evaluation Results}
 \label{appendix-full-classifier}
 \input{classifierTables.tex}
+\clearpage
 
 \chapter{Full Outage Detection Evaluation Results}
 \label{appendix-full-outage-detection}
 \input{outageResults.tex}
+\clearpage
 
 \chapter{Full Training Set}
 \label{appendix-full-training}
 \input{trainingSet.tex}
+\clearpage
 
 
 % TODO(eriq): Pick more tables
