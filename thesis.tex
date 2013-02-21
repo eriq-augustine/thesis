@@ -1859,12 +1859,14 @@ The following definitions are used to calculate the accuracy metrics:
 \end{itemize}
 
 \subsection{Recall}
+\label{outage-detection-metrics-recall}
 The percent of the reported events that were caught.
 \begin{center}
    $Recall = \frac{tp}{tp + fn}$
 \end{center}
 
 \subsection{Precision}
+\label{outage-detection-metrics-precision}
 The percent of the alerts generated that occurred during an outage event.
 Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
 \begin{center}
@@ -1872,6 +1874,7 @@ Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
 \end{center}
 
 \subsection{F$_{0.5}$ Score}
+\label{outage-detection-metrics-f}
 A harmonic mean between recall and precision. The standard F$_{1}$ score evenly weighs precision and recall.
 F$_{0.5}$ weighs precision more than recall. Precision is being weighed more heavily than recall because
 every alert that SPOONS generates would require the intervention of a Netflix engineer. Generating too many
@@ -1883,8 +1886,42 @@ false positives would just cause SPOONS to be ignored.
    $F_{0.5} = 1.25 \cdot \frac{precision \cdot recall}{.25 \cdot precision + recall}$
 \end{center}
 
+% Netflix Coverage: 0.334129995406
+\subsection{Coverage}
+\label{outage-detection-metrics-coverage}
+F$_{0.5}$ score cannot completely capture the effectiveness of an outage detection method.
+A flaw in solely relying on the F$_{0.5}$ score is that an outage detection method can produce an unjustly high F score by generating long alerts.
+Taken to the extreme, an outage detection method can generate just one alert an have it span the entire evaluation period.
+This one alert will capture every service outage, and therefore have a recall of 1.
+Also, every alert it generates (the single one) will intersect with a real outage which will produce a precision of 1.
+No matter the type of F score used, a precision and recall of 1 will result in the highest possible F score of 1.
+Figure~\ref{fig:coverage} shows a graphical representation of this problem.
+
+To counteract this, an outage detection's coverage is also taken into account.
+Coverage is the percentage of frames in the evaluation period that are during alerts.
+The outage reports that Netflix provided has a coverage of 0.33.
+
+\begin{figure}
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{images/Coverage.eps}
+      \captionfonts
+      \caption[Coverage Example]{A long alert producing an unjustly high precision and recall.}
+      \label{fig:coverage}
+   \end{center}
+\end{figure}
+
+\subsection{Adjusted Score}
+\label{outage-detection-metrics-adjusted-score}
+Because of the coverage problem, outage detection methods cannot be compared using just their F$_{0.5}$ scores.
+Therefore, they will be compared using an adjusted score that rewards a high F$_{0.5}$ score and punishes a high coverage.
+
+\begin{equation}
+   Adjusted Score = F_{0.5} \times (1 - coverage)
+\end{equation}
+
 \section{Outage Detection Pipeline}
 \label{outage-detection-pipeline}
+TODO(eriq)
 
 \subsection{Processors}
 \label{outage-detection-processors}
@@ -2155,13 +2192,6 @@ $$
 \section{Evaluation}
 \label{outage-detection-evaluation}
 TODO(eriq): Describe tables
-
-\subsection{Coverage}
-\label{outage-detection-results-coverage}
-TODO(eriq): Explain
-Took into account when scoring.
-%      score = (@fScore * (1 - @coverage)) - (other.fScore * (1 - other.coverage))
-%            return score > 0 ? -1 : score < 0 ? 1 : 0
 
 \section{Results}
 \label{outage-detection-results}
