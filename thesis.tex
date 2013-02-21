@@ -1308,7 +1308,6 @@ The different schema requirements are shown in Table~\ref{table:ui-expected-sche
 The stored procedures further divides the tables by language. The currently recognized languages are English,
 Spanish, and Portuguese.
 
-% TODO(eriq): Better name
 \part{Analysis}
 \label{analysis}
 
@@ -1745,7 +1744,7 @@ The accuracy of classifying tweets \textbf{info} a class can be seen using the s
          \hline
          \end{tabular}
       }
-      \caption[Example Classification Confusion Matrix]{A example confusion matrix for a classifier. The \texttt{undecided} class was removed because there were no tweets in that class.}
+      \caption[Example Classification Confusion Matrix]{An example confusion matrix for a classifier. The \texttt{undecided} class was removed because there were no tweets in that class.}
       \label{table:confusionExample}
    \end{center}
 \end{table}
@@ -1919,26 +1918,14 @@ Therefore, they will be compared using an adjusted score that rewards a high F$_
    Adjusted Score = F_{0.5} \times (1 - coverage)
 \end{equation}
 
-\section{Outage Detection Pipeline}
-\label{outage-detection-pipeline}
-TODO(eriq)
-
-\subsection{Processors}
-\label{outage-detection-processors}
-TODO(eriq)
-
-\subsection{Modeler}
-\label{outage-detection-modeler}
-TODO(eriq)
-
-\subsection{Monitors}
+\section{Monitors}
 \label{outage-detection-monitors}
 SPOONS uses a number of Monitors that use different methods to try and detect anomalies in the traffic.
 This section will describe each Monitor used.
 Each Monitor described will have two tables describing the parameters that can tune this Monitor and
 the inputs that the Monitor takes. In addition, each Monitor will have a text description along with it.
 
-\subsubsection{Baseline Monitor}
+\subsection{Baseline Monitor}
 \label{outage-detection-monitors-Baseline}
 \begin{table}[H]
    \begin{center}
@@ -1967,7 +1954,7 @@ the inputs that the Monitor takes. In addition, each Monitor will have a text de
 The Baseline Monitor looks for any value above B, and counts that as anomalous.
 Ironically, because of its naivety it also provides a decent baseline for the Monitors.
 
-\subsubsection{Windowed Standard Deviation Monitor}
+\subsection{Windowed Standard Deviation Monitor}
 \label{outage-detection-monitors-WindowStdDev}
 \begin{table}[H]
    \begin{center}
@@ -2020,7 +2007,7 @@ $$
    WindowStdDev(k) = \sqrt{\frac{T(K))}{k - 1}}
 $$
 
-\subsubsection{Weekly Offset Windowed Standard Deviation Monitor}
+\subsection{Weekly Offset Windowed Standard Deviation Monitor}
 \label{outage-detection-monitors-WeeklyWindowStdDev}
 \begin{table}[H]
    \begin{center}
@@ -2031,9 +2018,9 @@ $$
             W & Window Size & $ W > 0 $\\
          \hline
             L & Lower Threshold & $L > 0 $\\
-         \hline 
+         \hline
             U & Upper Threshold & $U >= L $\\
-         \hline 
+         \hline
       \end{tabular}
    \end{center}
 \end{table}
@@ -2060,7 +2047,7 @@ This Monitor holds a windowed standard deviation for every 30 minute time period
 for every week. Therefore, values are not compared to the other values around it, but to expected values from
 previous weeks. This Monitor uses the same tactics as the Windows Standard Deviation Monitor for counting anomalies.
 
-\subsubsection{Mean Squared Error Monitor}
+\subsection{Mean Squared Error Monitor}
 \label{outage-detection-monitors-MSE}
 \begin{table}[H]
    \begin{center}
@@ -2103,7 +2090,7 @@ $$
    && \frac{MSE(k - 1) * (k - 1) - V(k - W) + V(k)}{k}
 \end{eqnarray*}
 
-\subsubsection{Ratio Monitor}
+\subsection{Ratio Monitor}
 \label{outage-detection-monitors-Ratio}
 \begin{table}[H]
    \begin{center}
@@ -2136,7 +2123,7 @@ Whenever the ratio dips under the threshold $T$, then that period counts towards
 This Monitor may seem simple, but the real challenge lies in picking a proper $X$ and $Y$.
 If a good approximating time series can be chosen, then the Monitor can be very successful.
 
-\subsubsection{Class Correlation Monitor}
+\subsection{Class Correlation Monitor}
 \label{outage-detection-monitors-Correlation}
 \begin{table}[H]
    \begin{center}
@@ -2191,26 +2178,154 @@ $$
 
 \section{Evaluation}
 \label{outage-detection-evaluation}
-TODO(eriq): Describe tables
+The classifiers chosen to be used in the outage detection evaluation are the top ten classifiers from the classifier evaluation (see Section~\ref{class-evaluation-results}).
+Each of the ten classifiers are paired with one of the monitors six monitors discussed in Section~\ref{outage-detection-monitors} making 60 different combinations as shown in Table~\ref{table:outageDetectionEvaluationSpace}.
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|l|l|}
+         \hline
+            \textbf{Classifiers} & \textbf{Filtering}
+         \tabularnewline\hline
+            SMO & Full
+         \tabularnewline\hline
+            SMO & None
+         \tabularnewline\hline
+            BPNB & Full
+         \tabularnewline\hline
+            BinarySMO & None
+         \tabularnewline\hline
+            BinarySMO & None
+         \tabularnewline\hline
+            BinaryNaiveBayes & None
+         \tabularnewline\hline
+            BinaryNaiveBayes & Full
+         \tabularnewline\hline
+            NaiveBayes & None
+         \tabularnewline\hline
+            BPNB & None
+         \tabularnewline\hline
+            J48 & Full
+         \tabularnewline\hline
+      \end{tabular}
+      {
+         \Huge
+         $\times$
+      }
+      \begin{tabular}{|l|}
+         \hline
+            \textbf{Monitor}
+         \tabularnewline\hline
+            Baseline
+         \tabularnewline\hline
+            Windowed Standard Deviation
+         \tabularnewline\hline
+            Weekly Offset Windowed Standard Deviation
+         \tabularnewline\hline
+            Mean Squared Error
+         \tabularnewline\hline
+            Ratio
+         \tabularnewline\hline
+            Class Correlation
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Outage Detection Evaluation Combinations]{The cross product of the classifier and Monitor will be used to evaluate the outage detection methods.}
+      \label{table:outageDetectionEvaluationSpace}
+   \end{center}
+\end{table}
+
+After the combination is chosen, the classifier will be fun on all of the tweets in the evaluation period.
+The Monitor will then use the classified data to auto-tune (Section~\ref{arch-autotuning}).
+The output will be a set of optimal parameters and a confusion matrix with the actual results.
+Table~\ref{outage-detection-results-example} shows an example of the J48 classifier paired with the Weekly Window Standard Deviation Monitor.
+Note that the confusion matrix is much more simple than the classification confusion matrix.
+The ``True'' label indicates an outage.
+It does not make sense to fill the true negative (false/false) cell because the confusion matrix is dealing in outages and that cell represents the number of non-outages that were correctly classified as non-outages.
+Since neither precision nor recall uses this cell, it can be left undefined.
+
+\begin{table}[H]
+   \begin{center}
+      \footnotesize
+      \begin{tabular}{|l|c|}
+         \hline
+            Parameter & Value
+         \tabularnewline\hline
+            Resistance Method & Fighting
+         \tabularnewline\hline
+            Alert Resistance & 10
+         \tabularnewline\hline
+            Recovery Resistance & 6
+         \tabularnewline\hline
+            Smoothing Method & None
+         \tabularnewline\hline
+            Lower Tolerance & 1.0
+         \tabularnewline\hline
+            Upper Tolerance & 6.0
+         \tabularnewline\hline
+            Window Size & 10
+         \tabularnewline\hline
+      \end{tabular}
+      \begin{tabular}{|c|c|c|}
+         \hline
+            \diaghead{\theadfont ABCDEFGHIJKL}{Predicted}{Actual} & True & False
+         \tabularnewline\hline
+            True & 84 & 4
+         \tabularnewline\hline
+            False & 120 & X
+         \tabularnewline\hline
+      \end{tabular}
+      \caption[Example Outage Detection Results]{An example of the output for an outage detection method.}
+      \label{outage-detection-results-example}
+   \end{center}
+\end{table}
 
 \section{Results}
 \label{outage-detection-results}
-TODO(eriq): Numbers
-Full = Appendix~\ref{appendix-full-outage-detection}.
+Table~\ref{table:outage-detection-summary} shows a summary of the outage detection evaluation results.
+The SMO classifier took the top place when paired with the Weekly Window Standard Deviation Monitor.
+The full outage detection results are in Appendix~\ref{appendix-full-outage-detection}.
 
 \input{outageSummaries.tex}
 
 \part{Conclusions}
 \label{conclusions}
-TODO(eriq)
+
+\chapter{Conclusions}
+\label{conclusions-conclusions}
+Section~\ref{class-evaluation-results} shows that it is possible to use classifiers to accurately classify Netflix-related tweets.
+Section~\ref{outage-detection-results} shows that it is possible to use those classified tweets to detect Netflix service outages.
 
 \chapter{Current Limitations of SPOONS}
 \label{limitations}
-TODO(eriq)
-Severity
-Nature of Outage
-Malicious Tweet Attack
-Know What To Search For (dynamic search generation)
+\paragraph{Real Time Tuning.}
+All the results generated were the result of auto-tuning on the entire set of data.
+This assumes that the traffic that occurs in the future will be similar to the traffic that occurred in the past.
+Ideally, SPOONS would continually re-tune itself every time new outage data is acquired.
+
+\paragraph{Severity.}
+SPOONS does not try to determine how severe an outage it.
+Severity can be measures in two different ways: breadth and depth.
+The breath measure would be how many different platforms or regions are affected.
+Both of these pieces of information could be available through tweets.
+The depth measure would be how many users are affected.
+This measure is much more simple, it would be relative to the size of the outage spike.
+
+\paragraph{Malicious Tweet Attack.}
+SPOONS is currently susceptible to a type of attack where a user generates many fake tweets.
+SPOONS currently makes no attempt to verify the validity of a tweet, or the credibility of
+its author. Therefore, an attacker can just generate hundreds of simple tweets like:
+\begin{center}
+   \texttt{Netflix is down.}
+\end{center}
+This will be probably be enough to cause SPOONS to report an outage when there is none.
+
+\paragraph{Nature of an Outage.}
+Currently, SPOONS cannot detect the root cause of an outage.
+Even though during an outage there are many tweets like:
+\begin{center}
+   \texttt{Damn NetFlix via Xbox 360 DOWN! (Bbm Sad Face)}
+\end{center}
+SPOONS does not yet try to determine the cause of an outage.
 
 \chapter{Current and Future Work}
 \label{future-work}
@@ -2245,6 +2360,8 @@ AWS instance.
 \appendix
 \chapter{SPOONS Database Schema Highlights}
 \label{appendix-db-schema}
+
+% TODO(eriq): Pick more tables
 
 \section{DATA\_tweets}
 \begin{lstlisting}
@@ -2282,9 +2399,6 @@ CREATE TABLE DATA_tweets (
 \label{appendix-full-training}
 \input{trainingSet.tex}
 \clearpage
-
-
-% TODO(eriq): Pick more tables
 
 % Glossary here plz
 \newglossaryentry{SPOONS}{name={SPOONS},
