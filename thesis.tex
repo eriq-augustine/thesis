@@ -375,7 +375,14 @@ their tweets\cite{Pennacchiotti}.
 
 \subsection{Twitter Anomaly Detection}
 \label{background-twitter-anomaly}
-TODO(eriq): levchenko
+Levchenko et al.\cite{levchenko} created a system that uses tweets to detect outages in several widely used Web services such as Amazon, Gmail, Google, PayPal, Netflix, Youtube, Facebook, Wikipedia, and Flickr.
+They describe Twitter users as acting as millions of sensors who have a large breadth and flexibility of in the definition of failure.
+The detection mechanism employed in this work is fairly straightforward.
+A collection of tweets that either contain the phrase ``\texttt{X is down}'' or a ``\texttt{\#Xfail}'' hashtag, where ``X'' is the name of a service (e.g., ``\texttt{\#netflixfail}'') is gathered.
+The traffic is compared against expected traffic to determin if there is an outage.
+
+Levchenko et al. were only able to validate a subset of their detected events because a full validation would require a list of all outages during 2009 for every service that they were monitoring.
+So while the events they were able to verify indicate that the system can detect outages, the full effectiveness of their method is still largely unknown.
 
 \section{Classifiers}
 \label{background-classifiers}
