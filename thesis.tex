@@ -1844,7 +1844,7 @@ Netflix has provided us with a list of outages that occurred between March 14, 2
 This list is not comprehensive and some of the times are questionable. Some of the outages contained in the list
 are internal outages that did not affect their streaming service. These outages generated no signal on Twitter.
 Therefore, errors of omission could fall into one of two categories: true failures to recognize outages, and uncatchable
-outages. Regardless, we use this as our base truth about all of the Netflix outages in that time period.
+outages. Regardless, we use this as our ground truth about all of the Netflix outages in that time period.
 
 \section{Success Metrics}
 \label{outage-detection-metrics}
@@ -1921,8 +1921,8 @@ Therefore, they will be compared using an adjusted score that rewards a high F$_
 \section{Monitors}
 \label{outage-detection-monitors}
 SPOONS uses a number of Monitors that use different methods to try and detect anomalies in the traffic.
-This section will describe each Monitor used.
-Each Monitor described will have two tables describing the parameters that can tune this Monitor and
+This section describes each Monitor used.
+Each Monitor described has two tables describing the parameters that can tune this Monitor and
 the inputs that the Monitor takes. In addition, each Monitor will have a text description along with it.
 
 \subsection{Baseline Monitor}
@@ -1952,7 +1952,11 @@ the inputs that the Monitor takes. In addition, each Monitor will have a text de
 \end{table}
 
 The Baseline Monitor looks for any value above B, and counts that as anomalous.
-Ironically, because of its naivety it also provides a decent baseline for the Monitors.
+Ironically, because of its na\"{i}vet\'{e} it also provides a decent baseline for the Monitors.
+
+For example, the Baseline Monitor can be used to monitor the number of tweets classified as \texttt{bad}.
+The Monitor can be assigned a baseline of 200.
+Therefore whenever there are more than 200 \texttt{bad} tweets in a period, the Baseline Monitor will alert.
 
 \subsection{Windowed Standard Deviation Monitor}
 \label{outage-detection-monitors-WindowStdDev}
@@ -1985,18 +1989,17 @@ Ironically, because of its naivety it also provides a decent baseline for the Mo
 \end{table}
 
 The Windowed Standard Deviation Monitor is one of the simplest Monitors. This Monitor takes a $W$ sized window worth of data
-and uses the standard deviation of the window to find outliers. Any outliers more than $L$ are considered anomalies and counts towards
-an alert, but are still included in the windowed standard deviation calculation. Any value above $U$ is considered an anomaly, but not included
+and uses the standard deviation of the window to find outliers. Any outliers more than $L$ standard deviations away are considered anomalies and counts towards
+an alert, but are still included in the windowed standard deviation calculation. Any value more than $U$ standard deviations away is considered an anomaly, but not included
 in the standard deviation calculation. The reason for this is that values above $U$ are extreme outliers.
 
-The calculation for the standard deviation, is based off of an iterative approach described in Knuth's ``The Art of Computer Programming'' is used \cite{Knuth}.
-Because Knuth's approach was iterative, it could be modified it to calculate for a range of values in an on-line fashion.
+The calculation for the standard deviation is based off of an iterative approach described in Knuth's ``The Art of Computer Programming''\cite{Knuth}.
+Because Knuth's approach is iterative, it can be modified it to calculate for a range of values in an on-line fashion.
 
 Adding the $k$th value, $x$, to the window:
-\begin{eqnarray*}
-   \lefteqn{Mean(k) = }\\
-   && \frac{Mean(k - 1) * (k - 1) - Mean(k - W) + x}{k}
-\end{eqnarray*}
+$$
+   Mean(k) = \frac{Mean(k - 1) * (k - 1) - Mean(k - W) + x}{k}
+$$
 $$
    V(k) = (x - Mean(k)) * (x - Mean(k - 1))
 $$
@@ -2006,6 +2009,38 @@ $$
 $$
    WindowStdDev(k) = \sqrt{\frac{T(K))}{k - 1}}
 $$
+
+For example, the Windowed Standard Deviation Monitor can be used to monitor the number of tweets classified as \texttt{bad} with a lower threshold of 2, an upper threshold of 3, and a window size of 3.
+Table~\ref{table:weeklyWindowEx} shows the process of the Windowed Standard Deviation Monitor at each iteration.
+Note that iterations 1 - 3 are filling the window and will never alert.
+Iteration 5 observed a value that was over the lower threshold, so generated an alert. However it as under the upper threshold, so was included in the window.
+Iteration 6 observed a value that was greater than the upper threshold. Therefore, that value produced an alert and was not included in the window.
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|}
+         \hline
+            Iteration & Window & Mean & Standard Deviation & Observed Point & Alert?
+         \tabularnewline\hline
+            1 & - & - & - & 5 & No
+         \tabularnewline\hline
+            2 & 5 & 5 & 0 & 6 & No
+         \tabularnewline\hline
+            3 & 5, 6 & 5.5 & 0.7071 & 3 & No
+         \tabularnewline\hline
+            4 & 5, 6, 2 & 4.3333 & 2.0817 & 6 & No
+         \tabularnewline\hline
+            5 & 6, 2, 6 & 4.6667 & 2.3094 & 10 & Yes
+         \tabularnewline\hline
+            6 & 2, 6, 10 & 6 & 4 & 20 & Yes
+         \tabularnewline\hline
+            6 & 2, 6, 10 & 6 & 4 & 6 & No
+         \tabularnewline\hline
+      \end{tabular}
+   \end{center}
+   \caption[Windowed Standard Deviation Monitor Example]{An example of how the Windowed Standard Deviation Monitor determines when to alert.}
+   \label{table:weeklyWindowEx}
+\end{table}
 
 \subsection{Weekly Offset Windowed Standard Deviation Monitor}
 \label{outage-detection-monitors-WeeklyWindowStdDev}
@@ -2047,6 +2082,10 @@ This Monitor holds a windowed standard deviation for every 30 minute time period
 for every week. Therefore, values are not compared to the other values around it, but to expected values from
 previous weeks. This Monitor uses the same tactics as the Windows Standard Deviation Monitor for counting anomalies.
 
+For example, the Weekly Offset Windowed Standard Deviation Monitor can be used to monitor the number of tweets classified as \texttt{bad}.
+Unlike the Baseline Monitor, this Monitor allows for both weekly trends and daily variance.
+Therefore a period of 200 \texttt{bad} tweets may be acceptable on a Friday evening when traffic is typically high, but considered anomalous on a Tuesday morning when traffic is typically low.
+
 \subsection{Mean Squared Error Monitor}
 \label{outage-detection-monitors-MSE}
 \begin{table}[H]
@@ -2071,24 +2110,51 @@ previous weeks. This Monitor uses the same tactics as the Windows Standard Devia
          \hline
             X & The expected time series & - \\
          \hline
-            Y & The actual time series & $ Y(k) < X(k) $ \\
+            Y & The actual time series & $ Y(k) \leq X(k) $ \\
          \hline
       \end{tabular}
    \end{center}
 \end{table}
 
-The Mean square Error Monitor keeps a windowed mean squared error (MSE). This Monitor requires two sets of input, a set
+The Mean Square Error Monitor keeps a windowed mean squared error (MSE). This Monitor requires two sets of input, a set
 of expected values and a set of actual values. Any value that causes the MSE to go above a certain threshold, $T$,
 counts towards an anomaly.
 
-Adding the $k$th value to the window MSE:
+Adding the $k$th value to a full window:
 $$
    V(k) = (X(k) - Y(k))^{2}
 $$
-\begin{eqnarray*}
-   \lefteqn{MSE(k) = }\\
-   && \frac{MSE(k - 1) * (k - 1) - V(k - W) + V(k)}{k}
-\end{eqnarray*}
+$$
+   MSE(k) = \frac{MSE(k - 1) * W - V(k - W) + V(k)}{W}
+$$
+
+For example, the Mean Square Error Monitor can be used to monitor the number of tweets classified as \texttt{bad} by letting $X$ be the actual volume of tweets and $Y$ be the number of total tweets \textbf{not} classified as \texttt{bad}.
+Table~\ref{table:mseEx} shows the process of a Mean Square Error Monitor with a window size of 3 and a threshold of 100 at each iteration.
+Iteration 5 produces an alert because an MSE over the threshold was observed.
+An MSE over the threshold means that the number of tweets excluding tweets classified as \texttt{bad} became a poor predictor for the actual traffic of all tweets.
+This indicates that the traffic of \texttt{bad} tweets is becoming a significant factor to the overall Netflix-related Twitter traffic, which signifies an outage.
+
+\begin{table}[H]
+   \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|c|}
+         \hline
+            Iteration & Window (Errors) & Old MSE & Observed X & Observed Y & New MSE & Alert?
+         \tabularnewline\hline
+            1 & - & - & 100 & 95 & 25 & No
+         \tabularnewline\hline
+            2 & 5 & 25 & 105 & 95 & 62.5 & No
+         \tabularnewline\hline
+            3 & 5, 10 & 62.5 & 100 & 98 & 43 & No
+         \tabularnewline\hline
+            4 & 5, 10, 2 & 43 & 95 & 88 & 51 & No
+         \tabularnewline\hline
+            5 & 10, 2, 7 & 51 & 100 & 80 & 151 & Yes
+         \tabularnewline\hline
+      \end{tabular}
+   \end{center}
+   \caption[MSE Monitor Example]{An example of how the MSE Monitor determines when to alert.}
+   \label{table:mseEx}
+\end{table}
 
 \subsection{Ratio Monitor}
 \label{outage-detection-monitors-Ratio}
@@ -2122,6 +2188,9 @@ The Ratio Monitor takes the ratio of the actual value over the expected value fo
 Whenever the ratio dips under the threshold $T$, then that period counts towards an anomaly.
 This Monitor may seem simple, but the real challenge lies in picking a proper $X$ and $Y$.
 If a good approximating time series can be chosen, then the Monitor can be very successful.
+
+For example, the Ratio Monitor can be used with $X$ being the actual volume of tweets and $Y$ being the number of total tweets \textbf{not} classified as \texttt{bad}.
+Therefore, any divergence in $X$ and $Y$ would be caused by the traffic of tweets classified as \texttt{bad}.
 
 \subsection{Class Correlation Monitor}
 \label{outage-detection-monitors-Correlation}
@@ -2161,12 +2230,12 @@ For performance reasons SPOONS uses an approximation of Pearson Correlation whic
 described in Section~\ref{outage-detection-monitors-WindowStdDev}.
 
 Adding the $k$th value, to the window:
-$$
-   Let \bar{X} be the windowed mean of X.
-$$
-$$
-   Let \bar{Y} be the windowed mean of Y.
-$$
+\begin{center}
+   Let $\bar{X}$ be the windowed mean of $X$.
+\end{center}
+\begin{center}
+   Let $\bar{Y}$ be the windowed mean of $Y$.
+\end{center}
 \begin{eqnarray*}
    \lefteqn{T(k) = }\\
    && T(k - 1) + (X(k) * Y(k)) - (X(k - W) * Y(k -W))
@@ -2176,12 +2245,17 @@ $$
    && \frac{T(k) - (W * \bar{X} * \bar{Y})}{(W - 1) * WindowStdDev(X) * WindowStdDev(Y)}
 \end{eqnarray*}
 
+
+For example, the Correlation Monitor can use the same tactic described by the MSE and Ratio Monitors,
+By letting $X$ be the actual volume of tweets and $Y$ be the number of total tweets \textbf{not} classified as \texttt{bad}, the Correlation Monitor can view the effects of tweets classified as \texttt{bad}.
+
 \section{Evaluation}
 \label{outage-detection-evaluation}
 The classifiers chosen to be used in the outage detection evaluation are the top ten classifiers from the classifier evaluation (see Section~\ref{class-evaluation-results}).
 Each of the ten classifiers are paired with one of the monitors six monitors discussed in Section~\ref{outage-detection-monitors} making 60 different combinations as shown in Table~\ref{table:outageDetectionEvaluationSpace}.
 
 \begin{table}[H]
+   \footnotesize
    \begin{center}
       \begin{tabular}{|l|l|}
          \hline
