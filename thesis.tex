@@ -618,6 +618,68 @@ Note that all the children can be instantiated once.
    \end{center}
 \end{figure}
 
+\section{Accuracy Measures}
+\label{background-accuracy}
+The accuracy of classification is primarily determined using three metrics: Recall, Precision, and F Score.
+
+Consider the situation of trying to classify documents into class $A$ with $A$ and $B$ being the two possible classes.
+The following definitions are used to calculate the accuracy metrics:
+\begin{itemize}
+   \item tp --- True Positive. A document with the true class $A$ was correctly classified as $A$.
+   \item fp --- False Positive. A document with the true class $B$ was incorrectly classified as $A$.
+   \item fn --- False Negative. A document with the true class $A$ was incorrectly classified as $B$.
+   \item tn --- True Negative. A document with the true class $B$ was correctly classified as $B$.
+\end{itemize}
+
+\subsection{Recall}
+\label{background-accuracy-recall}
+The percent of the documents that were correctly classified.
+\begin{center}
+   $Recall = \frac{tp}{tp + fn}$
+\end{center}
+
+\subsection{Precision}
+\label{background-accuracy-precision}
+The percent of correct classifications of all documents classified as $A$.
+\begin{center}
+   $Precision = \frac{tp}{tp + fp}$
+\end{center}
+
+\subsection{F Score}
+\label{background-accuracy-f}
+A harmonic mean between recall and precision. The standard F$_{1}$ score evenly weighs precision and recall.
+SPOONS uses the F$_{0.5}$ score. F$_{0.5}$ weighs precision more than recall. Precision is being weighed more heavily than recall because
+every alert that SPOONS generates would require the intervention of a Netflix engineer. Generating too many
+false positives would just cause SPOONS to be ignored.
+\begin{center}
+   $F_{\beta} = (1 + \beta^{2}) \cdot \frac{precision \cdot recall}{\beta^{2} \cdot precision + recall}$
+\end{center}
+\begin{center}
+   $F_{0.5} = 1.25 \cdot \frac{precision \cdot recall}{.25 \cdot precision + recall}$
+\end{center}
+
+\subsection{Coverage}
+\label{background-accuracy-coverage}
+In the context of outage detection, F$_{0.5}$ score cannot completely capture the effectiveness of an outage detection method.
+A flaw in solely relying on the F$_{0.5}$ score is that an outage detection method can produce an unjustly high F score by generating long alerts.
+Taken to the extreme, an outage detection method can generate just one alert an have it span the entire evaluation period.
+This one alert will capture every service outage, and therefore have a recall of 1.
+Also, the single alert it generates will intersect with a real outage which will produce a precision of 1.
+No matter the type of F score used, a precision and recall of 1 will result in the highest possible F score of 1.
+Figure~\ref{fig:coverage} shows a graphical representation of this problem.
+
+To counteract this, an outage detection's coverage is also taken into account.
+Coverage is the percentage of frames in the evaluation period that are during alerts.
+
+\begin{figure}[H]
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{images/Coverage.eps}
+      \captionfonts
+      \caption[Coverage Example]{A long alert producing an unjustly high precision and recall.}
+      \label{fig:coverage}
+   \end{center}
+\end{figure}
+
 \chapter{Twitter API}
 \label{api}
 All of the data data that SPOONS uses is obtained in real time using the Twitter Search REST API\cite{TwitterAPI}.
@@ -1848,66 +1910,23 @@ outages. Regardless, we use this as our ground truth about all of the Netflix ou
 
 \section{Success Metrics}
 \label{outage-detection-metrics}
-The accuracy of outage detection is measured using three metrics: Recall, Precision, and F$_{0.5}$.
-
-The following definitions are used to calculate the accuracy metrics:
+Recall from Section~\ref{background-accuracy}, the definition of \textbf{True Positive}, \textbf{False Positive}, and \textbf{False Negative}.
+In the context of outage detection, these metrics have more specific definitions:
 \begin{itemize}
-   \item tp --- True Positive. Any intersection between a reported outage range and a detected outage range.
-   \item fp --- False Positive. Any detected outage that has no intersection in the events reported by Netflix.
-   \item fn --- False Negative. An alert that has no intersection on an event reported by Netflix is a false negative.
+   \item True Positive --- Any intersection between a reported outage range and a detected outage range.
+   \item False Positive --- Any detected outage that has no intersection in the events reported by Netflix.
+   \item False Negative --- An alert that has no intersection on an event reported by Netflix is a false negative.
 \end{itemize}
 
-\subsection{Recall}
-\label{outage-detection-metrics-recall}
-The percent of the reported events that were caught.
-\begin{center}
-   $Recall = \frac{tp}{tp + fn}$
-\end{center}
-
-\subsection{Precision}
-\label{outage-detection-metrics-precision}
-The percent of the alerts generated that occurred during an outage event.
-Netflix has specified that a precision of 0.5 is an acceptable amount of noise.
-\begin{center}
-   $Precision = \frac{tp}{tp + fp}$
-\end{center}
-
-\subsection{F$_{0.5}$ Score}
-\label{outage-detection-metrics-f}
-A harmonic mean between recall and precision. The standard F$_{1}$ score evenly weighs precision and recall.
-F$_{0.5}$ weighs precision more than recall. Precision is being weighed more heavily than recall because
-every alert that SPOONS generates would require the intervention of a Netflix engineer. Generating too many
-false positives would just cause SPOONS to be ignored.
-\begin{center}
-   $F_{\beta} = (1 + \beta^{2}) \cdot \frac{precision \cdot recall}{\beta^{2} \cdot precision + recall}$
-\end{center}
-\begin{center}
-   $F_{0.5} = 1.25 \cdot \frac{precision \cdot recall}{.25 \cdot precision + recall}$
-\end{center}
+\paragraph{Precision.}
+Netlfix has specified an acceptable precision of 0.5.
+This means that SPOONS is allowed to generate an incorrect alert for ever correct alert.
+Any precision lower than 0.5 will cause SPOONS to be too noisy and consume too much engineer time.
 
 % Netflix Coverage: 0.334129995406
-\subsection{Coverage}
-\label{outage-detection-metrics-coverage}
-F$_{0.5}$ score cannot completely capture the effectiveness of an outage detection method.
-A flaw in solely relying on the F$_{0.5}$ score is that an outage detection method can produce an unjustly high F score by generating long alerts.
-Taken to the extreme, an outage detection method can generate just one alert an have it span the entire evaluation period.
-This one alert will capture every service outage, and therefore have a recall of 1.
-Also, every alert it generates (the single one) will intersect with a real outage which will produce a precision of 1.
-No matter the type of F score used, a precision and recall of 1 will result in the highest possible F score of 1.
-Figure~\ref{fig:coverage} shows a graphical representation of this problem.
-
-To counteract this, an outage detection's coverage is also taken into account.
-Coverage is the percentage of frames in the evaluation period that are during alerts.
-The outage reports that Netflix provided has a coverage of 0.33.
-
-\begin{figure}
-   \begin{center}
-      \includegraphics[width=0.8\textwidth]{images/Coverage.eps}
-      \captionfonts
-      \caption[Coverage Example]{A long alert producing an unjustly high precision and recall.}
-      \label{fig:coverage}
-   \end{center}
-\end{figure}
+\paragraph{Coverage.}
+The list of outages that Netflix supplied has a coverage of 0.3341.
+SPOONS tries to minimize the coverage to supply directed outages with low noise.
 
 \subsection{Adjusted Score}
 \label{outage-detection-metrics-adjusted-score}
@@ -2431,6 +2450,11 @@ AWS instance.
 
 % ------------- End main chapters ----------------------
 
+\clearpage
+\bibliography{bibliography}
+\bibliographystyle{plain}
+%\addcontentsline{toc}{chapter}{Bibliography}
+
 \appendix
 \chapter{SPOONS Database Schema Highlights}
 \label{appendix-db-schema}
@@ -2522,10 +2546,5 @@ CREATE TABLE DATA_tweets (
 %\glsaddall
 %\addcontentsline{toc}{chapter}{Glossary}
 %\printglossaries
-
-\clearpage
-\bibliography{bibliography}
-\bibliographystyle{plain}
-%\addcontentsline{toc}{chapter}{Bibliography}
 
 \end{document}
