@@ -100,10 +100,13 @@ as well as outage detection using tweet classification.
 \end{abstract}
 
 \begin{acknowledgements}
-
-% TODO(eriq): More Thankful!
-Thanks Alex, ABRA, Netflix especially Kevin McEntee, and all the funions.
-Thanks to Farscape for encouraging team bonding and providing a common enemy.
+\noindent
+Thanks Alex, ABRA, Netflix especially Kevin McEntee, and all the funions.\\
+Thanks to the Cal Poly Computer Science Department for being the very supportive and helpful.\\
+Thanks to all of the department office staff: Cindy, Christy, and Susanne.\\
+Thanks family for raising me, especially my parents (they are pretty cool).\\
+Thanks to Farscape for encouraging team bonding and providing a common enemy.\\
+Thank you VIM for being the best text editor.
 
 \end{acknowledgements}
 
@@ -258,6 +261,7 @@ Therefore, the collection and analysis of Twitter data by SPOONS is well withing
 Twitter Terms of Service.
 
 \chapter{SPOONS Requirements}
+\label{requirements}
 Netflix has provided the following set of key requirements to be met by the
 SPOONS system:
 
@@ -316,7 +320,6 @@ The ABRA team has published a paper on SPOONS \cite{abraPaper}.
 In addition, Cailin Cushing defended a thesis on a part of SPOONS devoted to outage detection through sentiment analysis\cite{cailinThesis}.
 
 The main contributions of this work are as follows:
-
 \begin{itemize}
    \item Design and implementation of the SPOONS system.
    \item Design and implementation of the SPOONS framework.
@@ -381,7 +384,7 @@ Levchenko et al.\cite{levchenko} created a system that uses tweets to detect out
 They describe Twitter users as acting as millions of sensors who have a large breadth and flexibility of in the definition of failure.
 The detection mechanism employed in this work is fairly straightforward.
 A collection of tweets that either contain the phrase ``\texttt{X is down}'' or a ``\texttt{\#Xfail}'' hashtag, where ``X'' is the name of a service (e.g., ``\texttt{\#netflixfail}'') is gathered.
-The traffic is compared against expected traffic to determin if there is an outage.
+The traffic is compared against expected traffic to determine if there is an outage.
 
 Levchenko et al. were only able to validate a subset of their detected events because a full validation would require a list of all outages during 2009 for every service that they were monitoring.
 So while the events they were able to verify indicate that the system can detect outages, the full effectiveness of their method is still largely unknown.
@@ -1641,7 +1644,7 @@ starting at the next word in the tweet. Figure~\ref{fig:title-trie} shows a samp
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Title_Trie.eps}
       \captionfonts
-      \caption[Title Trie Walk]{A sample trie of Frankenstein movie titles. The solid lines show what nodes the search for "Frankenstein Meets The Wolf Man" would traverse.}
+      \caption[Title Trie Walk]{A sample trie of Frankenstein movie titles. The solid lines show what nodes the search for ``Frankenstein Meets The Wolf Man'' would traverse.}
       \label{fig:title-trie}
    \end{center}
 \end{figure}
@@ -2375,8 +2378,22 @@ Since neither precision nor recall uses this cell, it can be left undefined.
 \section{Results}
 \label{outage-detection-results}
 Table~\ref{table:outage-detection-summary} shows a summary of the outage detection evaluation results.
-The SMO classifier took the top place when paired with the Weekly Window Standard Deviation Monitor.
 The full outage detection results are in Appendix~\ref{appendix-full-outage-detection}.
+
+The best outage detection method was the SMO classifier using full filtering and the Weekly Window Standard Deviation Monitor.
+This method achieved a precision of 0.9583, a recall of 0.4510, a F$_{0.5}$ score of 0.6970, a coverage 0.2890, and an adjusted score of 0.4956.
+The very high precision means that this method will almost never give an erroneous alert.
+The recall of this method is only 0.4510, however this is fairly good considering that not all reported outages produce signals Twitter.
+
+All of the top ten methods use the Weekly Window Standard Deviation Monitor.
+This shows that the weekly trends in Twitter are very strong.
+The Monitor that took best advantage of the natural trends in the data did the best.
+
+Full filtering was used in five of the top ten methods, which all have a very close adjusted score.
+This indicates that the type of filtering is not actually significant.
+
+All of the top 35 methods were able to achieve Netflix's requirement of a precision greater than 0.5.
+Only 40 of all 50 methods failed to meet this requirement.
 
 \input{outageSummaries.tex}
 
@@ -2385,8 +2402,57 @@ The full outage detection results are in Appendix~\ref{appendix-full-outage-dete
 
 \chapter{Conclusions}
 \label{conclusions-conclusions}
-Section~\ref{class-evaluation-results} shows that it is possible to use classifiers to accurately classify Netflix-related tweets.
-Section~\ref{outage-detection-results} shows that it is possible to use those classified tweets to detect Netflix service outages.
+SPOONS has proven to be a system that is capable of Netflix outage detection using only tweets.
+This work has proven that all of the contributions stated in Chapter~\ref{contributions-organization} have been fulfilled.
+Chapters~\ref{arch-breakdown}, \ref{arch-framework}, and \ref{arch-dist} discuss the design and implementation of the SPOONS system, framework, server architecture, and distributed computation model.
+Chapter~\ref{arch-database} discusses the design of the SPOONS database.
+Chapters~\ref{classifiers} and \ref{outage-detection} discuss the design and implementation of the classification based outage detection methods.
+
+\section{Tweet Classification}
+\label{conclusions-conclusions-classification}
+Tweet classification has proven to be a difficult problem (see Section~\ref{background-twitter-classification}).
+However, SPOONS has shown that it is possible to classify tweets with high accuracy (0.8583).
+With knowledge about the domain of the tweets and a tight restriction on the classes, tweets can be classified with high accuracy.
+Section~\ref{class-evaluation-results} highlights the success of the classifiers.
+
+\section{Outage Detection}
+\label{conclusions-conclusions-outage-detection}
+SPOONS has shown the ability to detect Netflix service outages with very high precision (0.9583), good recall (0.4510), and with an acceptable coverage (0.2890).
+This proves that it is possible to use social media to precisely detect Netflix service outages.
+Section~\ref{outage-detection-results} highlights the success of the outage detection methods.
+
+\section{Fulfilled Requirements}
+\label{conclusions-conclusions-requirements}
+Netflix provided six requirement that SPOONS was to fulfil (see Chapter~\ref{requirements}):
+\begin{enumerate}
+   \item Structural Independence
+   \item Use of Amazon Web Services
+   \item Real-Time Detection
+   \item Precise Outage Detection
+   \item Comprehensive Outage Detection
+   \item User-Friendly UI
+\end{enumerate}
+
+The scope of this work covers the first four of these requirements.
+And the sixth was covered in a senior project by Matthew Tognetti.
+
+\paragraph{Structural Independence.}
+SPOONS was build from scratch and uses no infrastructure from Netflix.
+
+\paragraph{Use of Amazon Web Services.}
+SPOONS is deployed on Amazon Web Services.
+
+\paragraph{Real-Time Detection.}
+SPOONS is a real-time system that continuously runs and provides results within minutes.
+
+\paragraph{Precise Outage Detection.}
+Section~\ref{outage-detection-results} shows that the top 35 outage detection methods provide the precision required by Netflix.
+The top method provides almost perfect precision.
+
+\paragraph{Comprehensive Outage Detection.}
+Although the best outage detection methods provide a recall greater than 0.4, the true comprehension of a method is beyond the scope of this work.
+Accurately determining how comprehensive the outage detection methods are would require an omniscient way of determining when Twitter generates an outage signal.
+A more accurate list of Netflix outages can also serve as a way to test if the outage detection methods are comprehensive.
 
 \chapter{Current Limitations of SPOONS}
 \label{limitations}
@@ -2459,8 +2525,6 @@ AWS instance.
 \chapter{SPOONS Database Schema Highlights}
 \label{appendix-db-schema}
 
-% TODO(eriq): Pick more tables
-
 \section{DATA\_tweets}
 \begin{lstlisting}
 CREATE TABLE DATA_tweets (
@@ -2469,7 +2533,8 @@ CREATE TABLE DATA_tweets (
    content text COLLATE utf8_unicode_ci NOT NULL,
    source text COLLATE utf8_unicode_ci,
    lang varchar(3) COLLATE utf8_unicode_ci NOT NULL,
-   author varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Jon Doe',
+   author varchar(50) COLLATE utf8_unicode_ci
+      NOT NULL DEFAULT 'Jon Doe',
    frame_id int(11) DEFAULT NULL,
    id int(11) NOT NULL AUTO_INCREMENT,
    place text COLLATE utf8_unicode_ci,
@@ -2480,6 +2545,114 @@ CREATE TABLE DATA_tweets (
    KEY frame_index (frame_id),
    KEY published_index (published),
    KEY lang (lang)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE DATA_EN_class_training (
+   tweet_id int(11) DEFAULT NULL,
+   class int(11) NOT NULL DEFAULT '1',
+   user_id int(11) DEFAULT NULL,
+   UNIQUE KEY double_rating (tweet_id,class),
+   KEY class (class)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE DATA_netflix_titles (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   title varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+   expire int(11) DEFAULT NULL,
+   PRIMARY KEY (id),
+   KEY title (title),
+   KEY title_index (title)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE DATA_reported_events (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   start_frame int(11) NOT NULL,
+   end_frame int(11) NOT NULL,
+   severity varchar(32) COLLATE utf8_unicode_ci
+      NOT NULL DEFAULT 'unknown',
+   type enum('outage','hole','media','poutage','meme spkie')
+      COLLATE utf8_unicode_ci NOT NULL DEFAULT 'outage',
+   source varchar(64) COLLATE utf8_unicode_ci NOT NULL
+      DEFAULT 'unknown',
+   description varchar(256) COLLATE utf8_unicode_ci DEFAULT '',
+   PRIMARY KEY (id)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE META_logs (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   timestamp bigint(20) NOT NULL,
+   level enum('info','debug','warn','error','fatal')
+      COLLATE utf8_unicode_ci NOT NULL DEFAULT 'info',
+   entry text COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (id)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE META_tweet_classes (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   class varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+   description text COLLATE utf8_unicode_ci,
+   PRIMARY KEY (id),
+   UNIQUE KEY class (class)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE RESULT_ALL_volume (
+   start_frame int(11) NOT NULL,
+   end_frame int(11) NOT NULL,
+   value float DEFAULT NULL,
+   PRIMARY KEY (start_frame),
+   UNIQUE KEY end_frame (end_frame),
+   KEY start_frame (start_frame),
+   KEY end_frame_2 (end_frame)
+)
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE RESULT_EN_class_smo (
+   tweet_id int(11) NOT NULL DEFAULT '0',
+   class int(11) NOT NULL,
+   PRIMARY KEY (tweet_id,class),
+   KEY tweet_id (tweet_id),
+   KEY class (class)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE RESULT_EN_volume_smo (
+   start_frame int(11) NOT NULL,
+   end_frame int(11) NOT NULL,
+   undecided float NOT NULL DEFAULT '0',
+   media float NOT NULL DEFAULT '0',
+   neutral float NOT NULL DEFAULT '0',
+   snafu float NOT NULL DEFAULT '0',
+   watching float NOT NULL DEFAULT '0',
+   response float NOT NULL DEFAULT '0',
+   complaint float NOT NULL DEFAULT '0',
+   refuse_to_rate float NOT NULL DEFAULT '0',
+   happy float NOT NULL DEFAULT '0',
+   PRIMARY KEY (start_frame),
+   UNIQUE KEY end_frame (end_frame),
+   KEY start_frame (start_frame),
+   KEY end_frame_2 (end_frame)
+);
+\end{lstlisting}
+
+\begin{lstlisting}
+CREATE TABLE RESULT_EN_volume_weighted_series_prediction_week (
+   start_frame int(11) NOT NULL,
+   prediction float DEFAULT NULL,
+   PRIMARY KEY (start_frame)
 );
 \end{lstlisting}
 
@@ -2499,6 +2672,9 @@ CREATE TABLE DATA_tweets (
 \clearpage
 
 % Glossary here plz
+\newglossaryentry{ABRA}{name={ABRA},
+                          description={The core team working on SPOONS. Includes Eriq Augustine, Cailin Cushing, Alex Dekhtyar, Kim Paterson, Matt Tognetti, Aldrin Montana (unofficial member).}}
+
 \newglossaryentry{SPOONS}{name={SPOONS},
                           description={Swift Perception Of Online Negative Situations. The name
                                        of the system presented in this paper}}
