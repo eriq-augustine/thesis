@@ -100,13 +100,18 @@ as well as outage detection using tweet classification.
 \end{abstract}
 
 \begin{acknowledgements}
+
 \noindent
-Thanks Alex, ABRA, Netflix especially Kevin McEntee, and all the funions.\\
-Thanks to the Cal Poly Computer Science Department for being the very supportive and helpful.\\
-Thanks to all of the department office staff: Cindy, Christy, and Susanne.\\
-Thanks family for raising me, especially my parents (they are pretty cool).\\
-Thanks to Farscape for encouraging team bonding and providing a common enemy.\\
-Thank you VIM for being the best text editor.
+Thanks to:
+\begin{itemize}
+   \item Alex, ABRA, Netflix especially Kevin McEntee, and all the funions.
+   \item The Cal Poly Computer Science Department for being the very supportive and helpful.
+   \item All of the department office staff: Cindy, Christy, and Susanne.
+   \item My family for raising me, especially my parents (they are pretty cool).
+   \item My roommates for providing support and unity.
+   \item Farscape for encouraging team bonding and providing a common enemy.
+   \item VIM for being the best text editor.
+\end{itemize}
 
 \end{acknowledgements}
 
@@ -326,7 +331,7 @@ The main contributions of this work are as follows:
    \item Design and implementation of the SPOONS server architecture.
    \item Design and implementation of the SPOONS distributed computation model.
    \item Design of the SPOONS database structure and all table schemas.
-   \item Design and implementation of all SPOONS classification based outage detection methods.
+   \item Design, implementation, and evaluation of all SPOONS classification based outage detection methods.
 \end{itemize}
 
 The rest of the paper is organized as follows.
@@ -2408,6 +2413,13 @@ Chapters~\ref{arch-breakdown}, \ref{arch-framework}, and \ref{arch-dist} discuss
 Chapter~\ref{arch-database} discusses the design of the SPOONS database.
 Chapters~\ref{classifiers} and \ref{outage-detection} discuss the design and implementation of the classification based outage detection methods.
 
+\section{The SPOONS System}
+\label{conclusions-conclusions-system}
+This work has covered the details of SPOONS as a robust, distributed system.
+SPOONS has the ability to function on a single server, or scale to as many servers as desired.
+SPOONS is fault tolerance and can survive nodes dropping out and coming back into the cluster.
+The current iteration of the SPOONS system has been running for over a year without any major disruptions.
+
 \section{Tweet Classification}
 \label{conclusions-conclusions-classification}
 Tweet classification has proven to be a difficult problem (see Section~\ref{background-twitter-classification}).
@@ -2433,8 +2445,8 @@ Netflix provided six requirement that SPOONS was to fulfil (see Chapter~\ref{req
    \item User-Friendly UI
 \end{enumerate}
 
-The scope of this work covers the first four of these requirements.
-And the sixth was covered in a senior project by Matthew Tognetti.
+The scope of this work covers the first five of these requirements.
+The UI for SPOONS was built by Matthew Tognetti as his senior project.
 
 \paragraph{Structural Independence.}
 SPOONS was build from scratch and uses no infrastructure from Netflix.
