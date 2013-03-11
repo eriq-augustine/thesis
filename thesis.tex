@@ -85,7 +85,7 @@
 
 Every week there are over a billion new posts to Twitter services and many of
 those messages contain feedback to companies about their services. One company
-that has recognizes this unused source of information is Netflix. That is why
+that recognizes this unused source of information is Netflix. That is why
 Netflix initiated the development of a system that lets them respond to the
 millions of Twitter and Netflix users that are acting as sensors and reporting all types of user
 visible outages. This system enhances the feedback loop between Netflix and
@@ -337,7 +337,7 @@ The main contributions of this work are as follows:
 The rest of the paper is organized as follows.
 Chapter~\ref{background-related-work} covers background and related work.
 Part~\ref{arch} discusses the architecture of SPOONS.
-Part~\ref{analysis} discuss the work done by the spoons system to detect outages.
+Part~\ref{analysis} discuss the work done by the SPOONS system to detect outages.
 With Chapter~\ref{classifiers} focusing on the details of the classifiers used in SPOONS, and
 Chapter~\ref{outage-detection} extending the problem of classification to full outage detection.
 Part~\ref{conclusions} wraps up the paper.
@@ -464,7 +464,7 @@ Figure~\ref{fig:bayesNet1} shows a simple Bayesian Network that models the chanc
 Note that whether or not it is Spring affects the chance of it raining; and both the season and weather
 affect the chance of going on a picnic.
 
-Figure~\ref{fig:bayesNet2} shows the probability distributions for the network. The chance of the season being Spring if
+Figure~\ref{fig:bayesNet2} shows the probability distributions for the network. The chance of the season being Spring is
 fully independent, and therefore takes no parameters into its probability function. However, the weather and picnic decision
 takes one and two input parameters respectively.
 
@@ -493,7 +493,7 @@ C4.5 is an algorithm that is used to generate a decision tree given a training s
 
 \subsubsection{Decision Trees}
 \label{background-classifiers-j48-decision-trees}
-A decision tree is a simple data structure used to come to come conclusion based off of a number of observations.
+A decision tree is a simple data structure used to come to a conclusion based off of a number of observations.
 At each non-terminal node, a question is asked. The answers to the question are represented by the node's outgoing edges.
 The tree is traversed in this fashion until a terminal node is reached. The terminal node contains the final conclusion.
 In a classification context, each non-terminal node is labeled with an attribute, each edge is the value (or range of values)
@@ -597,10 +597,10 @@ SPOONS uses two types of singletons: singletons that are relative to the base cl
 child classes.
 
 \paragraph{Base Relative Singletons.}
-Base relative singletons are singletons that only allow one instance of to base class in the inheritance hierarchy to be instantiated
+Base relative singletons are singletons that only allow one instance of the base class in the inheritance hierarchy to be instantiated
 at a time. This means that there can only be one instance allowed for the entire inheritance hierarchy.
 Figure~\ref{fig:baseSingleton} shows an inheritance diagram of a hierarchy that uses a base relative singleton.
-Note that because one of the children have been instantiated, no other class in the hierarchy can be instantiated.
+Note that because one of the children has been instantiated, no other class in the hierarchy can be instantiated.
 
 \begin{figure}[H]
    \begin{center}
@@ -612,8 +612,8 @@ Note that because one of the children have been instantiated, no other class in 
 \end{figure}
 
 \paragraph{Child Relative Singletons.}
-Child relative singletons are singletons that allows only one instance of each leaf child in the inheritance hierarchy to be instantiated
-at a time. This allows the inheritance hierarchy to have as many instance as leaf children.
+Child relative singletons are singletons that allow only one instance of each leaf child in the inheritance hierarchy to be instantiated
+at a time. This allows the inheritance hierarchy to have as many instances as leaf children.
 Figure~\ref{fig:childSingleton} shows an inheritance diagram of a hierarchy that uses child relative singletons.
 Note that all the children can be instantiated once.
 
@@ -670,9 +670,9 @@ false positives would just cause SPOONS to be ignored.
 \label{background-accuracy-coverage}
 In the context of outage detection, F$_{0.5}$ score cannot completely capture the effectiveness of an outage detection method.
 A flaw in solely relying on the F$_{0.5}$ score is that an outage detection method can produce an unjustly high F score by generating long alerts.
-Taken to the extreme, an outage detection method can generate just one alert an have it span the entire evaluation period.
+Taken to the extreme, an outage detection method can generate just one alert and have it span the entire evaluation period.
 This one alert will capture every service outage, and therefore have a recall of 1.
-Also, the single alert it generates will intersect with a real outage which will produce a precision of 1.
+Also, the single alert it generates will intersect with a real outage, which will produce a precision of 1.
 No matter the type of F score used, a precision and recall of 1 will result in the highest possible F score of 1.
 Figure~\ref{fig:coverage} shows a graphical representation of this problem.
 
@@ -805,7 +805,7 @@ There are multiple levels of architecture within SPOONS that need to be discusse
 Chapter~\ref{arch-framework} describes the framework architecture (Figure~\ref{fig:frameworkArch}).
 The framework architecture describes the relations between the different pieces of the SPOONS framework.
 Chapter~\ref{arch-dist} describes both the layout of the different servers involved in the SPOONS system
-and the Distribution Model which describes how pieces of work are distributed between the different servers
+and the Distribution Model which describes how pieces of work are distributed between the different servers.
 Finally, Chapter~\ref{arch-database} discusses the architecture of the database that backs SPOONS.
 
 \chapter{Framework Architecture}
@@ -856,7 +856,7 @@ Predictors build a predictive model of the data. Counters build a model of the d
 
 \paragraph{Monitor.}
 Monitors take the models produced by the Predictors and Counters and compares them. The Monitors are responsible for
-making the final decision on about a period of time being anomalous.
+making the final decision about a period of time being anomalous.
 
 \section{Gatherers}
 \label{arch-gatherers}
@@ -912,7 +912,7 @@ This model allows all the analysis pipelines to share the same Processor without
 \section{Analysis Pipelines}
 \label{arch-pipelines}
 An Analysis Pipeline (also called Analysis Method) is the analytical center of the SPOONS framework.
-Pipelines are split into Tasks (see Section~\ref{arch-tasks}) which are chunked units of work.
+Pipelines are split into Tasks (see Section~\ref{arch-tasks}), which are chunked units of work.
 The exact number and types of Tasks used are different for each pipeline.
 
 The run of an Analysis Pipeline is typically as follows:
@@ -1730,7 +1730,7 @@ There will be 24 classifier/filtering combinations.
    \begin{center}
       \begin{tabular}{|l|}
          \hline
-            \textbf{Classifiers}
+            \textbf{Classifier}
          \tabularnewline\hline
             BayesNetClassifier
          \tabularnewline\hline
