@@ -262,7 +262,7 @@ make available through the Services.''}
 
 In short, Twitter takes ownership of user tweets as soon as they are posted on Twitter.
 Using the Twitter API allows SPOONS to obtain the tweets with the consent of Twitter.
-Therefore, the collection and analysis of Twitter data by SPOONS is well withing the
+Therefore, the collection and analysis of Twitter data by SPOONS is well within the
 Twitter Terms of Service.
 
 \chapter{SPOONS Requirements}
@@ -363,7 +363,7 @@ Links to news stories, slang, and Twitter symbols (see Section~\ref{class-filter
 \paragraph{Informal Language.}
 Informal language, e.g. slang, jargon, and abbreviations, is common place on Twitter.
 The use of informal language can be partially attributed to the strict character limit.
-Informal language can be difficult to deal with because it it less likely to appear in well established
+Informal language can be difficult to deal with because it less likely to appear in well established
 Natural Language Processing corpora. Not having a corpus forces researchers to either only use unsupervised methods, or
 build their own corpus.
 
@@ -1616,7 +1616,7 @@ For example, the following tweet references my Twitter account.
 Emoticons are parsed out and replaced with meta words.
 SPOONS emoticon parser was written by Ryan Hnarakis and Allen Dunlea as part of a project for a graduate Artificial Intelligence course.
 Emoticons provide a plethora of information about a tweet. Sarcasm aside,
-an emoticon can surmise the sentiment of an entire tweet.
+an emoticon can indicate the sentiment of an entire tweet.
 
 \subsubsection{Title Replacement}
 \label{class-filter-title}
@@ -2336,7 +2336,7 @@ Each of the ten classifiers is paired with one of the monitors six monitors disc
    \end{center}
 \end{table}
 
-After the combination is chosen, the classifier will be fun on all of the tweets in the evaluation period.
+After the combination is chosen, the classifier will be run on all of the tweets in the evaluation period.
 The Monitor will then use the classified data to auto-tune (Section~\ref{arch-autotuning}).
 The output will be a set of optimal parameters and a confusion matrix with the actual results.
 Table~\ref{outage-detection-results-example} shows an example of the J48 classifier paired with the Weekly Window Standard Deviation Monitor.
@@ -2389,7 +2389,7 @@ The full outage detection results are in Appendix~\ref{appendix-full-outage-dete
 The best outage detection method was the SMO classifier using full filtering and the Weekly Window Standard Deviation Monitor.
 This method achieved a precision of 0.9583, a recall of 0.4510, a F$_{0.5}$ score of 0.6970, a coverage 0.2890, and an adjusted score of 0.4956.
 The very high precision means that this method will almost never give an erroneous alert.
-The recall of this method is only 0.4510, however this is fairly good considering that not all reported outages produce signals Twitter.
+The recall of this method is only 0.4510, however this is fairly good considering that not all reported outages produce signals on Twitter.
 
 All of the top ten methods use the Weekly Window Standard Deviation Monitor.
 This shows that the weekly trends in Twitter are very strong.
@@ -2418,7 +2418,7 @@ Chapters~\ref{classifiers} and \ref{outage-detection} discuss the design and imp
 \label{conclusions-conclusions-system}
 This work has covered the details of SPOONS as a robust, distributed system.
 SPOONS has the ability to function on a single server, or scale to as many servers as desired.
-SPOONS is fault tolerance and can survive nodes dropping out and coming back into the cluster.
+SPOONS is fault tolerant and can survive nodes dropping out and coming back into the cluster.
 The current iteration of the SPOONS system has been running for over a year without any major disruptions.
 
 \section{Tweet Classification}
