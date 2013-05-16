@@ -46,6 +46,8 @@
 % Different font in captions (single-spaced, bold) ------------
 \newcommand{\captionfonts}{\small\bf\ssp}
 
+\newcommand{\mycaption}[2]{\caption[#1]{#1 --- #2}}
+
 \makeatletter  % Allow the use of @ in command names
 \long\def\@makecaption#1#2{%
   \vskip\abovecaptionskip
@@ -68,7 +70,12 @@
 \author{Eriq Augustine}
 \degreemonth{March} \degreeyear{2013} \degree{Master of Science}
 \defensemonth{March} \defenseyear{2013}
-\numberofmembers{3} \chair{Alex Dekhtyar, Ph.D.} \othermemberA{Clint Staley, Ph.D.} \othermemberB{Franz Kurfess, Ph.D.} \othermemberC{Foaad Khosmood, Ph.D.} \field{Computer Science} \campus{San Luis Obispo}
+\numberofmembers{3}
+   \chair{Professor Alex Dekhtyar, \hspace{19mm} Ph.D. Department of Computer Science}
+   \othermemberA{Professor Clint Staley, \hspace{24mm} Ph.D. Department of Computer Science}
+   \othermemberB{Professor Franz Kurfess, \hspace{20mm} Ph.D. Department of Computer Science}
+   \othermemberC{Assistant Professor Foaad Khosmood, Ph.D. Department of Computer Science}
+\field{Computer Science} \campus{San Luis Obispo}
 \copyrightyears{seven}
 
 \maketitle
@@ -186,7 +193,7 @@ fast, and does not require any human intervention \cite{kevin}.}
    \begin{center}
       \includegraphics[width=140mm]{images/tweetexample.eps}
       \captionfonts
-      \caption[Outage Tweets Example]{Tweets posted on March 9, 2011 during a disruption of Netflix
+      \mycaption{Outage Tweets Example}{Tweets posted on March 9, 2011 during a disruption of Netflix
                                        streaming to the Nintendo Wii console.}
       \label{fig:tweetEx}
    \end{center}
@@ -206,7 +213,7 @@ analysis, and filtering.
    \begin{center}
       \includegraphics[width=140mm]{images/systemFlow.eps}
       \captionfonts
-      \caption[System Concept Diagram]{This system concept diagram shows the general
+      \mycaption{System Concept Diagram}{This system concept diagram shows the general
                                        flow of processing done in the SPOONS system.}
       \label{fig:systemFlow}
    \end{center}
@@ -472,7 +479,7 @@ takes one and two input parameters respectively.
    \begin{center}
       \includegraphics[width=0.4\textwidth]{images/Bayes_Net_1.eps}
       \captionfonts
-      \caption[Simple Bayes Net]{A simple Bayesian Network modeling the chance of going on a picnic given the season and weather. The season affects the weather and both the season and weather affect the chance of going on a picnic.}
+      \mycaption{Simple Bayes Net}{A simple Bayesian Network modeling the chance of going on a picnic given the season and weather. The season affects the weather and both the season and weather affect the chance of going on a picnic.}
       \label{fig:bayesNet1}
    \end{center}
 \end{figure}
@@ -481,7 +488,7 @@ takes one and two input parameters respectively.
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Bayes_Net_2.eps}
       \captionfonts
-      \caption[Bayes Net With Probabilities]{The simple Bayesian Network augmented with the probability functions for each node.}
+      \mycaption{Bayes Net With Probabilities}{The simple Bayesian Network augmented with the probability functions for each node.}
       \label{fig:bayesNet2}
    \end{center}
 \end{figure}
@@ -503,7 +510,7 @@ for that attribute, and each terminal node is a class. Each attribute can only a
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Decision_Tree.eps}
       \captionfonts
-      \caption[Simple Decision Tree]{A simple decision tree trying to answer the question of whether or not to go on a picnic.}
+      \mycaption{Simple Decision Tree}{A simple decision tree trying to answer the question of whether or not to go on a picnic.}
       \label{fig:decisionTree}
    \end{center}
 \end{figure}
@@ -533,7 +540,7 @@ Figure~\ref{fig:knn} shows an example of $k$-Nearest Neighbors with a simple sea
    \begin{center}
       \includegraphics[width=0.4\textwidth]{images/KNN.eps}
       \captionfonts
-      \caption[K-Nearest Neighbors]{A simple example of KNN. If $k = 3$, then the query point (the star) will be classified as a triangle. However, if $k = 5$ then the query point will be classified as a square.}
+      \mycaption{K-Nearest Neighbors}{A simple example of KNN. If $k = 3$, then the query point (the star) will be classified as a triangle. However, if $k = 5$ then the query point will be classified as a square.}
       \label{fig:knn}
    \end{center}
 \end{figure}
@@ -550,7 +557,7 @@ Depending on the implementation, the SVM may choose the optimal partition or jus
    \begin{center}
       \includegraphics[width=0.4\textwidth]{images/SVM.eps}
       \captionfonts
-      \caption[Support Vector Machine]{A simple example of a support vector machine. The SVM chose a partition that maximizes the margin between the squares and triangles.}
+      \mycaption{Support Vector Machine}{A simple example of a support vector machine. The SVM chose a partition that maximizes the margin between the squares and triangles.}
       \label{fig:svm}
    \end{center}
 \end{figure}
@@ -606,7 +613,7 @@ Note that because one of the children has been instantiated, no other class in t
    \begin{center}
       \includegraphics[width=0.6\textwidth]{images/Base_Singleton.eps}
       \captionfonts
-      \caption[Base Relative Singleton]{An example base relative singleton inheritance hierarchy. Note that instantiating any child removes the ability to instantiate any other part of the hierarchy.}
+      \mycaption{Base Relative Singleton}{An example base relative singleton inheritance hierarchy. Note that instantiating any child removes the ability to instantiate any other part of the hierarchy.}
       \label{fig:baseSingleton}
    \end{center}
 \end{figure}
@@ -621,7 +628,7 @@ Note that all the children can be instantiated once.
    \begin{center}
       \includegraphics[width=0.6\textwidth]{images/Child_Singleton.eps}
       \captionfonts
-      \caption[Child Relative Singleton]{An example child relative singleton inheritance hierarchy. Note that any child can be instantiated, but only once.}
+      \mycaption{Child Relative Singleton}{An example child relative singleton inheritance hierarchy. Note that any child can be instantiated, but only once.}
       \label{fig:childSingleton}
    \end{center}
 \end{figure}
@@ -683,7 +690,7 @@ Coverage is the percentage of frames in the evaluation period that are during al
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Coverage.eps}
       \captionfonts
-      \caption[Coverage Example]{A long alert producing an unjustly high precision and recall.}
+      \mycaption{Coverage Example}{A long alert producing an unjustly high precision and recall.}
       \label{fig:coverage}
    \end{center}
 \end{figure}
@@ -719,7 +726,7 @@ The typical structure of a Twitter API query is shown in Figure~\ref{fig:apiQuer
          \end{minipage}
       }
       \captionfonts
-      \caption[Twitter API Query]{The structure of a typical query to the Twitter API.}
+      \mycaption{Twitter API Query}{The structure of a typical query to the Twitter API.}
       \label{fig:apiQuery}
    \end{center}
 \end{figure}
@@ -765,7 +772,7 @@ not providing an upper limit includes new tweets outside of the original search 
          \end{minipage}
       }
       \captionfonts
-      \caption[Twitter Search API Result]{A JSON result from the Twitter Search API}
+      \mycaption{Twitter Search API Result}{A JSON result from the Twitter Search API}
       \label{fig:apiRes}
    \end{center}
 \end{figure}
@@ -787,7 +794,7 @@ like the \textsf{geo} field, can be null. Also note that the API incorrectly gue
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/SPOONS_Framework_Architecture.eps}
       \captionfonts
-      \caption[SPOONS Framework Architecture]{The flow of control and data through the SPOONS framework system.}
+      \mycaption{SPOONS Framework Architecture}{The flow of control and data through the SPOONS framework system.}
       \label{fig:frameworkArch}
    \end{center}
 \end{figure}
@@ -796,7 +803,7 @@ like the \textsf{geo} field, can be null. Also note that the API incorrectly gue
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/ui.eps}
       \captionfonts
-      \caption[SPOONS UI]{The web UI for SPOONS.}
+      \mycaption{SPOONS UI}{The web UI for SPOONS.}
       \label{fig:ui}
    \end{center}
 \end{figure}
@@ -878,7 +885,7 @@ into the database.
    \begin{center}
       \includegraphics[width=0.9\textwidth]{images/Twitter_Holes.eps}
       \captionfonts
-      \caption[Twitter Holes]{One server in a hole is covered by two other gathering servers.}
+      \mycaption{Twitter Holes}{One server in a hole is covered by two other gathering servers.}
       \label{fig:twitterHoles}
    \end{center}
 \end{figure}
@@ -989,6 +996,7 @@ The method of resistance as well as the resistance thresholds can also be auto-t
             R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
          \hline
       \end{tabular}
+      \caption[Fighting Resistance Parameters]{Fighting Resistance Parameters}
    \end{center}
 \end{table}
 
@@ -1008,6 +1016,7 @@ If the counter reaches $R$, then the Monitor is put into a normal state.
             R & The number the counter must reach to enter a normal state. & $ R > 0 $ \\
          \hline
       \end{tabular}
+      \caption[Continuous Resistance Parameters]{Continuous Resistance Parameters}
    \end{center}
 \end{table}
 
@@ -1026,6 +1035,7 @@ observations to enter a normal state.
             C & The number of anomalous observations necessary for an alerting state. & $ 0 < C <= W $ \\
          \hline
       \end{tabular}
+      \caption[Window Resistance Parameters]{Window Resistance Parameters}
    \end{center}
 \end{table}
 
@@ -1051,6 +1061,7 @@ Do not smooth. If this smoother is put into the parameter search space, then the
             W & The window size. & $ W > 0 $ \\
          \hline
       \end{tabular}
+      \caption[Moving Mean Smoother Parameters]{Moving Mean Smoother Parameters}
    \end{center}
 \end{table}
 
@@ -1100,7 +1111,7 @@ The Single Control is for a SPOONS instance that wants to run on a single server
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/SPOONS_Server_Architecture.eps}
       \captionfonts
-      \caption[SPOONS Server Architecture]{The server architecture of the SPOONS system.}
+      \mycaption{SPOONS Server Architecture}{The server architecture of the SPOONS system.}
       \label{fig:serverArch}
    \end{center}
 \end{figure}
@@ -1109,7 +1120,7 @@ The Single Control is for a SPOONS instance that wants to run on a single server
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/SPOONS_Distributable_Task_Control_Flow.eps}
       \captionfonts
-      \caption[SPOONS Distributable Task Flow]{The control flow for distributable tasks.}
+      \mycaption{SPOONS Distributable Task Flow}{The control flow for distributable tasks.}
       \label{fig:taskFlow}
    \end{center}
 \end{figure}
@@ -1269,7 +1280,7 @@ At a later time the data from CALC tables is further analyzed and the results ar
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/DB_Data_Flow.eps}
       \captionfonts
-      \caption[Database Data Flow]{The flow of data through the different types of tables in SPOONS.}
+      \mycaption{Database Data Flow}{The flow of data through the different types of tables in SPOONS.}
       \label{fig:db-data-flow}
    \end{center}
 \end{figure}
@@ -1309,7 +1320,7 @@ The tweets table contains ten attributes which are described in Table~\ref{table
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[Database Tweet Attributes]{The database attributes used to describe tweets.}
+   \mycaption{Database Tweet Attributes}{The database attributes used to describe tweets.}
    \label{table:tweet-attributes}
 \end{table}
 
@@ -1349,7 +1360,7 @@ The different schema requirements are shown in Table~\ref{table:ui-expected-sche
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[Stored Procedure UI Expected Schema]{The different types of schemas that the UI looks for in RESULT tables.}
+   \mycaption{Stored Procedure UI Expected Schema}{The different types of schemas that the UI looks for in RESULT tables.}
    \label{table:ui-expected-schema}
 \end{table}
 
@@ -1407,7 +1418,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Normal_Traffic.eps}
       \captionfonts
-      \caption[Normal Traffic]{A week's worth of Netflix-related Twitter traffic. Notice the daily periodicity.}
+      \mycaption{Normal Traffic}{A week's worth of Netflix-related Twitter traffic. Notice the daily periodicity.}
       \label{fig:normal-traffic}
    \end{center}
 \end{figure}
@@ -1416,7 +1427,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Anomalous_Traffic.eps}
       \captionfonts
-      \caption[Anomalous Traffic]{Netflix-related Twitter traffic with two different anomalies.}
+      \mycaption{Anomalous Traffic}{Netflix-related Twitter traffic with two different anomalies.}
       \label{fig:anomalous-traffic}
    \end{center}
 \end{figure}
@@ -1425,7 +1436,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Linkless_Differentiation.eps}
       \captionfonts
-      \caption[Linkless Anomalous Traffic]{The same traffic shown in Figure~\ref{fig:anomalous-traffic}, with an additional line showing Netflix-related Twitter traffic that does not contain a URL.}
+      \mycaption{Linkless Anomalous Traffic}{The same traffic shown in Figure~\ref{fig:anomalous-traffic}, with an additional line showing Netflix-related Twitter traffic that does not contain a URL.}
       \label{fig:linkless-traffic}
    \end{center}
 \end{figure}
@@ -1434,7 +1445,7 @@ outage related traffic and that the spike on the right is caused by media relate
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Classified_Traffic.eps}
       \captionfonts
-      \caption[Classified Traffic]{The same traffic shown in Figure~\ref{fig:anomalous-traffic}, with two addition lines: the volume of tweets classified as ``Bad'' and the volume of tweets classified as ``Media''.}
+      \mycaption{Classified Traffic}{The same traffic shown in Figure~\ref{fig:anomalous-traffic}, with two addition lines: the volume of tweets classified as ``Bad'' and the volume of tweets classified as ``Media''.}
       \label{fig:classified-traffic}
    \end{center}
 \end{figure}
@@ -1504,7 +1515,7 @@ Examples of tweets with their corresponding classes are shown in Table~\ref{tabl
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[Tweet Class Examples]{Examples of the types of tweets that go with each class.}
+   \mycaption{Tweet Class Examples}{Examples of the types of tweets that go with each class.}
    \label{table:classes}
 \end{table}
 
@@ -1528,7 +1539,7 @@ periods.
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/groups.eps}
       \captionfonts
-      \caption[SPOONS Groups]{The different volumes for different tweet classes during an outage (left) and media event (right).}
+      \mycaption{SPOONS Groups}{The different volumes for different tweet classes during an outage (left) and media event (right).}
       \label{fig:groups}
    \end{center}
 \end{figure}
@@ -1650,7 +1661,7 @@ starting at the next word in the tweet. Figure~\ref{fig:title-trie} shows a samp
    \begin{center}
       \includegraphics[width=0.8\textwidth]{images/Title_Trie.eps}
       \captionfonts
-      \caption[Title Trie Walk]{A sample trie of Frankenstein movie titles. The solid lines show what nodes the search for ``Frankenstein Meets The Wolf Man'' would traverse.}
+      \mycaption{Title Trie Walk}{A sample trie of Frankenstein movie titles. The solid lines show what nodes the search for ``Frankenstein Meets The Wolf Man'' would traverse.}
       \label{fig:title-trie}
    \end{center}
 \end{figure}
@@ -1715,7 +1726,7 @@ See Appendix~\ref{appendix-full-training} for the full training set.
          \texttt{Happy}  & 147  & \texttt{Undetermined}  & 48
          \tabularnewline\hline
       \end{tabular}
-      \caption[Netflix-related Twitter Traffic]{Overview of the Netflix-related Twitter post training set used to train classifiers in SPOONS.}
+      \mycaption{Netflix-related Twitter Traffic}{Overview of the Netflix-related Twitter post training set used to train classifiers in SPOONS.}
       \label{table:classCounts}
    \end{center}
 \end{table}
@@ -1771,7 +1782,7 @@ There will be 24 classifier/filtering combinations.
             Full
          \tabularnewline\hline
       \end{tabular}
-      \caption[Classifier Evaluation Combinations]{The cross product of the classifier and filtering will be used to evaluate the classifiers.}
+      \mycaption{Classifier Evaluation Combinations}{The cross product of the classifier and filtering will be used to evaluate the classifiers.}
       \label{table:classifierEvaluationSpace}
    \end{center}
 \end{table}
@@ -1815,7 +1826,7 @@ The accuracy of classifying tweets \textbf{info} a class can be seen using the s
          \hline
          \end{tabular}
       }
-      \caption[Example Classification Confusion Matrix]{An example confusion matrix for a classifier. The \texttt{undecided} class was removed because there were no tweets in that class.}
+      \mycaption{Example Classification Confusion Matrix}{An example confusion matrix for a classifier. The \texttt{undecided} class was removed because there were no tweets in that class.}
       \label{table:confusionExample}
    \end{center}
 \end{table}
@@ -1860,7 +1871,7 @@ will be compressed into their respective groups before the results are evaluated
          \hline
          \end{tabular}
       }
-      \caption[Uncompressed Misclassification Example]{The SMO results with no filtering. Every misclassification that would map to the \texttt{other} group is bold.}
+      \mycaption{Uncompressed Misclassification Example}{The SMO results with no filtering. Every misclassification that would map to the \texttt{other} group is bold.}
       \label{table:confusionMisclassification}
    \end{center}
 \end{table}
@@ -1897,7 +1908,7 @@ cells, they are not as important as the \textbf{bold} cells.
          \hline
          \end{tabular}
       }
-      \caption[Misclassified Snafu]{A sample compressed classification confusion matrix showing misclassified \texttt{snafu} tweets.}
+      \mycaption{Misclassified Snafu}{A sample compressed classification confusion matrix showing misclassified \texttt{snafu} tweets.}
       \label{table:confusionPrecisionRecall}
    \end{center}
 \end{table}
@@ -1964,6 +1975,7 @@ the inputs that the Monitor takes. In addition, each Monitor will have a text de
             B & Baseline & $ B > 0 $\\
          \hline
       \end{tabular}
+      \caption[Baseline Monitor Parameters]{Baseline Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -1976,6 +1988,7 @@ the inputs that the Monitor takes. In addition, each Monitor will have a text de
             X & Any time series & - \\
          \hline
       \end{tabular}
+      \caption[Baseline Monitor Input Arguments]{Baseline Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2001,6 +2014,7 @@ Therefore whenever there are more than 200 \texttt{bad} tweets in a period, the 
             U & Upper Threshold & $U >= L $\\
          \hline
       \end{tabular}
+      \caption[Windowed Standard Deviation Monitor Parameters]{Windowed Standard Deviation Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -2013,6 +2027,7 @@ Therefore whenever there are more than 200 \texttt{bad} tweets in a period, the 
             X & Any time series & - \\
          \hline
       \end{tabular}
+      \caption[Windowed Standard Deviation Monitor Input Arguments]{Windowed Standard Deviation Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2066,7 +2081,7 @@ Iteration 6 observed a value that was greater than the upper threshold. Therefor
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[Windowed Standard Deviation Monitor Example]{An example of how the Windowed Standard Deviation Monitor determines when to alert.}
+   \mycaption{Windowed Standard Deviation Monitor Example}{An example of how the Windowed Standard Deviation Monitor determines when to alert.}
    \label{table:weeklyWindowEx}
 \end{table}
 
@@ -2085,6 +2100,7 @@ Iteration 6 observed a value that was greater than the upper threshold. Therefor
             U & Upper Threshold & $U >= L $\\
          \hline
       \end{tabular}
+      \caption[Weekly Offset Windowed Standard Deviation Monitor Parameters]{Weekly Offset Windowed Standard Deviation Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -2097,6 +2113,7 @@ Iteration 6 observed a value that was greater than the upper threshold. Therefor
             X & Any time series & - \\
          \hline
       \end{tabular}
+      \caption[Weekly Offset Windowed Standard Deviation Monitor Input Arguments]{Weekly Offset Windowed Standard Deviation Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2127,6 +2144,7 @@ Therefore a period of 200 \texttt{bad} tweets may be acceptable on a Friday even
             T & Threshold & $ T > 0 $\\
          \hline
       \end{tabular}
+      \caption[Mean Squared Error Monitor Parameters]{Mean Squared Error Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -2141,6 +2159,7 @@ Therefore a period of 200 \texttt{bad} tweets may be acceptable on a Friday even
             Y & The actual time series & $ Y(k) \leq X(k) $ \\
          \hline
       \end{tabular}
+      \caption[Mean Squared Error Monitor Input Arguments]{Mean Squared Error Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2180,7 +2199,7 @@ This indicates that the traffic of \texttt{bad} tweets is becoming a significant
          \tabularnewline\hline
       \end{tabular}
    \end{center}
-   \caption[MSE Monitor Example]{An example of how the MSE Monitor determines when to alert.}
+   \mycaption{MSE Monitor Example}{An example of how the MSE Monitor determines when to alert.}
    \label{table:mseEx}
 \end{table}
 
@@ -2195,6 +2214,7 @@ This indicates that the traffic of \texttt{bad} tweets is becoming a significant
             T & Threshold & $ 0 < T < 1 $\\
          \hline
       \end{tabular}
+      \caption[Ratio Monitor Parameters]{Ratio Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -2209,6 +2229,7 @@ This indicates that the traffic of \texttt{bad} tweets is becoming a significant
             Y & The actual time series & $ Y(k) < X(k) $\\
          \hline
       \end{tabular}
+      \caption[Ratio Monitor Input Arguments]{Ratio Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2233,6 +2254,7 @@ Therefore, any divergence in $X$ and $Y$ would be caused by the traffic of tweet
             T & Threshold & $ -1 < T < 1 $\\
          \hline
       \end{tabular}
+      \caption[Class Correlation Monitor Parameters]{Class Correlation Monitor Parameters}
    \end{center}
 \end{table}
 
@@ -2247,6 +2269,7 @@ Therefore, any divergence in $X$ and $Y$ would be caused by the traffic of tweet
             Y & The actual time series & $ Y(k) < X(k) $\\
          \hline
       \end{tabular}
+      \caption[Class Correlation Monitor Input Arguments]{Class Correlation Monitor Input Arguments}
    \end{center}
 \end{table}
 
@@ -2331,7 +2354,7 @@ Each of the ten classifiers is paired with one of the monitors six monitors disc
             Class Correlation
          \tabularnewline\hline
       \end{tabular}
-      \caption[Outage Detection Evaluation Combinations]{The cross product of the classifier and Monitor will be used to evaluate the outage detection methods.}
+      \mycaption{Outage Detection Evaluation Combinations}{The cross product of the classifier and Monitor will be used to evaluate the outage detection methods.}
       \label{table:outageDetectionEvaluationSpace}
    \end{center}
 \end{table}
@@ -2376,7 +2399,7 @@ Since neither precision nor recall uses this cell, it can be left undefined.
             False & 120 & X
          \tabularnewline\hline
       \end{tabular}
-      \caption[Example Outage Detection Results]{An example of the output for an outage detection method.}
+      \mycaption{Example Outage Detection Results}{An example of the output for an outage detection method.}
       \label{outage-detection-results-example}
    \end{center}
 \end{table}
