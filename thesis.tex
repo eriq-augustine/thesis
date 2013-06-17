@@ -12,7 +12,7 @@
 \usepackage{etex}
 \usepackage[morefloats=125]{morefloats}
 \usepackage[hyphens]{url}
-\usepackage{hyperref}
+\usepackage[breaklinks=true]{hyperref}
 \usepackage{subfig}
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -28,12 +28,6 @@
 \usepackage{listings}
 \usepackage{makecell}
 
-\definecolor{orange}{rgb}{1,0.5,0}
-\definecolor{blue}{rgb}{0.1,0.1,0.8}
-\definecolor{green}{rgb}{0,0.5,0}
-\definecolor{red}{rgb}{0.8,0,0}
-\definecolor{bad}{rgb}{0.8,0,0.8}
-
 \makeindex
 \makeglossaries
 
@@ -46,7 +40,7 @@
 % Different font in captions (single-spaced, bold) ------------
 \newcommand{\captionfonts}{\small\bf\ssp}
 
-\newcommand{\mycaption}[2]{\caption[#1]{#1 --- #2}}
+\newcommand{\mycaption}[2]{\caption[#1 --- #2]{#1 --- #2}}
 
 \makeatletter  % Allow the use of @ in command names
 \long\def\@makecaption#1#2{%
